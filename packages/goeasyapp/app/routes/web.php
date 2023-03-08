@@ -57,6 +57,8 @@ Route::prefix('admin')->group(function () {
 
     Route::middleware(['auth:sanctum', 'verified'])->get('/banner', [BannerController::class, 'list'])->name('banner.list');
     Route::middleware(['auth:sanctum', 'verified'])->get('/banner/create', [BannerController::class, 'create'])->name('banner.create');
+	Route::middleware(['auth:sanctum', 'verified'])->get('/banner/popup', [BannerController::class, 'popupList'])->name('banner.popup.list');
+	Route::middleware(['auth:sanctum', 'verified'])->get('/banner/popup/create', [BannerController::class, 'popupCreate'])->name('banner.popup.create');
     Route::middleware(['auth:sanctum', 'verified'])->post('/banner/store/{id}', [BannerController::class, 'store'])->name('banner.store');
     Route::middleware(['auth:sanctum', 'verified'])->get('banner/update/{id}', [BannerController::class, 'update'])->name('banner.update');
     Route::middleware(['auth:sanctum', 'verified'])->delete('banner/delete/{id}', [BannerController::class, 'deleteItem'])->name('banner.delete');

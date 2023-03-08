@@ -14,4 +14,5 @@
 	<link rel="icon" type="image/x-icon" href="https://mccannasia.com/upload/logo.jpg">
     @yield('lib_css')
     <link href="{{ asset('assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+    @stack('css')
 </head>

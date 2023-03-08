@@ -86,8 +86,9 @@ $cas = Category::all();
                                     <span key="t-dashboards">{!!__trans($language, 'All.banner', 'Banner')!!}</span>
                                 </a>
                                 <ul class="sub-menu">
-                                    <li><a href="{{route('banner.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a></li>	
-                                    <li><a href="{{route('banner.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a></li>	
+                                    <li><a href="{{route('banner.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a></li>
+                                    <li><a href="{{route('banner.list')}}" key="t-default">{!!__trans($language, 'All.banner.list', 'Banner List')!!}</a></li>
+                                    <li><a href="{{route('banner.popup.list')}}" key="t-default">{!!__trans($language, 'All.popup.list', 'Popup List')!!}</a></li>
                                 </ul>
                             </li>
                             <li>

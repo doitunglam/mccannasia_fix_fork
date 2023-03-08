@@ -40,7 +40,7 @@ class BannerController extends Controller
             ['title' => __trans($language, 'All.id', 'ID'), 'value' => 'id'],
             ['title' => __trans($language, 'All.image', 'Image'), 'value' => 'image', 'type' => 'image'],
         ];
-        $items = $this->useRepository->getPaginateWithRelation();
+        $items = $this->useRepository->getPaginateWithRelation(['is_popup' => FALSE]);
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.list', [
             'title' => $this->useRepository->getConfig()['title'],
             'delete' => $this->useRepository->getConfig()['aciton'] . '.delete',
@@ -73,10 +73,28 @@ class BannerController extends Controller
     }
     public function store(Request $request)
     {
-
-
         $this->useRepository->updateModel($request);
         return redirect()->intended('admin/' . $this->useRepository->getConfig()['aciton'])
             ->with('success', 'Update item success!');
     }
+
+	public function popupList() {
+
+		$lang = (session('locale') ? session('locale') : 'en');
+		$language = Language::orderBy('updated_at', 'DESC')->where('code', $lang)->first();
+		$language = ($language && $language->value != '') ? json_decode($language->value, true) : [];
+		$td = [
+			['title' => __trans($language, 'All.id', 'ID'), 'value' => 'id'],
+			['title' => __trans($language, 'All.image', 'Image'), 'value' => 'image', 'type' => 'image'],
+		];
+		$items = $this->useRepository->getPaginateWithRelation(['is_popup' => TRUE]);
+		return view('app::' . $this->useRepository->getConfig()['aciton'] . '.list', [
+			'title' => "Popup",
+			'delete' => $this->useRepository->getConfig()['aciton'] . '.delete',
+			'update' => $this->useRepository->getConfig()['aciton'] . '.update',
+			'status' => $this->useRepository->getConfig()['aciton'] . '.status',
+			'td' => $td,
+			'items' => $items
+		]);
+	}
 }

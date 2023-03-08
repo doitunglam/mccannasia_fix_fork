@@ -93,6 +93,7 @@ class AuthController extends Controller
         $language = Language::orderBy('updated_at', 'DESC')->where('code', $lang)->first();
         $language = ($language && $language->value != '') ? json_decode($language->value, true) : [];
         $check = $this->useHook->validate($request);
+	    session(['login-current' => 'true']);
         if ($check['resuft'])
             return redirect()->intended($this->routerHome)->with('success', __trans($language, 'success', 'Success!'));
         return redirect()->back()->withErrors($check['validator'])->withInput();

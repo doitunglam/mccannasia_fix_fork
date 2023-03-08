@@ -50,11 +50,9 @@ class BannerRepository
     {
         $this->useModel->find($id)->delete();
     }
-    public function getPaginateWithRelation($limit = 20, $request = [])
+    public function getPaginateWithRelation($request = [], $limit = 20)
     {
-        if (count($request) == 0) {
-            return $this->useModel->orderBy('updated_at', 'DESC')->paginate($limit);
-        }
+	    return $this->useModel->where('is_popup', $request['is_popup'])->orderBy('updated_at', 'DESC')->paginate($limit);
     }
     public function updateModel($request)
     {
@@ -63,6 +61,7 @@ class BannerRepository
         }
         $this->useModel->link_ = $request->name;
         $this->useModel->image = $request->image;
+	    $this->useModel->is_popup = ($request->is_popup == 1) ? 1 : 0;
         $this->useModel->save();
     }
 
