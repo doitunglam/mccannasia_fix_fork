@@ -62,18 +62,25 @@ $bannes = Banner::where('is_popup', FALSE)->get();
         <div class="row">
 
             @foreach($items as $item)
-                <div class="col-md-6 col-xl-3">
-                    <div class="card">
-                        <img class="card-img-top img-fluid" src="{!! env('APP_URL').__transItem($item->image) !!}" onerror="this.src='{{asset('upload/no-image.png')}}'" alt="add alternative text here">
-                        <div class="card-body">
+                <div class="col-md-6 col-xl-2">
+                    <div class="card rounded-3 position-relative card-hover campaign-item">
+                        <div class="wrap-image p-2">
+                            <div class="wrap-button">
+                                <a href="{{route('campain.register', $item->id)}}" class="btn waves-effect waves-light btn-register">{{__trans($language, 'All.register', 'Register')}}</a>
+                            </div>
+{{--                            <img class="card-img-top img-fluid" src="{!! env('APP_URL').__transItem($item->image) !!}" onerror="this.src='{{asset('upload/no-image.png')}}'" alt="add alternative text here">--}}
+                            <img class="card-img-top img-fluid h-100 img-campaign" src="{!! env('APP_URL').__transItem($item->image) !!}" onerror="this.src='https://content.accesstrade.vn/adv/1675414212_avatar_1675414212.gif'" alt="add alternative text here">
+                        </div>
+                        <div class="card-body p-2">
 								<?php
 
 								$count = count(CampainItem::where('cid', $item->id)->get());
 								?>
-                            <h4 class="card-title">{{ __transItem($item->name) }}</h4>
-                            <p class="card-text">{{__trans($language, 'All.registration_fee', 'Registration fee')}}: {{currency_format($item->registration_fee, 'đ')}}</p>
-                            <p class="card-text">{{__trans($language, 'All.subscriber_number', 'Subscriber number')}}: {{$count}}</p>
-                            <a href="{{route('campain.register', $item->id)}}" class="btn btn-primary waves-effect waves-light">{{__trans($language, 'All.register', 'Register')}}</a>
+                            <h5 class="card-title campaign-name" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __transItem($item->name) }}">{{ __transItem($item->name) }}</h5>
+                            <hr>
+                            <p class="card-text text-short-description mb-2">{{__trans($language, 'All.registration_fee', 'Registration fee')}}: {{currency_format($item->registration_fee, 'đ')}}</p>
+                            <p class="card-text text-short-description mb-2">{{__trans($language, 'All.subscriber_number', 'Subscriber number')}}: {{$count}}</p>
+{{--                            <a href="{{route('campain.register', $item->id)}}" class="btn btn-primary waves-effect waves-light">{{__trans($language, 'All.register', 'Register')}}</a>--}}
                         </div>
                     </div>
 

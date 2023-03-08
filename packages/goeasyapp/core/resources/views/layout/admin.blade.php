@@ -15,8 +15,8 @@ $cas = Category::all();
                     <div class="d-flex">
                         <div class="navbar-brand-box" style="background: #fff !important;">
                             <x-component::app.navbar/>
-                        </div> 
-                        
+                        </div>
+
                         <button type="button" class="btn btn-sm px-3 font-size-14 header-item dnm-cs waves-effect" id="">
                             <a style="color: #fff;"  href="{{route('campain.statistical')}}"><i class='bx bx-notification'></i> <span style="">{!!__trans($language, 'All.statistical', 'Statistical')!!}</span></a>
                         </button>
@@ -25,10 +25,10 @@ $cas = Category::all();
                         </button>
                        <button type="button" class="btn btn-sm px-3 font-size-14 header-item dnm-cs waves-effect" id="">
                            <a style="color: #fff;" href="{{route('campain.my')}}"><i class='bx bxs-customize' ></i> <span style="">{!!__trans($language, 'All.campain_my', 'My Campain')!!}</span></a>
-                       </button>   
+                       </button>
                        <button type="button" class="btn btn-sm px-3 font-size-14 header-item dnm-cs waves-effect" id="">
                         <a style="color: #fff;" href="{{route('campain.payment')}}"><i class='bx bxs-customize' ></i> <span style="">{!!__trans($language, 'All.payment', 'Payment')!!}</span></a>
-                    </button>   
+                    </button>
                     </div>
                     <div class="d-flex">
                         <div class="dropdown d-inline-block">
@@ -55,34 +55,34 @@ $cas = Category::all();
                         <ul class="metismenu list-unstyled" id="side-menu">
 							<li class="off-menu" style="height: 0px;">
                                 <a href="#" class="waves-effect">
-									
+
                                 </a>
                             </li>
                             @if(Auth::user()->type != 'agency')
                             <li>
                                 <a href="javascript: void(0);" class="waves-effect">
-                                    <i class="bx bxs-briefcase-alt-2"></i>
+                                    <i class="bx bxs-bank"></i>
                                     <span key="t-dashboards">{!!__trans($language, 'All.bank', 'Bank')!!}</span>
                                 </a>
                                 <ul class="sub-menu">
-                                    <li><a href="{{route('config.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a></li>	
-                                    <li><a href="{{route('config.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a></li>	
+                                    <li><a href="{{route('config.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a></li>
+                                    <li><a href="{{route('config.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href="javascript: void(0);" class="waves-effect">
-                                    <i class="bx bxs-briefcase-alt-2"></i>
+                                    <i class="fa fa-language"></i>
                                     <span key="t-dashboards">{!!__trans($language, 'All.language', 'Language')!!}</span>
                                 </a>
                                 <ul class="sub-menu">
-                                    <li><a href="{{route('language.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a></li>	
-                                    <li><a href="{{route('language.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a></li>	
+                                    <li><a href="{{route('language.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a></li>
+                                    <li><a href="{{route('language.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a></li>
                                 </ul>
                             </li>
 
                             <li>
                                 <a href="javascript: void(0);" class="waves-effect">
-                                    <i class="bx bxs-briefcase-alt-2"></i>
+                                    <i class="fa fa-image"></i>
                                     <span key="t-dashboards">{!!__trans($language, 'All.banner', 'Banner')!!}</span>
                                 </a>
                                 <ul class="sub-menu">
@@ -93,48 +93,48 @@ $cas = Category::all();
                             </li>
                             <li>
                                 <a href="javascript: void(0);" class="waves-effect">
-                                    <i class="bx bxs-briefcase-alt-2"></i>
+                                    <i class="fa fa-list"></i>
                                     <span key="t-dashboards">{!!__trans($language, 'All.category_new', 'Category New')!!}</span>
                                 </a>
                                 <ul class="sub-menu">
-                                    <li><a href="{{route('category-new.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a></li>	
-                                    <li><a href="{{route('category-new.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a></li>	
+                                    <li><a href="{{route('category-new.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a></li>
+                                    <li><a href="{{route('category-new.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href="javascript: void(0);" class="waves-effect">
-                                    <i class="bx bxs-briefcase-alt-2"></i>
+                                    <i class="fa fa-blog"></i>
                                     <span key="t-dashboards">{!!__trans($language, 'All.blog', 'Blog')!!}</span>
                                 </a>
                                 <ul class="sub-menu">
-                                    <li><a href="{{route('blog.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a></li>	
-                                    <li><a href="{{route('blog.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a></li>	
+                                    <li><a href="{{route('blog.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a></li>
+                                    <li><a href="{{route('blog.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href="javascript: void(0);" class="waves-effect">
-                                    <i class="bx bxs-briefcase-alt-2"></i>
+                                    <i class="fa fa-industry"></i>
                                     <span key="t-dashboards">{!!__trans($language, 'All.campain', 'Campain')!!}</span>
                                 </a>
                                 <ul class="sub-menu">
-                                    <li><a href="{{route('campain.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a></li>	
-                                    <li><a href="{{route('campain.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a></li>	
-                                    <li><a href="{{route('campain.resuft.list')}}" key="t-default">{!!__trans($language, 'All.resuft', 'Resuft')!!}</a></li>	
+                                    <li><a href="{{route('campain.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a></li>
+                                    <li><a href="{{route('campain.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a></li>
+                                    <li><a href="{{route('campain.resuft.list')}}" key="t-default">{!!__trans($language, 'All.resuft', 'Resuft')!!}</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href="javascript: void(0);" class="waves-effect">
-                                    <i class="bx bxs-briefcase-alt-2"></i>
+                                    <i class="fa fa-people-arrows"></i>
                                     <span key="t-dashboards">{!!__trans($language, 'All.agency', 'Agency')!!}</span>
                                 </a>
                                 <ul class="sub-menu">
-                                    <li><a href="{{route('user')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a></li>	
-                                    <li><a href="{{route('user.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a></li>	
+                                    <li><a href="{{route('user')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a></li>
+                                    <li><a href="{{route('user.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a></li>
                                 </ul>
                             </li>
 							<li>
                                 <a href="{{route('payment.list')}}" class="waves-effect">
-                                    <i class="bx bxs-briefcase-alt-2"></i>
+                                    <i class="fa fa-credit-card"></i>
                                     <span key="t-dashboards">{!!__trans($language, 'All.payment', 'Payment')!!}</span>
                                 </a>
 
@@ -156,7 +156,7 @@ $cas = Category::all();
                             </li>
                             <li class="menu-title" key="t-menu">Category</li>
                             @foreach($cas as $ca)
-                            
+
                             <li>
                                 <a href="{{route('campain.category', $ca->id)}}" class="waves-effect">
                                     <i class="bx bxs-briefcase-alt-2"></i>
@@ -178,7 +178,7 @@ $cas = Category::all();
                         <i class="mdi mdi-check-all me-2"></i>
                             {!! session()->get('success') !!}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                     </div>						
+                     </div>
 				@endif
 				@yield('content')
 				</div>

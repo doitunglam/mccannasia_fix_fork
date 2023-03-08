@@ -1,0 +1,88 @@
+.text-short-description {
+    font-size: 0.7rem;
+}
+
+.campaign-name {
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 0.9rem;
+}
+
+.wrap-button {
+    position: absolute;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 220px;
+    width: 100%;
+    margin-left: -8px;
+    top: 0;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.card-hover:hover {
+    webkit-transform: translateY(-4px) scale(1.01);
+    -ms-transform: translateY(-4px) scale(1.01);
+    -webkit-transform: translateY(-4px) scale(1.01);
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 14px 24px rgb(62 57 107 / 10%);
+    cursor: pointer;
+}
+
+.card-hover {
+    -webkit-transition: .25s;
+    transition: all .25s ease;
+}
+
+.card-hover.campaign-item:hover .wrap-button {
+    background-color: rgba(0,0,0,.7);
+    border-radius: 6px;
+}
+
+.wrap-image {
+    height: 220px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.img-campaign {
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.wrap-image .btn-register {
+    position: absolute;
+    display: none;
+    background-color: #ff900d;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 4px;
+    font-size: 16px;
+    padding-left: 24px;
+    padding-right: 24px;
+    z-index: 2;
+}
+
+.card-hover.campaign-item:hover .btn-register {
+    display: inline-block;
+}
+
+@media screen and (max-width: 1440px) {
+    .wrap-button {
+        height: 165px;
+    }
+
+    .wrap-image {
+        height: 165px;
+    }
+}
