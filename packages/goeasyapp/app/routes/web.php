@@ -9,6 +9,7 @@ use Goeasyapp\App\Http\Controllers\AgencyController;
 use Goeasyapp\App\Http\Controllers\BannerController;
 use Goeasyapp\App\Http\Controllers\ConfigController;
 
+use Goeasyapp\App\Http\Controllers\ShortLinkController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -31,6 +32,7 @@ Route::get('/publisher-policy', [AppController::class, 'publisherPolicy'])->name
 Route::get('/contact', [AppController::class, 'contact'])->name('home.contact');
 /* end author Doi Tung Lam */
 Route::get('/introduce/{id}', [AppController::class, 'introduce'])->name('home.base.introduce');
+Route::get('shortlink/{code}', [ShortLinkController::class, 'shortenLink'])->name('shortlink.get');
 Route::prefix('admin')->group(function () {
 
     Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [CampainController::class, 'day'])->name('home');
@@ -103,7 +105,9 @@ Route::prefix('admin')->group(function () {
 
     Route::middleware(['auth:sanctum', 'verified'])->get('campain/payment/create', [CampainController::class, 'paymentCreate'])->name('campain.payment.create');
     Route::middleware(['auth:sanctum', 'verified'])->post('payment/create', [CampainController::class, 'paymentCreateStore'])->name('payment.store');
-
+    Route::middleware(['auth:sanctum', 'verified'])->get('campain/link/{id}', [CampainController::class, 'link'])->name('campain.link');
+    Route::middleware(['auth:sanctum', 'verified'])->post('campain/link/{id}', [CampainController::class, 'linkStore'])->name('campain.link.store');
+    Route::middleware(['auth:sanctum', 'verified'])->post('shortlink/{id}', [ShortLinkController::class, 'store'])->name('shortlink.store');
 
 
 

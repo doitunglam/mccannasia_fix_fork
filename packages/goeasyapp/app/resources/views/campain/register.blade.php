@@ -1,23 +1,23 @@
 @extends('core::layout.admin')
 @section('content')
 <div class="container-fluid">
-    
+
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                 <h4 class="mb-sm-0 font-size-18">{{$title}} : {{__transItem($item->name)}}</h4>
 
-                
+
 
             </div>
-            
+
         </div>
-        
+
     </div>
 
 
-   
-    <form action="{{ route($route, $item->id) }}" method="POST" class="form-submit" enctype="multipart/form-data">	
+
+    <form action="{{ route($route, $item->id) }}" method="POST" class="form-submit" enctype="multipart/form-data">
         @csrf
         @if(isset($use_))
             <input type="hidden" name="use_" value="{{$use_}}"/>
@@ -44,12 +44,14 @@
                     <div class="row">
                         <div class="d-flex flex-wrap gap-2">
                             @if(!$info)
-                            <x-component::form.submit default="Register" key="all.register"/>   
+                            <x-component::form.submit default="Register" key="all.register"/>
+                            @else
+                                <a href="{{ route('campain.link', $item->id) }}" class="btn btn-primary waves-effect waves-light">{{ __trans($language, 'all.create_link', 'Create link') }}</a>
                             @endif
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </form>
@@ -62,13 +64,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-               
+
                 @foreach( $config as $index => $n)
                 <?php
                     $info = json($n->name);
                 ?>
                 <div style="border-bottom: 1px solid #ddd;position: relative">
-                    <p class="mb-2" style="margin-top: 10px;font-weight: bold">{{__trans($language, 'All.name', 'Name')}}: <span class="text-primary">{!!$info['name']!!}</span></p>    
+                    <p class="mb-2" style="margin-top: 10px;font-weight: bold">{{__trans($language, 'All.name', 'Name')}}: <span class="text-primary">{!!$info['name']!!}</span></p>
                 <p class="mb-2" style="margin-top: 10px;font-weight: bold">{{__trans($language, 'All.bank_name', 'Bank Name')}}: <span class="text-primary">{!!$info['bank']!!}</span></p>
                 <p class="mb-4" style="margin-bottom: 9px !important;font-weight: bold">{{__trans($language, 'All.bank_account', 'Bank Account')}}: <span class="text-primary">{!!__transItem($n->value)!!}</span></p>
                 <img src="{{asset($n->image)}}" style="position: absolute; top: -16px;right: 0;height: 61px;"/>
@@ -88,7 +90,7 @@
 @stack('c-script')
 <script>
 $(document).ready(function(){
-    
+
     $('.done-payment').click(function(){
         var fd = new FormData();
 		fd.append('price', {{$item->registration_fee}});
@@ -118,7 +120,7 @@ $(document).ready(function(){
         }
         parent.parent().find('.task-wrap .content-item').last().find('input').val(val);
     })
-    
+
 })
 </script>
 @endsection()

@@ -2,11 +2,12 @@
 
 namespace Goeasyapp\App\Http\Controllers;
 
+use App\Models\ShortLink;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Goeasyapp\Core\Http\Hooks\CampainHook;
 use Goeasyapp\Core\Http\Repositories\CampainRepository;
-use Auth;
+use \Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 use App\Models\Campain;
 use App\Models\User;
@@ -151,7 +152,7 @@ class CampainController extends Controller
 
         $model = $this->useRepository->getModelById($id);
         if ($model->registration_fee > Auth::user()->amount) {
-            return redirect()->back()->with('success', 'You don\'t have enough money to register! 
+            return redirect()->back()->with('success', 'You don\'t have enough money to register!
             <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".transaction-detailModal">
             Transfer
             </button>');
@@ -423,5 +424,20 @@ class CampainController extends Controller
         $this->useRepository->updateModel($request);
         return redirect()->intended('admin/' . $this->useRepository->getConfig()['aciton'])
             ->with('success', 'Update item success!');
+    }
+
+
+    public function link($id)
+    {
+        $item = $this->useRepository->getModelById($id);
+        $link = $item->link_;
+        $listLink = ShortLink::query()->where('user', Auth::id())->where('campain', $id)->get();
+        return view('app::' . $this->useRepository->getConfig()['aciton'] . '.link', [
+            'item' => $item,
+            'link' => $link,
+            'route' => 'campain.link.store',
+            'listLink' => $listLink,
+            'title' => $this->useRepository->getConfig()['title'] . ' Create Link',
+        ]);
     }
 }
