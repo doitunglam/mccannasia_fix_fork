@@ -68,8 +68,7 @@ $bannes = Banner::where('is_popup', FALSE)->get();
                             <div class="wrap-button">
                                 <a href="{{route('campain.register', $item->id)}}" class="btn waves-effect waves-light btn-register">{{__trans($language, 'All.register', 'Register')}}</a>
                             </div>
-{{--                            <img class="card-img-top img-fluid" src="{!! env('APP_URL').__transItem($item->image) !!}" onerror="this.src='{{asset('upload/no-image.png')}}'" alt="add alternative text here">--}}
-                            <img class="card-img-top img-fluid h-100 img-campaign" src="{!! env('APP_URL').__transItem($item->image) !!}" onerror="this.src='https://content.accesstrade.vn/adv/1675414212_avatar_1675414212.gif'" alt="add alternative text here">
+                            <img class="card-img-top img-fluid h-100 img-campaign" src="{!! env('APP_URL').__transItem($item->image) !!}" onerror="this.src='{{asset('upload/no-image.png')}}'" alt="add alternative text here">
                         </div>
                         <div class="card-body p-2">
 								<?php

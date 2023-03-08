@@ -27,3 +27,4 @@
 </script>
 @yield('lib_js')
 @yield('script')
+<script src="//code.tidio.co/rasnpyjtutv4tikr3gvc92tecgy1zhf7.js" defer></script>
