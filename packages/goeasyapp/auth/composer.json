@@ -1,0 +1,24 @@
+{
+    "name": "goeasyapp/auth",
+    "description": "App Package",
+    "authors": [
+        {
+            "name": "Goeasyapp",
+            "email": "minhducbk88@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Goeasyapp\\Auth\\":"src/"
+        }
+    },
+    "extra":{
+        "laravel":{
+            "providers":[
+                "Goeasyapp\\Auth\\Providers\\AuthServiceProvider",
+                "Goeasyapp\\Auth\\Providers\\RouteServiceProvider"
+            ]
+        }
+    }
+}

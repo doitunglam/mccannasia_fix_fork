@@ -1,0 +1,26 @@
+{
+    "name": "goeasyapp/core",
+    "description": "App Package",
+    "authors": [
+        {
+            "name": "Goeasyapp",
+            "email": "minhducbk88@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Goeasyapp\\Core\\":"src/"
+        },
+        "files":[
+            "helper/helper.php"
+        ]
+    },
+    "extra":{
+        "laravel":{
+            "providers":[
+                "Goeasyapp\\Core\\Providers\\CoreServiceProvider"
+            ]
+        }
+    }
+}

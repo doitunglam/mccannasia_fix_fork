@@ -1,0 +1,1 @@
+<button class="btn btn-primary waves-effect waves-light" type="submit">{{ __trans($language, $key, $default) }}</button>

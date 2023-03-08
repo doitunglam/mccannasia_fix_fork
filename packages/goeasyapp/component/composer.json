@@ -1,0 +1,23 @@
+{
+    "name": "goeasyapp/component",
+    "description": "Component Package",
+    "authors": [
+        {
+            "name": "Goeasyapp",
+            "email": "minhducbk88@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Goeasyapp\\Component\\":"src/"
+        }
+    },
+    "extra":{
+        "laravel":{
+            "providers":[
+                "Goeasyapp\\Component\\Providers\\ComponentServiceProvider"
+            ]
+        }
+    }
+}
