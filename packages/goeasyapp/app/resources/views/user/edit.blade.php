@@ -95,18 +95,32 @@ $ln   = json_decode($ln->label_, TRUE);
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-2">
-                            <label for="productname">Bank Account</label>
+                            <label for="productname">Tên ngân hàng</label>
                         </div>
                         <div class="col-md-10">
-                            <input id="productname" name="bank_account" type="text" class="form-control" value="{{$model->bank_account}}" autocomplete="off">
+                            <select name="bank_name" class="select2 form-control" id="">
+                                <option value="">-- Chọn Ngân Hàng --</option>
+                                @foreach($banks as $bank)
+                                    <option @if($bank['vn_name'] === $model->bank_name) selected @endif
+                                    value="{{ $bank['vn_name'] }}">{{ $bank['vn_name'] }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-2">
-                            <label for="productname">Bank Name</label>
+                            <label for="productname">Tên tài khoản</label>
                         </div>
                         <div class="col-md-10">
-                            <input id="productname" name="bank_name" type="text" class="form-control" value="{{$model->bank_name}}" autocomplete="off">
+                            <input id="productname" name="bank_name_account" type="text" class="form-control" value="{{$model->bank_name_account}}" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-2">
+                            <label for="productname">Sổ tài khoản</label>
+                        </div>
+                        <div class="col-md-10">
+                            <input id="productname" name="bank_account" type="text" class="form-control" value="{{$model->bank_account}}" autocomplete="off">
                         </div>
                     </div>
                     <div class="row mb-3">
