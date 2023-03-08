@@ -100,9 +100,10 @@ class AgencyController extends Controller
         $model->phone = $request->phone;
         $model->address = $request->address;
         $model->type = $request->type_;
-        $model->name_bank = $request->name_bank;
+        $model->gender = $request->gender;
+	    $model->bank_name = $request->bank_name;
         $model->bank_account = $request->bank_account;
-        if ($request->password != '')
+        if (!empty($request->password))
             $model->password = bcrypt($request->password);
 
 
@@ -113,11 +114,11 @@ class AgencyController extends Controller
             $index_ = count($end) - 1;
             $file_name = time() . '.' . $end[$index_];
             $request->file('image')->move('upload/user/' . $model->id, $file_name);
-            $model->img = 'upload/user/' . $model->id . '/' . $file_name;
+            $model->image	 = 'upload/user/' . $model->id . '/' . $file_name;
         }
 
         $model->save();
-        return redirect()->intended('admin/user/' . $r)
+        return redirect()->route('user')
             ->with('success', 'Updated the user information successfully!');
     }
     public function create(Request $request)
