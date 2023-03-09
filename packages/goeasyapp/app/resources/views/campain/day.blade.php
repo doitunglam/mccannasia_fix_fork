@@ -4,25 +4,25 @@ use App\Models\Banner;
 use App\Models\CampainItem;
 
 $bannes = Banner::where('is_popup', FALSE)->get();
+$popup  = Banner::where('is_popup', TRUE)->inRandomOrder()->first();
 ?>@extends('core::layout.admin')
 @section('content')
     <div class="container-fluid">
-        <button type="button" class="d-none" id="popup-banner-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        @if(session()->has('login-current') && !empty($popup))
+        <button type="button" class="d-none" id="popup-banner-btn" data-bs-toggle="modal" data-bs-target="#popup-modal">
             Launch demo modal
         </button>
-        <div class="modal" tabindex="-1" id="exampleModal">
+        <div class="modal" tabindex="-1" id="popup-modal">
             <div class="modal-dialog">
                 <div class="modal-content rounded-0 ">
                     <div class="modal-body position-relative">
                         <button type="button" class="btn-close position-absolute top-0 end-0 p-4" data-bs-dismiss="modal" aria-label="Close"></button>
-                        @php
-                            $popup = Banner::where('is_popup', TRUE)->inRandomOrder()->first();
-                        @endphp
                         <img width="100%" height="100%" src="{{asset($popup->image ?? "Please add popup")}}">
                     </div>
                 </div>
             </div>
         </div>
+        @endif
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
@@ -79,7 +79,7 @@ $bannes = Banner::where('is_popup', FALSE)->get();
                             <hr>
                             <p class="card-text text-short-description mb-2">{{__trans($language, 'All.registration_fee', 'Registration fee')}}: {{currency_format($item->registration_fee, 'đ')}}</p>
                             <p class="card-text text-short-description mb-2">{{__trans($language, 'All.subscriber_number', 'Subscriber number')}}: {{$count}}</p>
-{{--                            <a href="{{route('campain.register', $item->id)}}" class="btn btn-primary waves-effect waves-light">{{__trans($language, 'All.register', 'Register')}}</a>--}}
+                            {{--                            <a href="{{route('campain.register', $item->id)}}" class="btn btn-primary waves-effect waves-light">{{__trans($language, 'All.register', 'Register')}}</a>--}}
                         </div>
                     </div>
 
@@ -117,10 +117,10 @@ $bannes = Banner::where('is_popup', FALSE)->get();
 					}
 				]
 			});
-            @if(session()->has('login-current'))
-			    $("#popup-banner-btn")[0].click();
-				@php(session()->remove('login-current'))
-			@endif
+            @if(session()->has('login-current') && !empty($popup))
+			$("#popup-banner-btn")[0].click();
+            @php(session()->remove('login-current'))
+            @endif
 		});
     </script>
 @endsection()

@@ -1064,6 +1064,9 @@
 			}
 		}
     </style>
+
+    @php($popup = \App\Models\Banner::where('is_popup', TRUE)->inRandomOrder()->first())
+    @if(!empty($popup))
     <script>
 		(function ($) {
 			$(document).ready(function () {
@@ -1073,22 +1076,22 @@
 			})
 		})(jQuery);
     </script>
+    @endif
 </head>
 <body class="home blog wp-custom-logo wp-embed-responsive elementor-default elementor-kit-136">
-<a href="#popup-banner-show" id="popup-banner-btn" style="display:none;">aaaaaaa</a>
-<div id="popup-banner">
-    <div id="popup-banner-show" class="overlay">
-        <div class="popup">
-            <div class="popup-content" style="line-height: 0">
-                <a class="close" href="#">&times;</a>
-                @php
-                    $banner = \App\Models\Banner::where('is_popup', TRUE)->inRandomOrder()->first();
-                @endphp
-                <img width="100%" height="100%" src="{{asset($banner->image)}}">
+@if(!empty($popup))
+    <a href="#popup-banner-show" id="popup-banner-btn" style="display:none;">aaaaaaa</a>
+    <div id="popup-banner">
+        <div id="popup-banner-show" class="overlay">
+            <div class="popup">
+                <div class="popup-content" style="line-height: 0">
+                    <a class="close" href="#">&times;</a>
+                    <img width="100%" height="100%" src="{{asset($popup->image)}}">
+                </div>
             </div>
         </div>
     </div>
-</div>
+@endif
 <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 0 0" width="0" height="0" focusable="false" role="none" style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;">
     <defs>
         <filter id="wp-duotone-dark-grayscale">
