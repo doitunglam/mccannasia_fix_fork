@@ -27,115 +27,130 @@ $ln   = json_decode($ln->label_, TRUE);
             @csrf
             <div class="card">
                 <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-md-2"><label for="avatar">Avatar</label></div>
-                        <div class="col-md-10">
-                            <label class="position-relative text-center rounded-circle overflow-hidden " for="formFile" style="cursor:pointer; width: 150px; height: 150px">
-                                <img src="{{!empty($model->image) ? asset($model->image) : '/upload/no-image.png'}}" width="100%" height="100%" style="object-fit: cover" class="show-flag"/>
-                                <span class="position-absolute bottom-0 start-0 end-0 m-auto bg-secondary py-2 text-white">Change</span>
-                            </label>
-                            <input class="form-control change-img opacity-0 h-0" type="file" name="image" id="formFile">
-                            <input class="form-control" type="hidden" name="type_" value="{{$model->type}}">
+                    <div class="group mb-4">
+                        <div class="mb-4">
+                            <h5>Thông tin cá nhân</h5>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-2"><label for="avatar">Avatar</label></div>
+                            <div class="col-md-10">
+                                <label class="position-relative text-center rounded-circle overflow-hidden " for="formFile" style="cursor:pointer; width: 150px; height: 150px">
+                                    <img src="{{!empty($model->image) ? asset($model->image) : '/upload/no-image.png'}}" width="100%" height="100%" style="object-fit: cover" class="show-flag"/>
+                                    <span class="position-absolute bottom-0 start-0 end-0 m-auto bg-secondary py-2 text-white">Change</span>
+                                </label>
+                                <input class="form-control change-img opacity-0 h-0 position-absolute bottom-0" type="file" name="image" id="formFile">
+                                <input class="form-control position-absolute bottom-0" type="hidden" name="type_" value="{{$model->type}}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-2">
+                                <label for="productname">Tên hiển thị</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input id="productname" name="display" type="text" value="{{$model->name}}" class="form-control" value="" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-2">
+                                <label for="productname">Email</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input id="productname" name="username" type="text" value="{{$model->email}}" class="form-control" value="" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-2">
+                                <label for="productname">Số điện thoại</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input id="productname" name="phone" type="text" class="form-control" value="{{$model->phone}}" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-2">
+                                <label for="productname">Địa chỉ</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input id="productname" name="address" type="text" class="form-control" value="{{$model->address}}" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-2">
+                                <label for="productname">Gender</label>
+                            </div>
+                            <div class="col-md-10">
+                                <label class="me-5">
+                                    <input type="radio" name="gender" value="Male" {{ (empty($model->gender) || 'Male' == $model->gender) ? ' checked' : ''}}>
+                                    Male
+                                </label>
+                                <label>
+                                    <input type="radio" name="gender" value="Female" {{('Female' == $model->gender) ? ' checked' : ''}}>
+                                    Female
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-2">
+                                <label for="productname">Link</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input id="productname" name="" type="text" class="form-control" value="{{route('home.base.introduce', md5($model->id))}}" autocomplete="off">
+                            </div>
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-md-2">
-                            <label for="productname">Tên hiển thị</label>
+                    <hr>
+                    <div class="group mb-4">
+                        <div class="mb-4">
+                            <h5>Thông tin thanh toán</h5>
                         </div>
-                        <div class="col-md-10">
-                            <input id="productname" name="display" type="text" value="{{$model->name}}" class="form-control" value="" autocomplete="off">
+                        <div class="row mb-3">
+                            <div class="col-md-2">
+                                <label for="productname">Tên ngân hàng</label>
+                            </div>
+                            <div class="col-md-10">
+                                <select name="bank_name" class="select2 form-control" id="">
+                                    <option value="">-- Chọn Ngân Hàng --</option>
+                                    @foreach($banks as $bank)
+                                        <option @if($bank['vn_name'] === $model->bank_name) selected @endif value="{{ $bank['vn_name'] }}">{{ $bank['vn_name'] }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-2">
-                            <label for="productname">Email</label>
+                        <div class="row mb-3">
+                            <div class="col-md-2">
+                                <label for="productname">Tên tài khoản</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input id="productname" name="bank_name_account" type="text" class="form-control" value="{{$model->bank_name_account}}" autocomplete="off">
+                            </div>
                         </div>
-                        <div class="col-md-10">
-                            <input id="productname" name="username" type="text" value="{{$model->email}}" class="form-control" value="" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-2">
-                            <label for="productname">Password</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input id="productname" name="password" type="password" class="form-control" value="" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-2">
-                            <label for="productname">Số điện thoại</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input id="productname" name="phone" type="text" class="form-control" value="{{$model->phone}}" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-2">
-                            <label for="productname">Địa chỉ</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input id="productname" name="address" type="text" class="form-control" value="{{$model->address}}" autocomplete="off">
+                        <div class="row mb-3">
+                            <div class="col-md-2">
+                                <label for="productname">Sổ tài khoản</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input id="productname" name="bank_account" type="text" class="form-control" value="{{$model->bank_account}}" autocomplete="off">
+                            </div>
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-md-2">
-                            <label for="productname">Gender</label>
-                        </div>
-                        <div class="col-md-10">
-                            <label>
-                                <input type="radio" name="gender" value="Male" {{ (empty($model->gender) || 'Male' == $model->gender) ? ' checked' : ''}}>
-                                Male
-                            </label>
-                            <label>
-                                <input type="radio" name="gender" value="Female" {{('Female' == $model->gender) ? ' checked' : ''}}>
-                                Female
-                            </label>
+                    <hr>
+                    <div class="group mb-4">
+                        <div class="mb-3"><h5>Thay đổi mật khẩu</h5></div>
+                        <div class="row mb-3">
+                            <div class="col-md-2">
+                                <label for="productname">Password</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input id="productname" name="password" type="password" class="form-control" value="" autocomplete="off">
+                            </div>
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-md-2">
-                            <label for="productname">Tên ngân hàng</label>
-                        </div>
-                        <div class="col-md-10">
-                            <select name="bank_name" class="select2 form-control" id="">
-                                <option value="">-- Chọn Ngân Hàng --</option>
-                                @foreach($banks as $bank)
-                                    <option @if($bank['vn_name'] === $model->bank_name) selected @endif
-                                    value="{{ $bank['vn_name'] }}">{{ $bank['vn_name'] }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-2">
-                            <label for="productname">Tên tài khoản</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input id="productname" name="bank_name_account" type="text" class="form-control" value="{{$model->bank_name_account}}" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-2">
-                            <label for="productname">Sổ tài khoản</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input id="productname" name="bank_account" type="text" class="form-control" value="{{$model->bank_account}}" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-2">
-                            <label for="productname">Link</label>
-                        </div>
-                        <div class="col-md-10">
-                            <input id="productname" name="" type="text" class="form-control" value="{{route('home.base.introduce', md5($model->id))}}" autocomplete="off">
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary waves-effect waves-light">Save</button>
                 </div>
             </div>
+            <button type="submit" class="btn btn-primary waves-effect waves-light">Save</button>
         </form>
     </div>
+
 @endsection
 @section('script')
     <script>

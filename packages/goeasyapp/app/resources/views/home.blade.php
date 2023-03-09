@@ -1065,28 +1065,42 @@
 		}
     </style>
 
-    @php($popup = \App\Models\Banner::where('is_popup', TRUE)->inRandomOrder()->first())
-    @if(!empty($popup))
-    <script>
-		(function ($) {
-			$(document).ready(function () {
-				setTimeout(function () {
-					$("#popup-banner-btn")[0].click();
-				}, 2000)
-			})
-		})(jQuery);
-    </script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.css"/>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.min.css"/>
+
+    @php($popups = \App\Models\Banner::where('is_popup', TRUE)->where('status', 1)->get())
+    @if(!$popups->isEmpty())
+        <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+        <script>
+            (function ($) {
+                $(document).ready(function () {
+                    setTimeout(function () {
+                        $("#popup-banner-btn")[0].click();
+                    }, 2000)
+	                $('.popup-banner-slick').slick({
+		                arrows: false,
+		                dots: true,
+		                autoplay: true,
+		                autoplaySpeed: 3000,
+	                });
+                })
+            })(jQuery);
+        </script>
     @endif
 </head>
 <body class="home blog wp-custom-logo wp-embed-responsive elementor-default elementor-kit-136">
-@if(!empty($popup))
+@if(!$popups->isEmpty())
     <a href="#popup-banner-show" id="popup-banner-btn" style="display:none;">aaaaaaa</a>
     <div id="popup-banner">
         <div id="popup-banner-show" class="overlay">
             <div class="popup">
                 <div class="popup-content" style="line-height: 0">
                     <a class="close" href="#">&times;</a>
-                    <img width="100%" height="100%" src="{{asset($popup->image)}}">
+                    <div class="popup-banner-slick">
+                        @foreach($popups as $popup)
+                            <img width="100%" height="100%" src="{{asset($popup->image)}}">
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>

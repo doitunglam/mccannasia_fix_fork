@@ -4,11 +4,11 @@ use App\Models\Banner;
 use App\Models\CampainItem;
 
 $bannes = Banner::where('is_popup', FALSE)->get();
-$popup  = Banner::where('is_popup', TRUE)->inRandomOrder()->first();
+$popups = \App\Models\Banner::where('is_popup', TRUE)->where('status', 1)->get();
 ?>@extends('core::layout.admin')
 @section('content')
     <div class="container-fluid">
-        @if(session()->has('login-current') && !empty($popup))
+        @if(session()->has('login-current') && !empty($popups))
         <button type="button" class="d-none" id="popup-banner-btn" data-bs-toggle="modal" data-bs-target="#popup-modal">
             Launch demo modal
         </button>
@@ -17,7 +17,22 @@ $popup  = Banner::where('is_popup', TRUE)->inRandomOrder()->first();
                 <div class="modal-content rounded-0 ">
                     <div class="modal-body position-relative">
                         <button type="button" class="btn-close position-absolute top-0 end-0 p-4" data-bs-dismiss="modal" aria-label="Close"></button>
-                        <img width="100%" height="100%" src="{{asset($popup->image ?? "Please add popup")}}">
+                        <div>
+                            <div id="popup-carousel-slide" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-indicators">
+                                    @foreach($popups as $key => $popup)
+                                    <button type="button" data-bs-target="#popup-carousel-slide" data-bs-slide-to="{{ $key }}"  @if($key == 0)  class="active" aria-current="true" @endif></button>
+                                    @endforeach
+                                </div>
+                                <div class="carousel-inner">
+                                    @foreach($popups as $key => $popup)
+                                        <div class="carousel-item @if($key == 0) active @endif" data-bs-touch="true" data-bs-interval="3000">
+                                            <img src="{{asset($popup->image)}}" class="d-block w-100 h-100" alt="{{asset($popup->image)}}">
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -118,6 +133,11 @@ $popup  = Banner::where('is_popup', TRUE)->inRandomOrder()->first();
 				]
 			});
             @if(session()->has('login-current') && !empty($popup))
+
+            $('.popup-banner-slick').slick({
+	            arrows: false,
+	            dots: true
+            });
 			$("#popup-banner-btn")[0].click();
             @php(session()->remove('login-current'))
             @endif
