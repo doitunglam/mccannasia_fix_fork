@@ -1072,7 +1072,7 @@
 			$(document).ready(function () {
 				setTimeout(function () {
 					$("#popup-banner-btn")[0].click();
-				}, 4000)
+				}, 2000)
 			})
 		})(jQuery);
     </script>
