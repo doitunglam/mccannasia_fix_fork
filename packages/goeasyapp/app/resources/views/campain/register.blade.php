@@ -6,13 +6,22 @@
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                 <h4 class="mb-sm-0 font-size-18">{{$title}} : {{__transItem($item->name)}}</h4>
-
-
-
             </div>
-
         </div>
+    </div>
 
+    <div class="bg-white mb-4 p-3 d-flex align-items-center">
+        <div class="rounded-circle avatar-wrapper me-4">
+            <img class="card-img-top img-fluid h-100 img-campaign rounded-circle" src="{!! env('APP_URL').__transItem($item->image) !!}" onerror="this.src='{{asset('upload/no-image.png')}}'" alt="add alternative text here">
+        </div>
+        <div>
+            <h4 class="fw-bold">{{__transItem($item->name)}}</h4>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fas fa-star-half-alt checked"></span>
+        </div>
     </div>
 
 
@@ -56,6 +65,7 @@
         </div>
     </form>
 </div>
+<!--
 <div class="modal fade transaction-detailModal" tabindex="-1" role="dialog" aria-labelledby="transaction-detailModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -85,6 +95,30 @@
         </div>
     </div>
 </div>
+-->
+
+<button id="btnToggleRegisterError" hidden="hidden" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerError"></button>
+
+<div class="modal" id="registerError" role="dialog" tabindex="-1" aria-labelledby="registerError" aria-hidden="true">
+    <div class="modal-dialog mt-5">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger"><i class="fa fa-exclamation-triangle me-2"></i>{{__trans($language, 'All.error', 'Error')}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>{!! session()->get('success') !!}</p>
+            </div>
+        </div>
+    </div>
+</div>
+@if(session()->has('success'))
+<script>
+    $(document).ready(function(){
+        $('#btnToggleRegisterError').click();
+    })
+</script>
+@endif
 @endsection()
 @section('script')
 @stack('c-script')
@@ -120,6 +154,7 @@ $(document).ready(function(){
         }
         parent.parent().find('.task-wrap .content-item').last().find('input').val(val);
     })
+    $('.alert-success').addClass('d-none');
 
 })
 </script>

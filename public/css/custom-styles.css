@@ -3,8 +3,6 @@
 }
 
 .campaign-name {
-    white-space: nowrap;
-    overflow: hidden;
     font-size: 0.9rem;
 }
 
@@ -85,4 +83,13 @@
     .wrap-image {
         height: 165px;
     }
+}
+
+.avatar-wrapper{
+    width: 100px;
+    height: 100px;
+}
+
+.checked {
+    color: orange;
 }

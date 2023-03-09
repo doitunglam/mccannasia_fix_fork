@@ -90,7 +90,7 @@ $popups = \App\Models\Banner::where('is_popup', TRUE)->where('status', 1)->get()
 
 								$count = count(CampainItem::where('cid', $item->id)->get());
 								?>
-                            <h5 class="card-title campaign-name" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __transItem($item->name) }}">{{ __transItem($item->name) }}</h5>
+                            <h5 class="card-title campaign-name text-truncate" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __transItem($item->name) }}">{{ __transItem($item->name) }}</h5>
                             <hr>
                             <p class="card-text text-short-description mb-2">{{__trans($language, 'All.registration_fee', 'Registration fee')}}: {{currency_format($item->registration_fee, 'đ')}}</p>
                             <p class="card-text text-short-description mb-2">{{__trans($language, 'All.subscriber_number', 'Subscriber number')}}: {{$count}}</p>
@@ -101,9 +101,14 @@ $popups = \App\Models\Banner::where('is_popup', TRUE)->where('status', 1)->get()
                 </div>
             @endforeach
         </div>
-
-
     </div>
+    @if(session()->has('success'))
+        <div class="alert alert-success alert-dismissible fade show mt-5" role="alert" style="margin-left: 13px;margin-right: 13px;">
+            <i class="mdi mdi-check-all me-2"></i>
+            {!! session()->get('success') !!}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 @endsection()
 @section('script')
     @stack('c-script')
