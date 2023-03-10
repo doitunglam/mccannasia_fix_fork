@@ -93,3 +93,12 @@
 .checked {
     color: orange;
 }
+
+.short-content {
+	display: -webkit-box;
+	width: 98%;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	height: 60px;
+}

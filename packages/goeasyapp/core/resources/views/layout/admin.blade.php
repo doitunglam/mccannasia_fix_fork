@@ -188,13 +188,20 @@ $cas = Category::all();
             <div class="main-content">
 				<div class="page-content">
                     <x-component::form.error/>
-				@if(session()->has('success'))
-					<div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-left: 13px;margin-right: 13px;">
-                        <i class="mdi mdi-check-all me-2"></i>
-                            {!! session()->get('success') !!}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                     </div>
-				@endif
+                    @if(session()->has('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-left: 13px;margin-right: 13px;">
+                            <i class="mdi mdi-check-all me-2"></i>
+                                {!! session()->get('success') !!}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                         </div>
+                    @endif
+                    @if(session()->has('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-left: 13px;margin-right: 13px;">
+                            <i class="fa fa-exclamation-triangle me-2"></i>
+                            {!! session()->get('error') !!}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
 				@yield('content')
 				</div>
             </div>

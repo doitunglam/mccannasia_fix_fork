@@ -31,7 +31,7 @@
             </p>
             <h5 style="margin-top: 20px;">{{__trans($language, 'All.link', 'Link')}}</h5>
             <p>
-                {{route('campain.link',['campain' => $info->code, 'use_' => $info->url])}}
+                {{route('campain.link',[$item->id,'campain' => $info->code, 'use_' => $info->url])}}
             </p>
         </div>
     </div>

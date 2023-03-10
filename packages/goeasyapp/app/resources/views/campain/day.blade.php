@@ -3,7 +3,7 @@
 use App\Models\Banner;
 use App\Models\CampainItem;
 
-$bannes = Banner::where('is_popup', FALSE)->get();
+$bannes = Banner::where('is_popup', FALSE)->where('status', 1)->get();
 $popups = \App\Models\Banner::where('is_popup', TRUE)->where('status', 1)->get();
 ?>@extends('core::layout.admin')
 @section('content')
@@ -42,8 +42,6 @@ $popups = \App\Models\Banner::where('is_popup', TRUE)->where('status', 1)->get()
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                     <h4 class="mb-sm-0 font-size-18">{{$title}}</h4>
-
-
                 </div>
                 <div class="cat-slider border-bottom" style="margin-top: -28px;">
                     @foreach($bannes as $b)
@@ -53,7 +51,6 @@ $popups = \App\Models\Banner::where('is_popup', TRUE)->where('status', 1)->get()
                             </a>
                         </div>
                     @endforeach
-
                 </div>
             </div>
 

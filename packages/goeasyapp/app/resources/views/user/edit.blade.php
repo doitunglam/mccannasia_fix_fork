@@ -28,12 +28,8 @@ $ln   = json_decode($ln->label_, TRUE);
             <div class="card">
                 <div class="card-body">
                     <div class="group mb-4">
-                        <div class="mb-4">
-                            <h5>Thông tin cá nhân</h5>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-2"><label for="avatar">Avatar</label></div>
-                            <div class="col-md-10">
+                        <div class="row mb-5 text-center">
+                            <div class="col-12">
                                 <label class="position-relative text-center rounded-circle overflow-hidden " for="formFile" style="cursor:pointer; width: 150px; height: 150px">
                                     <img src="{{!empty($model->image) ? asset($model->image) : '/upload/no-image.png'}}" width="100%" height="100%" style="object-fit: cover" class="show-flag"/>
                                     <span class="position-absolute bottom-0 start-0 end-0 m-auto bg-secondary py-2 text-white">Change</span>
@@ -41,6 +37,12 @@ $ln   = json_decode($ln->label_, TRUE);
                                 <input class="form-control change-img opacity-0 h-0 position-absolute bottom-0" type="file" name="image" id="formFile">
                                 <input class="form-control position-absolute bottom-0" type="hidden" name="type_" value="{{$model->type}}">
                             </div>
+                            <div class="col-12">
+                                <label for="avatar">Avatar</label>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <h4>Thông tin cá nhân</h4>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-2">
@@ -101,7 +103,7 @@ $ln   = json_decode($ln->label_, TRUE);
                     <hr>
                     <div class="group mb-4">
                         <div class="mb-4">
-                            <h5>Thông tin thanh toán</h5>
+                            <h4>Thông tin thanh toán</h4>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-2">
@@ -111,7 +113,7 @@ $ln   = json_decode($ln->label_, TRUE);
                                 <select name="bank_name" class="select2 form-control" id="">
                                     <option value="">-- Chọn Ngân Hàng --</option>
                                     @foreach($banks as $bank)
-                                        <option @if($bank['vn_name'] === $model->bank_name) selected @endif value="{{ $bank['vn_name'] }}">{{ $bank['vn_name'] }}</option>
+                                        <option @if($bank['shortName'] === $model->bank_name) selected @endif value="{{ $bank['shortName'] }}">{{ $bank['shortName'] }} - {{ $bank['vn_name'] }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -135,7 +137,7 @@ $ln   = json_decode($ln->label_, TRUE);
                     </div>
                     <hr>
                     <div class="group mb-4">
-                        <div class="mb-3"><h5>Thay đổi mật khẩu</h5></div>
+                        <div class="mb-3"><h4>Thay đổi mật khẩu</h4></div>
                         <div class="row mb-3">
                             <div class="col-md-2">
                                 <label for="productname">Password</label>

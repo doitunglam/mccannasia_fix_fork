@@ -152,12 +152,11 @@ class CampainController extends Controller
 
         $model = $this->useRepository->getModelById($id);
         if ($model->registration_fee > Auth::user()->amount) {
-//            return redirect()->back()->with('success', 'You don\'t have enough money to register!
-//            <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light" data-bs-toggle="modal" data-bs-target=".transaction-detailModal">
-//            Transfer
-//            </button>
-//            ');
-            return redirect()->back()->with('success', 'You don\'t have enough money to register!');
+            return redirect()->back()->with('error', 'You don\'t have enough money to register!
+            <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light modal-transfer-btn">
+            Transfer
+            </button>
+            ');
         }
         if ($request->use_ = '') {
             $request->use_ = Auth::user()->url;
