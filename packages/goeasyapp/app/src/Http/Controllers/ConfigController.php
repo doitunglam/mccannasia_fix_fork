@@ -2,6 +2,7 @@
 
 namespace Goeasyapp\App\Http\Controllers;
 
+use App\Models\Bank;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Goeasyapp\Core\Http\Hooks\ConfigHook;
@@ -59,7 +60,8 @@ class ConfigController extends Controller
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.create', [
             'item' => $item,
             'title' => $this->useRepository->getConfig()['title'] . ' Create',
-            'route' => $this->useRepository->getConfig()['aciton'] . '.store'
+            'route' => $this->useRepository->getConfig()['aciton'] . '.store',
+	        'banks' => Bank::BANKS
         ]);
     }
     public function update($id)
@@ -69,7 +71,8 @@ class ConfigController extends Controller
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.edit', [
             'item' => $item,
             'title' => $this->useRepository->getConfig()['title'] . ' Edit',
-            'route' => $this->useRepository->getConfig()['aciton'] . '.store'
+            'route' => $this->useRepository->getConfig()['aciton'] . '.store',
+            'banks' => Bank::BANKS
         ]);
     }
     public function store(Request $request)
