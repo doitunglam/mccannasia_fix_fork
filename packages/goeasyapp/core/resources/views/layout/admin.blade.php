@@ -1,165 +1,234 @@
 
 <?php
+
 use App\Models\Category;
+use Illuminate\Support\Str;
+
 $cas = Category::all();
 ?>
-<!DOCTYPE html>
+        <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <x-component::app.header/>
-    <body class="">
-		<body data-sidebar="dark">
-		<script src="{{ asset('assets/libs/jquery/jquery.min.js') }}"></script>
-        <div id="layout-wrapper">
-            <header id="page-topbar">
-                <div class="navbar-header">
-                    <div class="d-flex">
-                        <div class="navbar-brand-box" style="background: #fff !important;">
-                            <x-component::app.navbar/>
-                        </div>
-
-                        <button type="button" class="btn btn-sm px-3 font-size-14 header-item dnm-cs waves-effect" id="">
-                            <a style="color: #fff;"  href="{{route('campain.statistical')}}"><i class='bx bx-notification'></i> <span style="">{!!__trans($language, 'All.statistical', 'Statistical')!!}</span></a>
-                        </button>
-						<button type="button" class="btn btn-sm px-3 font-size-14 header-item dnm-cs waves-effect" id="">
-                            <a style="color: #fff;"  href="{{route('campain.day')}}"><i class='bx bx-notification'></i> <span style="">{!!__trans($language, 'All.campain_day', 'Campain Day')!!}</span></a>
-                        </button>
-                       <button type="button" class="btn btn-sm px-3 font-size-14 header-item dnm-cs waves-effect" id="">
-                           <a style="color: #fff;" href="{{route('campain.my')}}"><i class='bx bxs-customize' ></i> <span style="">{!!__trans($language, 'All.campain_my', 'My Campain')!!}</span></a>
-                       </button>
-                       <button type="button" class="btn btn-sm px-3 font-size-14 header-item dnm-cs waves-effect" id="">
-                        <a style="color: #fff;" href="{{route('campain.payment')}}"><i class='bx bxs-customize' ></i> <span style="">{!!__trans($language, 'All.payment', 'Payment')!!}</span></a>
-                    </button>
-                    </div>
-                    <div class="d-flex">
-                        <div class="dropdown d-inline-block">
-                            <button type="button" class="btn header-item waves-effect text-white" id="page-header-user-dropdown"
-                                ata-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                                <a href="{{ route('admin.locale.cn') }}" class="mr-3">Cn</a>
-                            </button>
-                            <button type="button" class="btn header-item waves-effect text-white" id="page-header-user-dropdown"
-                                ata-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                                <a href="{{ route('admin.locale.en') }}" class="mr-3">En</a>
-                            </button>
-                            <button type="button" class="btn header-item waves-effect text-white" id="page-header-user-dropdown"
-                                ata-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                                <a href="{{ route('admin.locale.vi') }}" class="mr-3">Vi</a>
-                            </button>
-                            <x-component::app.dropdown/>
-                        </div>
-                    </div>
+<x-component::app.header/>
+<body class="">
+<body data-sidebar="dark">
+<script src="{{ asset('assets/libs/jquery/jquery.min.js') }}"></script>
+<div id="layout-wrapper">
+    <header id="page-topbar">
+        <div class="navbar-header">
+            <div class="d-flex">
+                <div class="navbar-brand-box" style="background: #fff !important;">
+                    <x-component::app.navbar/>
                 </div>
-            </header>
-            <div class="vertical-menu">
-                <div data-simplebar class="h-100">
-                    <div id="sidebar-menu">
-                        <ul class="metismenu list-unstyled" id="side-menu">
-							<li class="off-menu" style="height: 0px;">
-                                <a href="#" class="waves-effect">
 
-                                </a>
+                <button type="button" class="btn btn-sm px-3 font-size-14 header-item dnm-cs waves-effect" id="">
+                    <a style="color: #fff;" href="{{route('campain.statistical')}}"><i class='bx bx-notification'></i>
+                        <span style="">{!!__trans($language, 'All.statistical', 'Statistical')!!}</span></a>
+                </button>
+                <button type="button" class="btn btn-sm px-3 font-size-14 header-item dnm-cs waves-effect" id="">
+                    <a style="color: #fff;" href="{{route('campain.day')}}"><i class='bx bx-notification'></i>
+                        <span style="">{!!__trans($language, 'All.campain_day', 'Campain Day')!!}</span></a>
+                </button>
+                <button type="button" class="btn btn-sm px-3 font-size-14 header-item dnm-cs waves-effect" id="">
+                    <a style="color: #fff;" href="{{route('campain.my')}}"><i class='bx bxs-customize'></i>
+                        <span style="">{!!__trans($language, 'All.campain_my', 'My Campain')!!}</span></a>
+                </button>
+                <button type="button" class="btn btn-sm px-3 font-size-14 header-item dnm-cs waves-effect" id="">
+                    <a style="color: #fff;" href="{{route('campain.payment')}}"><i class='bx bxs-customize'></i>
+                        <span style="">{!!__trans($language, 'All.payment', 'Payment')!!}</span></a>
+                </button>
+            </div>
+            <div class="d-flex align-items-center">
+                <div class="d-inline-block px-2">
+                    <a class="position-relative" href="javascript:" data-bs-toggle="modal" data-bs-target="#contact-form">
+                        <i class="fas fa-envelope fs-5 text-white"></i>
+                        <span class="badge rounded-pill badge-notification bg-danger position-absolute" style="right: -10px; top: -5px;">!</span>
+                    </a>
+                </div>
+                <nav class="navbar navbar-expand-lg px-2">
+                    <div class="container-fluid">
+                        <ul class="navbar-nav d-flex flex-row me-1">
+                            <li class="nav-item me-3 me-lg-0">
+                                <div class="dropdown">
+                                    <a class="me-3 dropdown-toggle hidden-arrow position-relative" href="javascript:" id="bell-notification" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-bell text-white fs-5"></i>
+                                        <span class="badge rounded-pill badge-notification bg-danger position-absolute" style="left: 10px; top: -5px;">+99</span>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end" style="right: -74px !important;" aria-labelledby="bell-notification-list">
+                                        <li>
+                                            <a class="dropdown-item" href="#">Some news</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Another news</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
-                            @if(Auth::user()->type != 'agency')
-                            <li>
-                                <a href="javascript: void(0);" class="waves-effect">
-                                    <i class="bx bxs-bank"></i>
-                                    <span key="t-dashboards">{!!__trans($language, 'All.bank', 'Bank')!!}</span>
-                                </a>
-                                <ul class="sub-menu">
-                                    <li><a href="{{route('config.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a></li>
-                                    <li><a href="{{route('config.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="javascript: void(0);" class="waves-effect">
-                                    <i class="fa fa-language"></i>
-                                    <span key="t-dashboards">{!!__trans($language, 'All.language', 'Language')!!}</span>
-                                </a>
-                                <ul class="sub-menu">
-                                    <li><a href="{{route('language.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a></li>
-                                    <li><a href="{{route('language.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a></li>
-                                </ul>
-                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="dropdown d-inline-block">
+                    <button type="button" class="btn header-item waves-effect text-white" id="page-header-user-dropdown" ata-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a href="{{ route('admin.locale.cn') }}" class="mr-3">Cn</a>
+                    </button>
+                    <button type="button" class="btn header-item waves-effect text-white" id="page-header-user-dropdown" ata-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a href="{{ route('admin.locale.en') }}" class="mr-3">En</a>
+                    </button>
+                    <button type="button" class="btn header-item waves-effect text-white" id="page-header-user-dropdown" ata-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a href="{{ route('admin.locale.vi') }}" class="mr-3">Vi</a>
+                    </button>
+                    <x-component::app.dropdown/>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="vertical-menu">
+        <div data-simplebar class="h-100">
+            <div id="sidebar-menu">
+                <ul class="metismenu list-unstyled" id="side-menu">
+                    <li class="off-menu" style="height: 0px;">
+                        <a href="#" class="waves-effect">
 
-                            <li>
-                                <a href="javascript: void(0);" class="waves-effect">
-                                    <i class="fa fa-image"></i>
-                                    <span key="t-dashboards">{!!__trans($language, 'All.banner', 'Banner')!!}</span>
-                                </a>
-                                <ul class="sub-menu">
-                                    <li><a href="{{route('banner.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a></li>
-                                    <li><a href="{{route('banner.list')}}" key="t-default">{!!__trans($language, 'All.banner.list', 'Banner List')!!}</a></li>
-                                    <li><a href="{{route('banner.popup.list')}}" key="t-default">{!!__trans($language, 'All.popup.list', 'Popup List')!!}</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="javascript: void(0);" class="waves-effect">
-                                    <i class="fa fa-list"></i>
-                                    <span key="t-dashboards">{!!__trans($language, 'All.category_new', 'Category New')!!}</span>
-                                </a>
-                                <ul class="sub-menu">
-                                    <li><a href="{{route('category-new.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a></li>
-                                    <li><a href="{{route('category-new.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="javascript: void(0);" class="waves-effect">
-                                    <i class="fa fa-blog"></i>
-                                    <span key="t-dashboards">{!!__trans($language, 'All.blog', 'Blog')!!}</span>
-                                </a>
-                                <ul class="sub-menu">
-                                    <li><a href="{{route('blog.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a></li>
-                                    <li><a href="{{route('blog.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="javascript: void(0);" class="waves-effect">
-                                    <i class="fa fa-industry"></i>
-                                    <span key="t-dashboards">{!!__trans($language, 'All.campain', 'Campain')!!}</span>
-                                </a>
-                                <ul class="sub-menu">
-                                    <li><a href="{{route('campain.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a></li>
-                                    <li><a href="{{route('campain.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a></li>
-                                    <li><a href="{{route('campain.resuft.list')}}" key="t-default">{!!__trans($language, 'All.resuft', 'Resuft')!!}</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="javascript: void(0);" class="waves-effect">
-                                    <i class="fa fa-people-arrows"></i>
-                                    <span key="t-dashboards">{!!__trans($language, 'All.agency', 'Agency')!!}</span>
-                                </a>
-                                <ul class="sub-menu">
-                                    <li><a href="{{route('user')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a></li>
-                                    <li><a href="{{route('user.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a></li>
-                                    <li><a href="{{route('user.view_change_all_amount')}}" key="t-default">{!!__trans($language, 'All.change_amount', 'Change Amount')!!}</a></li>
-                                </ul>
-                            </li>
-							<li>
-                                <a href="{{route('payment.list')}}" class="waves-effect">
-                                    <i class="fa fa-credit-card"></i>
-                                    <span key="t-dashboards">{!!__trans($language, 'All.payment', 'Payment')!!}</span>
-                                </a>
+                        </a>
+                    </li>
+                    @if(Auth::user()->type != 'agency')
+                        <li>
+                            <a href="javascript: void(0);" class="waves-effect">
+                                <i class="bx bxs-bank"></i>
+                                <span key="t-dashboards">{!!__trans($language, 'All.bank', 'Bank')!!}</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="{{route('config.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('config.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript: void(0);" class="waves-effect">
+                                <i class="fa fa-language"></i>
+                                <span key="t-dashboards">{!!__trans($language, 'All.language', 'Language')!!}</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="{{route('language.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('language.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a>
+                                </li>
+                            </ul>
+                        </li>
 
-                            </li>
-                            @else
-                            <li class="menu-title" key="t-menu">Menus</li>
-                            <li>
-                                <a href="{{route('campain.hot')}}" class="waves-effect">
-                                    <i class="fa fa-fire"></i>
-                                    <span key="t-dashboards">{!!__trans($language, 'All.campain_hot', 'Campain Hot')!!}</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{route('campain.my')}}" class="waves-effect">
-                                    <i class="fa fa-industry"></i>
-                                    <span key="t-dashboards">{!!__trans($language, 'All.campain_use', 'Campain Using')!!}</span>
-                                </a>
+                        <li>
+                            <a href="javascript: void(0);" class="waves-effect">
+                                <i class="fa fa-image"></i>
+                                <span key="t-dashboards">{!!__trans($language, 'All.banner', 'Banner')!!}</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="{{route('banner.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('banner.list')}}" key="t-default">{!!__trans($language, 'All.banner.list', 'Banner List')!!}</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('banner.popup.list')}}" key="t-default">{!!__trans($language, 'All.popup.list', 'Popup List')!!}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript: void(0);" class="waves-effect">
+                                <i class="fa fa-list"></i>
+                                <span key="t-dashboards">{!!__trans($language, 'All.category_new', 'Category New')!!}</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="{{route('category-new.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('category-new.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript: void(0);" class="waves-effect">
+                                <i class="fa fa-blog"></i>
+                                <span key="t-dashboards">{!!__trans($language, 'All.blog', 'Blog')!!}</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="{{route('blog.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('blog.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript: void(0);" class="waves-effect">
+                                <i class="fa fa-industry"></i>
+                                <span key="t-dashboards">{!!__trans($language, 'All.campain', 'Campain')!!}</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="{{route('campain.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('campain.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('campain.resuft.list')}}" key="t-default">{!!__trans($language, 'All.resuft', 'Resuft')!!}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript: void(0);" class="waves-effect">
+                                <i class="fa fa-people-arrows"></i>
+                                <span key="t-dashboards">{!!__trans($language, 'All.agency', 'Agency')!!}</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="{{route('user')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('user.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('user.view_change_all_amount')}}" key="t-default">{!!__trans($language, 'All.change_amount', 'Change Amount')!!}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="{{route('payment.list')}}" class="waves-effect">
+                                <i class="fa fa-credit-card"></i>
+                                <span key="t-dashboards">{!!__trans($language, 'All.payment', 'Payment')!!}</span>
+                            </a>
 
-                            </li>
-                            <li class="menu-title" key="t-menu">Category</li>
-                            @foreach($cas as $ca)
+                        </li>
+                    @else
+                        <li class="menu-title" key="t-menu">Menus</li>
+                        <li>
+                            <a href="{{route('campain.hot')}}" class="waves-effect">
+                                <i class="fa fa-fire"></i>
+                                <span key="t-dashboards">{!!__trans($language, 'All.campain_hot', 'Campain Hot')!!}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('campain.my')}}" class="waves-effect">
+                                <i class="fa fa-industry"></i>
+                                <span key="t-dashboards">{!!__trans($language, 'All.campain_use', 'Campain Using')!!}</span>
+                            </a>
+
+                        </li>
+                        <li class="menu-title" key="t-menu">Category</li>
+                        @foreach($cas as $ca)
                             <li>
                                 <a href="{{route('campain.category', $ca->id)}}" class="waves-effect">
-                                    @php($ca_name_slug = \Illuminate\Support\Str::slug($ca->name))
+                                    @php($ca_name_slug = Str::slug($ca->name))
                                     @if($ca_name_slug == Str::slug('Mobile app'))
                                         <i class="fa fa-mobile"></i>
                                     @elseif($ca_name_slug == Str::slug('Dịch vụ tài chính'))
@@ -180,44 +249,80 @@ $cas = Category::all();
                                     <span key="t-dashboards">{{$ca->name}}</span>
                                 </a>
                             </li>
-                            @endforeach
+                        @endforeach
+                        <li>
+                            <a href="javascript: void(0);" class="waves-effect">
+                                <i class="fa fa-credit-card"></i>
+                                <span key="t-dashboards">{!!__trans($language, 'All.payment', 'Payment')!!}</span>
+                            </a>
+                            <ul class="sub-menu">
                                 <li>
-                                    <a href="javascript: void(0);" class="waves-effect">
-                                        <i class="fa fa-credit-card"></i>
-                                        <span key="t-dashboards">{!!__trans($language, 'All.payment', 'Payment')!!}</span>
-                                    </a>
-                                    <ul class="sub-menu">
-                                        <li><a href="{{route('payment.listRecharge')}}" key="t-default">{!!__trans($language, 'All.list_recharge', 'List Recharge')!!}</a></li>
-                                        <li><a href="{{route('payment.listWithdraw')}}" key="t-default">{!!__trans($language, 'All.list_withdraw', 'List Withdraw Money')!!}</a></li>
-                                    </ul>
+                                    <a href="{{route('payment.listRecharge')}}" key="t-default">{!!__trans($language, 'All.list_recharge', 'List Recharge')!!}</a>
                                 </li>
-                            @endif
-                        </ul>
+                                <li>
+                                    <a href="{{route('payment.listWithdraw')}}" key="t-default">{!!__trans($language, 'All.list_withdraw', 'List Withdraw Money')!!}</a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="page-content">
+            <x-component::form.error/>
+            @if(session()->has('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-left: 13px;margin-right: 13px;">
+                    <i class="mdi mdi-check-all me-2"></i>
+                    {!! session()->get('success') !!}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+            @if(session()->has('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-left: 13px;margin-right: 13px;">
+                    <i class="fa fa-exclamation-triangle me-2"></i>
+                    {!! session()->get('error') !!}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+            @yield('content')
+        </div>
+    </div>
+    @yield('modal')
+</div>
+
+<div class="modal fade" id="contact-form" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="#">
+                @csrf
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="contact-form">Liên hệ với chúng tôi</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-3">
+                        <label for="#">Tên</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="#">Email</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="#">Nôi dung</label>
+                        <textarea class="form-control" rows="9"></textarea>
                     </div>
                 </div>
-            </div>
-            <div class="main-content">
-				<div class="page-content">
-                    <x-component::form.error/>
-                    @if(session()->has('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-left: 13px;margin-right: 13px;">
-                            <i class="mdi mdi-check-all me-2"></i>
-                                {!! session()->get('success') !!}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                         </div>
-                    @endif
-                    @if(session()->has('error'))
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-left: 13px;margin-right: 13px;">
-                            <i class="fa fa-exclamation-triangle me-2"></i>
-                            {!! session()->get('error') !!}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
-				@yield('content')
-				</div>
-            </div>
-			@yield('modal')
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Gửi</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </form>
         </div>
-		<x-component::app.footer/>
-    </body>
+    </div>
+</div>
+<x-component::app.footer/>
+</body>
 </html>
