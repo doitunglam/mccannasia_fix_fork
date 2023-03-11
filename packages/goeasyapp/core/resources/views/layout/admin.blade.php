@@ -180,6 +180,16 @@ $cas = Category::all();
                                 </a>
                             </li>
                             @endforeach
+                                <li>
+                                    <a href="javascript: void(0);" class="waves-effect">
+                                        <i class="fa fa-credit-card"></i>
+                                        <span key="t-dashboards">{!!__trans($language, 'All.payment', 'Payment')!!}</span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li><a href="{{route('payment.listRecharge')}}" key="t-default">{!!__trans($language, 'All.list_recharge', 'List Recharge')!!}</a></li>
+                                        <li><a href="{{route('payment.listWithdraw')}}" key="t-default">{!!__trans($language, 'All.list_withdraw', 'List Withdraw Money')!!}</a></li>
+                                    </ul>
+                                </li>
                             @endif
                         </ul>
                     </div>

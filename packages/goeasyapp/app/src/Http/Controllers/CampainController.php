@@ -2,6 +2,7 @@
 
 namespace Goeasyapp\App\Http\Controllers;
 
+use App\Models\Payment;
 use App\Models\ShortLink;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -208,6 +209,76 @@ class CampainController extends Controller
             'items' => $items
         ]);
     }
+
+    public function paymentListRecharge(Request $request)
+    {
+        $lang = (session('locale') ? session('locale') : 'en');
+        $language = Language::orderBy('updated_at', 'DESC')->where('code', $lang)->first();
+        $language = ($language && $language->value != '') ? json_decode($language->value, true) : [];
+        $items = $this->useRepository->getMyPaymentRecharge_Withdraw($request, 1);
+
+        $td = [
+            ['title' => __trans($language, 'All.id', 'ID'), 'value' => 'id'],
+//            ['title' => __trans($language, 'All.user', 'User'), 'value' => 'user_name'],
+            ['title' => __trans($language, 'All.reason', 'Reason'), 'value' => 'name'],
+            ['title' => __trans($language, 'All.amount', 'Amount'), 'value' => 'amount'],
+        ];
+        return view('app::' . $this->useRepository->getConfig()['aciton'] . '.payment-list-recharge', [
+            'title' => 'List Payment Recharge',
+            'route' => 'payment.request',
+            'td' => $td,
+            'items' => $items,
+            'type' => 1
+        ]);
+    }
+
+    public function paymentListWithdraw(Request $request)
+    {
+        $lang = (session('locale') ? session('locale') : 'en');
+        $language = Language::orderBy('updated_at', 'DESC')->where('code', $lang)->first();
+        $language = ($language && $language->value != '') ? json_decode($language->value, true) : [];
+        $items = $this->useRepository->getMyPaymentRecharge_Withdraw($request, null);
+        $td = [
+            ['title' => __trans($language, 'All.id', 'ID'), 'value' => 'id'],
+//            ['title' => __trans($language, 'All.user', 'User'), 'value' => 'user_name'],
+            ['title' => __trans($language, 'All.reason', 'Reason'), 'value' => 'name'],
+            ['title' => __trans($language, 'All.amount', 'Amount'), 'value' => 'amount'],
+        ];
+        return view('app::' . $this->useRepository->getConfig()['aciton'] . '.payment-list-recharge', [
+            'title' => 'List Payment Withdraw Money',
+            'route' => 'payment.request',
+            'td' => $td,
+            'items' => $items,
+            'type' => 2
+        ]);
+    }
+
+    public function paymentRecharge(Request $request){
+        $user = Auth::user();
+        $input['user'] = $user->id;
+        $input['user_name'] = $user->name;
+        $input['amount'] = $request->payment;
+        $input['name'] = $request->reason;
+        $input['type'] = 1;
+
+        Payment::create($input);
+
+        return redirect()->back()->with('success', ' Request Recharge Successfully!');
+    }
+
+    public function paymentWithdraw(Request $request){
+        $user = Auth::user();
+        $input['user'] = $user->id;
+        $input['user_name'] = $user->name;
+        $input['amount'] = $request->payment;
+        $input['name'] = $request->reason;
+        $input['type'] = null;
+
+        Payment::create($input);
+
+        return redirect()->back()->with('success', ' Request Withdraw Money Successfully!');
+    }
+
     public function payment(Request $request)
     {
         $lang = (session('locale') ? session('locale') : 'en');
@@ -412,7 +483,40 @@ class CampainController extends Controller
     }
     public function paymentRequestCheck(Request $request, $id)
     {
+        $payment = Payment::find($id);
+        if ($payment->status == null && $request->status == 1) {
+            $user = User::find($payment->user);
+            $userModel = User::where('id',$payment->user);
+            if($payment->type == 1){
+                $amount = $user->amount + $payment->amount;
+                $userModel->update(['amount' => $amount]);
+            }else{
+                $amount = $user->amount - $payment->amount;
+                $userModel->update(['amount' => $amount]);
+            }
+        }
+
         $this->useRepository->updateModelPayment($request);
+        return redirect()->intended('admin/payment/list')
+            ->with('success', 'Update item success!');
+    }
+
+    public function paymentAcceptAll(Request $request)
+    {
+        $payments = Payment::where('status', null)->get();
+        foreach ($payments as $payment) {
+            $user = User::find($payment->user);
+            $userModel = User::where('id',$payment->user);
+            if($payment->type == 1){
+                $amount = $user->amount + $payment->amount;
+                $userModel->update(['amount' => $amount]);
+            }else{
+                $amount = $user->amount - $payment->amount;
+                $userModel->update(['amount' => $amount]);
+            }
+            $payment->update(['status' => 1]);
+        }
+
         return redirect()->intended('admin/payment/list')
             ->with('success', 'Update item success!');
     }

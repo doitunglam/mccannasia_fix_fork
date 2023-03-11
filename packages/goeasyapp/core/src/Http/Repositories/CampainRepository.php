@@ -165,6 +165,12 @@ class CampainRepository
         }
         return Payment::orderBy('updated_at')->get();
     }
+
+    public function getMyPaymentRecharge_Withdraw($request, $type)
+    {
+        return Payment::where('type', $type)->where('user', Auth::id())->orderBy('updated_at')->get();
+    }
+
     public function savePayment($request)
     {
         $model = new Payment;
