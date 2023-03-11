@@ -208,6 +208,18 @@ $cas = Category::all();
                                 <span key="t-dashboards">{!!__trans($language, 'All.payment', 'Payment')!!}</span>
                             </a>
 
+                                <ul class="sub-menu  @if(\Request::route()->getName() == 'payment.list' ||
+                                \Request::route()->getName() == 'payment.listAdminRecharge' ||
+                                \Request::route()->getName() == 'payment.listAdminWithdraw') mm-show @endif">
+                                    <li>
+                                        <a href="{{route('payment.listAdminRecharge')}}" key="t-default">{!!__trans($language, 'All.list_admin_recharge', 'List Recharge')!!}</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('payment.listAdminWithdraw')}}" key="t-default">{!!__trans($language, 'All.list_admin_withdraw', 'List Withdraw Money')!!}</a>
+                                    </li>
+                                </ul>
+
+
                         </li>
                     @else
                         <li class="menu-title" key="t-menu">Menus</li>

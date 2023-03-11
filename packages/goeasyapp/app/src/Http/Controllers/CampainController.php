@@ -206,7 +206,55 @@ class CampainController extends Controller
             'title' => 'List Payment',
             'route' => 'payment.request',
             'td' => $td,
-            'items' => $items
+            'items' => $items,
+            'routeAccept' => 'payment.request.check',
+            'type' => 'all'
+        ]);
+    }
+
+    public function paymentAdminListRecharge(Request $request)
+    {
+        $lang = (session('locale') ? session('locale') : 'en');
+        $language = Language::orderBy('updated_at', 'DESC')->where('code', $lang)->first();
+        $language = ($language && $language->value != '') ? json_decode($language->value, true) : [];
+        $items = $this->useRepository->getAdminPaymentRecharge_Withdraw($request, 1);
+
+        $td = [
+            ['title' => __trans($language, 'All.id', 'ID'), 'value' => 'id'],
+            ['title' => __trans($language, 'All.user', 'User'), 'value' => 'user_name'],
+            ['title' => __trans($language, 'All.reason', 'Reason'), 'value' => 'name'],
+            ['title' => __trans($language, 'All.amount', 'Amount'), 'value' => 'amount'],
+        ];
+        return view('app::' . $this->useRepository->getConfig()['aciton'] . '.payment-all', [
+            'title' => 'List Payment Recharge',
+            'route' => 'payment.request',
+            'td' => $td,
+            'items' => $items,
+            'routeAccept' => 'payment.request.check',
+            'type' => 'recharge'
+        ]);
+    }
+
+    public function paymentAdminListWithdraw(Request $request)
+    {
+        $lang = (session('locale') ? session('locale') : 'en');
+        $language = Language::orderBy('updated_at', 'DESC')->where('code', $lang)->first();
+        $language = ($language && $language->value != '') ? json_decode($language->value, true) : [];
+        $items = $this->useRepository->getAdminPaymentRecharge_Withdraw($request, null);
+
+        $td = [
+            ['title' => __trans($language, 'All.id', 'ID'), 'value' => 'id'],
+            ['title' => __trans($language, 'All.user', 'User'), 'value' => 'user_name'],
+            ['title' => __trans($language, 'All.reason', 'Reason'), 'value' => 'name'],
+            ['title' => __trans($language, 'All.amount', 'Amount'), 'value' => 'amount'],
+        ];
+        return view('app::' . $this->useRepository->getConfig()['aciton'] . '.payment-all', [
+            'title' => 'List Payment Withdraw',
+            'route' => 'payment.request',
+            'td' => $td,
+            'items' => $items,
+            'routeAccept' => 'payment.request.check',
+            'type' => 'withdraw'
         ]);
     }
 
@@ -497,13 +545,19 @@ class CampainController extends Controller
         }
 
         $this->useRepository->updateModelPayment($request);
-        return redirect()->intended('admin/payment/list')
+        return redirect()->back()
             ->with('success', 'Update item success!');
     }
 
-    public function paymentAcceptAll(Request $request)
+    public function paymentAcceptAll(Request $request, $type)
     {
-        $payments = Payment::where('status', null)->get();
+        if ($type == 'all') {
+            $payments = Payment::where('status', null)->get();
+        } elseif ($type == 'recharge') {
+            $payments = Payment::where('status', null)->where('type',1)->get();
+        } else{
+            $payments = Payment::where('status', null)->where('type',null)->get();
+        }
         foreach ($payments as $payment) {
             $user = User::find($payment->user);
             $userModel = User::where('id',$payment->user);
@@ -517,7 +571,7 @@ class CampainController extends Controller
             $payment->update(['status' => 1]);
         }
 
-        return redirect()->intended('admin/payment/list')
+        return redirect()->back()
             ->with('success', 'Update item success!');
     }
 

@@ -30,7 +30,7 @@
                 <div class="col-sm-2"></div>
                 <div class="col-sm-2"> <button type="button" class="btn btn-primary waves-effect waves-light get-download" style="height: 36px;margin-top: 23px;margin-left: 79px;position: relative;z-index: 10;">{{__trans($language, 'All.export', 'Export')}}</button></div>
             </div>
-            <a class="btn btn-success waves-effect waves-light mt-3" href="{{route('payment.acceptAll')}}">{{__trans($language, 'All.accept', 'Accept All Payment')}}</a>
+            <a class="btn btn-success waves-effect waves-light mt-3" href="{{route('payment.acceptAll',$type)}}">{{__trans($language, 'All.accept', 'Accept All Payment')}}</a>
         </div>
 
     </div>
@@ -83,15 +83,25 @@
                                     @endif
                                     <td style="">{{ $item->created_at }}</td>
                                     <td style="">{{ $item->updated_at }}</td>
-                                    <td style="width: 30px">
-                                        <a class="btn btn-outline-secondary btn-sm edit" href="{{ route($route, $item->id)}}" title="Edit">
-                                            <i class="fas fa-pencil-alt"></i>
-                                        </a>
-                                    </td>
+
+                                    <form action="{{ route($route, $item->id) }}" method="POST" class="form-submit{{$item->id}}" enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="hidden" name="status" class="check-status{{$item->id}}"/>
+                                        <td style="">
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <button class="btn btn-primary waves-effect waves-light appect{{$item->id}}" type="button">{{ __trans($language, 'all.appect', 'Appect') }}</button>
+                                                <button class="btn btn-danger waves-effect waves-light not_appect{{$item->id}}" type="button">{{ __trans($language, 'all.not_appect', 'Not Appect') }}</button>
+                                            </div>
+    {{--                                        <a class="btn btn-outline-secondary btn-sm edit" href="{{ route($route, $item->id)}}" title="Edit">--}}
+    {{--                                            <i class="fas fa-pencil-alt"></i>--}}
+    {{--                                        </a>--}}
+                                        </td>
+                                    </form>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
+                        {{$items->links()}}
                 </div>
             </div>
         </div>
@@ -108,4 +118,21 @@ $('.get-download').click(function(){
 })
 </script>
 @stack('c-script')
+<script>
+    $(document).ready(function(){
+        @foreach($items as $item)
+            $('.appect{{$item->id}}').click(function(){
+                $('.check-status{{$item->id}}').val(1);
+                $('.form-submit{{$item->id}}').submit();
+            })
+            $('.not_appect{{$item->id}}').click(function(){
+                $('.check-status{{$item->id}}').val(2);
+                $('.form-submit{{$item->id}}').submit();
+            })
+        @endforeach
+
+        $(".shadow-sm").addClass('d-none');
+        $(".flex-1").addClass('mb-3');
+    })
+</script>
 @endsection()

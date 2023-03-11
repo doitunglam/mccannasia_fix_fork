@@ -161,14 +161,26 @@ class CampainRepository
             $user = User::select('id')->where('name', 'like', '%' . $request->s_name . '%')->get()->toArray();
         }
         if (count($user) != 0) {
-            return Payment::orderBy('updated_at')->whereIn('user', $user)->get();
+            return Payment::orderBy('updated_at')->whereIn('user', $user)->paginate(20);
         }
-        return Payment::orderBy('updated_at')->get();
+        return Payment::orderBy('updated_at')->paginate(20);
+    }
+
+    public function getAdminPaymentRecharge_Withdraw($request, $type)
+    {
+        $user = [];
+        if ($request->s_name != '') {
+            $user = User::select('id')->where('name', 'like', '%' . $request->s_name . '%')->get()->toArray();
+        }
+        if (count($user) != 0) {
+            return Payment::where('type', $type)->orderBy('updated_at')->whereIn('user', $user)->paginate(20);
+        }
+        return Payment::where('type', $type)->orderBy('updated_at')->paginate(20);
     }
 
     public function getMyPaymentRecharge_Withdraw($request, $type)
     {
-        return Payment::where('type', $type)->where('user', Auth::id())->orderBy('updated_at')->get();
+        return Payment::where('type', $type)->where('user', Auth::id())->orderBy('updated_at')->paginate(20);
     }
 
     public function savePayment($request)

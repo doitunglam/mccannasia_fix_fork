@@ -118,7 +118,9 @@ Route::prefix('admin')->group(function () {
     Route::middleware(['auth:sanctum', 'verified'])->get('payment/list_withdraw', [CampainController::class, 'paymentListWithdraw'])->name('payment.listWithdraw');
     Route::middleware(['auth:sanctum', 'verified'])->post('payment/recharge', [CampainController::class, 'paymentRecharge'])->name('payment.recharge');
     Route::middleware(['auth:sanctum', 'verified'])->post('payment/withdraw', [CampainController::class, 'paymentWithdraw'])->name('payment.withdraw');
-    Route::middleware(['auth:sanctum', 'verified'])->get('payment/accept_all', [CampainController::class, 'paymentAcceptAll'])->name('payment.acceptAll');
+    Route::middleware(['auth:sanctum', 'verified'])->get('payment/accept_all/{type}', [CampainController::class, 'paymentAcceptAll'])->name('payment.acceptAll');
+    Route::middleware(['auth:sanctum', 'verified'])->get('payment/list_admin_recharge', [CampainController::class, 'paymentAdminListRecharge'])->name('payment.listAdminRecharge');
+    Route::middleware(['auth:sanctum', 'verified'])->get('payment/list_admin_withdraw', [CampainController::class, 'paymentAdminListWithdraw'])->name('payment.listAdminWithdraw');
 
     Route::middleware(['auth:sanctum', 'verified'])->get('/set-locale-en', [AppController::class, 'localeEn'])->name('admin.locale.en');
     Route::middleware(['auth:sanctum', 'verified'])->get('/set-locale-vi', [AppController::class, 'localeVi'])->name('admin.locale.vi');
