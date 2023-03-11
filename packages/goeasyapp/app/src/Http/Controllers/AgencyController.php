@@ -268,6 +268,62 @@ class AgencyController extends Controller
         $data['delete'] = 'user.delete';
         $data['status'] = 'user.status';
         $data['create'] = 'user.create';
+        $data['change_amount'] = 'user.view_change_amount';
         return view('app::user.list', $data);
+    }
+
+    public function viewChangeAllAmount(Request $request)
+    {
+        $search = $request->all();
+        $items = User::orderBy('updated_at', 'DESC')->where('type', 'agency')->where('close_account', null);
+        if ($request->f_name != '') {
+            $items = $items->where('name', 'like', '%' . $request->f_name . '%');
+        }
+        if ($request->f_email != '') {
+            $items = $items->where('email', 'like', '%' . $request->f_email . '%');
+        }
+
+        if ($request->f_phone != '') {
+            $items = $items->where('phone', 'like', '%' . $request->f_phone . '%');
+        }
+        $items = $items->get();
+        $search = $request->all();
+
+        $data = [
+            'search' => $search,
+            'items' => $items,
+            'title' => 'Increase amount for all users',
+
+        ];
+        $data['update'] = 'user.update';
+        $data['delete'] = 'user.delete';
+        $data['status'] = 'user.status';
+        $data['create'] = 'user.create';
+        $data['change_amount'] = 'user.view_change_amount';
+        return view('app::user.change-all-amount', $data);
+    }
+
+    public function viewChangeAmount($id)
+    {
+        $model = User::find($id);
+        return view('app::user.change_amount', [
+            'model' => $model,
+            'store' => 'user.change_amount',
+            'title' => 'Change Amount',
+            'banks' => Bank::BANKS
+        ]);
+    }
+
+    public function changeAmount(Request $request, $id){
+        if(is_numeric($request->plus_amount)) {
+            $userModel = User::where('id',$id);
+            $user = $userModel->first();
+            $amount = $user->amount + $request->plus_amount;
+            $userModel->update(['amount' => $amount]);
+            return redirect()->route('user')
+                ->with('success', 'Updated the user information successfully!');
+        }
+        return redirect()->back()
+            ->with('error', 'The increase amount must be an number');
     }
 }

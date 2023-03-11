@@ -9,7 +9,7 @@ $ln = Language::where('code', $lang)->first();
 $ln = json_decode($ln->label_, true);
 ?>
 @extends('core::layout.admin')
-   
+
 @section('content')
 	<div class="container-fluid">
                         <div class="row">
@@ -23,7 +23,7 @@ $ln = json_decode($ln->label_, true);
 											 @csrf
 											 <input type="hidden" name="delete_all" class="delete-input"/>
 									   </form>
-									   
+
 									   <a href="{{route($create)}}" class="btn btn-primary waves-effect waves-light">Thêm mới</a>
 									   <a class="btn btn-danger waves-effect waves-light delete-all">Xóa</a>
 									   @else
@@ -38,7 +38,7 @@ $ln = json_decode($ln->label_, true);
                                 </div>
                             </div>
                         </div>
-						
+
 						<div class="card">
                                     <div class="card-body">
                                         <div class="table-responsive">
@@ -61,10 +61,11 @@ $ln = json_decode($ln->label_, true);
 														@if(!isset($restore))
 														<th colspan="2" style="text-align: center">{{isset($ln['edit']) ?  $ln['edit'] : 'Edit'}}</th>
 														@endif
+                                                        <th style="text-align:center">{{isset($ln['change_amount']) ?  $ln['change_amount'] : 'Change Amount'}}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-												
+
 												<form method="GET" class="search-form">
 													<tr data-id="1" style="cursor: pointer;">
 														<td data-field="id" style="width: 80px"></td>
@@ -97,43 +98,43 @@ $ln = json_decode($ln->label_, true);
 														</td>
 														<td>
                                                         <h5 class="text-truncate font-size-14"><a href="javascript: void(0);" class="text-dark">{{$item_->name}}</a></h5>
-														
+
 														</td>
 														<td>
                                                         <h5 class="text-truncate font-size-14"><a href="javascript: void(0);" class="text-dark">{{$item_->email}}</a></h5>
-														
+
 														</td>
 														<td>
                                                         <h5 class="text-truncate font-size-14"><a href="javascript: void(0);" class="text-dark">{{$item_->phone}}</a></h5>
-														
+
 														</td>
-														
+
 														<td>
                                                         <h5 class="text-truncate font-size-14"><a href="javascript: void(0);" class="text-dark">{{$item_->address}}</a></h5>
-														
+
 														</td>
 														<?php
 															$recharge = Payment::where('status', 1)->where('type', 1)->where('user', $item_->id)->sum('amount');
 														?>
-	
-														<td data-field="name" style="width: 50px;"><span class="badge rounded-pill badge-soft-success">{{$recharge}}</span></td>	
+
+														<td data-field="name" style="width: 50px;"><span class="badge rounded-pill badge-soft-success">{{$recharge}}</span></td>
 														<?php
 															$recharge = Payment::where('status', 1)->where('type', null)->where('user', $item_->id)->sum('amount');
 														?>
 														<?php
 															$user = User::find($item_->id);
 														?>
-															
-														<td data-field="name" style="width: 50px;"><span class="badge rounded-pill badge-soft-danger">{{$recharge}}</span></td>	
+
+														<td data-field="name" style="width: 50px;"><span class="badge rounded-pill badge-soft-danger">{{$recharge}}</span></td>
 														<td data-field="name" style="width: 50px;"><span class="badge rounded-pill badge-soft-primary">{{$user->amount}}</span></td>
-														<td data-field="name" style="width: 50px;">{{date('d-m-Y', strtotime($item_->created_at))}}</td>	
+														<td data-field="name" style="width: 50px;">{{date('d-m-Y', strtotime($item_->created_at))}}</td>
 														@if($item_->status == 1)
-														<td data-field="name" style="width: 50px;"><a href="{{route($status, $item_->id)}}"><span class="badge rounded-pill badge-soft-success">{{__trans($language, 'All.block', 'Block')}}</span></a></td>	
+														<td data-field="name" style="width: 50px;"><a href="{{route($status, $item_->id)}}"><span class="badge rounded-pill badge-soft-success">{{__trans($language, 'All.block', 'Block')}}</span></a></td>
 														@else
-														<td data-field="name" style="width: 50px;"><a href="{{route($status, $item_->id)}}"><span class="badge rounded-pill badge-soft-danger">{{__trans($language, 'All.not_block', 'Not-Block')}}</span></a></td>		
+														<td data-field="name" style="width: 50px;"><a href="{{route($status, $item_->id)}}"><span class="badge rounded-pill badge-soft-danger">{{__trans($language, 'All.not_block', 'Not-Block')}}</span></a></td>
 														@endif
-														<td data-field="name" style="width: 50px;"><a href="{{route('campain.view.info', $item_->id)}}"><span class="badge rounded-pill badge-soft-success">{{__trans($language, 'All.view', 'View')}}</span></a></td>	
-														<td data-field="name" style="width: 50px;"><a href="{{route('user.reset',  $item_->id)}}"><span class="badge rounded-pill badge-soft-primary">{{__trans($language, 'All.reset', 'Reset')}}</span></a></td>	
+														<td data-field="name" style="width: 50px;"><a href="{{route('campain.view.info', $item_->id)}}"><span class="badge rounded-pill badge-soft-success">{{__trans($language, 'All.view', 'View')}}</span></a></td>
+														<td data-field="name" style="width: 50px;"><a href="{{route('user.reset',  $item_->id)}}"><span class="badge rounded-pill badge-soft-primary">{{__trans($language, 'All.reset', 'Reset')}}</span></a></td>
 														@if(!isset($restore))
                                                         <td style="width: 30px;padding: 0;">
                                                             <a class="edit badge rounded-pill badge-soft-success" href="{{ route($update, $item_->id)}}" title="Edit">
@@ -145,22 +146,27 @@ $ln = json_decode($ln->label_, true);
 															  {{ csrf_field() }}
 															  @method('DELETE')
 															  <a class="btn-delete badge rounded-pill badge-soft-danger" type="button"><i class="fa fa-trash"></i></a>
-															</form>   
+															</form>
                                                         </td>
 														@endif
+                                                        <td style="width: 30px;padding: 0;" class="text-center">
+                                                            <a class="edit badge rounded-pill badge-soft-success" href="{{ route($change_amount, $item_->id)}}" title="Edit">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </a>
+                                                        </td>
 												@endforeach
                                                 </tbody>
                                                 </table>
                                         </div>
-        
+
                                     </div>
                                 </div>
-								
-                    </div>
-                    
-                
 
-@endsection  
+                    </div>
+
+
+
+@endsection
 @section('script')
 <script>
 $(document).ready(function(){
@@ -170,7 +176,7 @@ $(document).ready(function(){
 		if (r == true) {
 			item.parent().submit();
 		} else {
-			
+
 		}
 	});
 	var tt = 0;
@@ -192,18 +198,18 @@ $(document).ready(function(){
 		$('.delete-input').val(strong);
 		$('.delete-form').submit();
 	})
-	
-	
-	
+
+
+
 	@foreach($search as $key_ => $s)
 		@if(isset($search[$key_]))
 			$('input[name="{{$key_}}"], select[name="{{$key_}}"]').val('{{$search[$key_]}}');
 		@endif
 	@endforeach
-	
+
 	$('.search-change').change(function(){
 		$('.search-form').submit();
 	})
 });
 </script>
-@endsection  
+@endsection

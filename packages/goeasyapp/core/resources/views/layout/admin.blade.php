@@ -130,6 +130,7 @@ $cas = Category::all();
                                 <ul class="sub-menu">
                                     <li><a href="{{route('user')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a></li>
                                     <li><a href="{{route('user.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a></li>
+                                    <li><a href="{{route('user.view_change_all_amount')}}" key="t-default">{!!__trans($language, 'All.change_amount', 'Change Amount')!!}</a></li>
                                 </ul>
                             </li>
 							<li>
