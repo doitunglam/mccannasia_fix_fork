@@ -205,17 +205,17 @@ $cas = Category::all();
                         <li>
                             <a href="{{route('payment.list')}}" class="waves-effect">
                                 <i class="fa fa-credit-card"></i>
-                                <span key="t-dashboards">{!!__trans($language, 'All.payment', 'Payment')!!}</span>
+                                <span key="t-dashboards">{!!__trans($language, 'All.payment', 'Thanh toán')!!}</span>
                             </a>
 
                                 <ul class="sub-menu  @if(\Request::route()->getName() == 'payment.list' ||
                                 \Request::route()->getName() == 'payment.listAdminRecharge' ||
                                 \Request::route()->getName() == 'payment.listAdminWithdraw') mm-show @endif">
                                     <li>
-                                        <a href="{{route('payment.listAdminRecharge')}}" key="t-default">{!!__trans($language, 'All.list_admin_recharge', 'List Recharge')!!}</a>
+                                        <a href="{{route('payment.listAdminRecharge')}}" key="t-default">{!!__trans($language, 'All.list_admin_recharge', 'Danh sách nạp tiền')!!}</a>
                                     </li>
                                     <li>
-                                        <a href="{{route('payment.listAdminWithdraw')}}" key="t-default">{!!__trans($language, 'All.list_admin_withdraw', 'List Withdraw Money')!!}</a>
+                                        <a href="{{route('payment.listAdminWithdraw')}}" key="t-default">{!!__trans($language, 'All.list_admin_withdraw', 'Danh sách rút tiền')!!}</a>
                                     </li>
                                 </ul>
 
@@ -265,14 +265,14 @@ $cas = Category::all();
                         <li>
                             <a href="javascript: void(0);" class="waves-effect">
                                 <i class="fa fa-credit-card"></i>
-                                <span key="t-dashboards">{!!__trans($language, 'All.payment', 'Payment')!!}</span>
+                                <span key="t-dashboards">{!!__trans($language, 'All.payment', 'Thanh toán')!!}</span>
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="{{route('payment.listRecharge')}}" key="t-default">{!!__trans($language, 'All.list_recharge', 'List Recharge')!!}</a>
+                                    <a href="{{route('payment.listRecharge')}}" key="t-default">{!!__trans($language, 'All.list_recharge', 'Danh sách nạp tiền')!!}</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('payment.listWithdraw')}}" key="t-default">{!!__trans($language, 'All.list_withdraw', 'List Withdraw Money')!!}</a>
+                                    <a href="{{route('payment.listWithdraw')}}" key="t-default">{!!__trans($language, 'All.list_withdraw', 'Danh sách rút tiền')!!}</a>
                                 </li>
                             </ul>
                         </li>

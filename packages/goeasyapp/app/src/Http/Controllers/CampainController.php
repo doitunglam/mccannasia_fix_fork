@@ -2,6 +2,7 @@
 
 namespace Goeasyapp\App\Http\Controllers;
 
+use App\Models\Config;
 use App\Models\Payment;
 use App\Models\ShortLink;
 use Illuminate\Http\Request;
@@ -226,7 +227,7 @@ class CampainController extends Controller
             ['title' => __trans($language, 'All.amount', 'Amount'), 'value' => 'amount'],
         ];
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.payment-all', [
-            'title' => 'List Payment Recharge',
+            'title' => 'Danh sách yêu cầu nạp tiền',
             'route' => 'payment.request',
             'td' => $td,
             'items' => $items,
@@ -249,7 +250,7 @@ class CampainController extends Controller
             ['title' => __trans($language, 'All.amount', 'Amount'), 'value' => 'amount'],
         ];
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.payment-all', [
-            'title' => 'List Payment Withdraw',
+            'title' => 'Danh sách yêu cầu rút tiền',
             'route' => 'payment.request',
             'td' => $td,
             'items' => $items,
@@ -264,7 +265,7 @@ class CampainController extends Controller
         $language = Language::orderBy('updated_at', 'DESC')->where('code', $lang)->first();
         $language = ($language && $language->value != '') ? json_decode($language->value, true) : [];
         $items = $this->useRepository->getMyPaymentRecharge_Withdraw($request, 1);
-
+        $config = Config::where('status', 1)->first();
         $td = [
             ['title' => __trans($language, 'All.id', 'ID'), 'value' => 'id'],
 //            ['title' => __trans($language, 'All.user', 'User'), 'value' => 'user_name'],
@@ -272,11 +273,12 @@ class CampainController extends Controller
             ['title' => __trans($language, 'All.amount', 'Amount'), 'value' => 'amount'],
         ];
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.payment-list-recharge', [
-            'title' => 'List Payment Recharge',
+            'title' => 'Danh sách yêu cầu nạp tiền',
             'route' => 'payment.request',
             'td' => $td,
             'items' => $items,
-            'type' => 1
+            'type' => 1,
+            'config' => $config
         ]);
     }
 
@@ -286,6 +288,7 @@ class CampainController extends Controller
         $language = Language::orderBy('updated_at', 'DESC')->where('code', $lang)->first();
         $language = ($language && $language->value != '') ? json_decode($language->value, true) : [];
         $items = $this->useRepository->getMyPaymentRecharge_Withdraw($request, null);
+        $user = Auth::user();
         $td = [
             ['title' => __trans($language, 'All.id', 'ID'), 'value' => 'id'],
 //            ['title' => __trans($language, 'All.user', 'User'), 'value' => 'user_name'],
@@ -293,38 +296,45 @@ class CampainController extends Controller
             ['title' => __trans($language, 'All.amount', 'Amount'), 'value' => 'amount'],
         ];
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.payment-list-recharge', [
-            'title' => 'List Payment Withdraw Money',
+            'title' => 'Danh sách yêu cầu rút tiền',
             'route' => 'payment.request',
             'td' => $td,
             'items' => $items,
-            'type' => 2
+            'type' => 2,
+            'user' => $user
         ]);
     }
 
     public function paymentRecharge(Request $request){
-        $user = Auth::user();
-        $input['user'] = $user->id;
-        $input['user_name'] = $user->name;
-        $input['amount'] = $request->payment;
-        $input['name'] = $request->reason;
-        $input['type'] = 1;
+        if(is_numeric($request->payment)){
+            $user = Auth::user();
+            $input['user'] = $user->id;
+            $input['user_name'] = $user->name;
+            $input['amount'] = $request->payment;
+            $input['name'] = $request->reason;
+            $input['type'] = 1;
 
-        Payment::create($input);
+            Payment::create($input);
 
-        return redirect()->back()->with('success', ' Request Recharge Successfully!');
+            return redirect()->back()->with('success', 'Yêu cầu nạp tiền thành công');
+        }
+        return redirect()->back()->with('error', 'Số tiền yêu cầu nạp phải là chữ số');
     }
 
     public function paymentWithdraw(Request $request){
-        $user = Auth::user();
-        $input['user'] = $user->id;
-        $input['user_name'] = $user->name;
-        $input['amount'] = $request->payment;
-        $input['name'] = $request->reason;
-        $input['type'] = null;
+        if(is_numeric($request->payment)){
+            $user = Auth::user();
+            $input['user'] = $user->id;
+            $input['user_name'] = $user->name;
+            $input['amount'] = $request->payment;
+            $input['name'] = $request->reason;
+            $input['type'] = null;
 
-        Payment::create($input);
+            Payment::create($input);
 
-        return redirect()->back()->with('success', ' Request Withdraw Money Successfully!');
+            return redirect()->back()->with('success', 'Yêu cầu rút tiền thành công');
+        }
+        return redirect()->back()->with('error', 'Số tiền yêu cầu rút phải là chữ số');
     }
 
     public function payment(Request $request)
