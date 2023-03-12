@@ -29,11 +29,11 @@ $ln   = json_decode($ln->label_, TRUE);
                 <div class="card-body">
                     <div class="group mb-4">
                         <div class="mb-4">
-                            <h4>{{__trans($language, 'All.add_amount', 'Increase money for ')}}{{$model->name}}</h4>
+                            <h4>{{__trans($language, 'All.add_amount', 'Cộng tiền cho ')}}{{$model->name}}</h4>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-2">
-                                <label for="productname">{{__trans($language, 'All.amount', 'Amount')}}</label>
+                                <label for="productname">{{__trans($language, 'All.amount', 'Số dư')}}</label>
                             </div>
                             <div class="col-md-10">
                                 {{$model->amount}}
@@ -41,7 +41,7 @@ $ln   = json_decode($ln->label_, TRUE);
                         </div>
                         <div class="row mb-3 align-items-center">
                             <div class="col-md-2">
-                                <label for="productname">{{__trans($language, 'All.increase_money', 'Increase money')}}</label>
+                                <label for="productname">{{__trans($language, 'All.increase_money', 'Cộng thêm')}}</label>
                             </div>
                             <div class="col-md-10">
                                 <input id="plus_amount" name="plus_amount" type="number" value="" class="form-control" autocomplete="off">
@@ -50,7 +50,7 @@ $ln   = json_decode($ln->label_, TRUE);
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary waves-effect waves-light">Save</button>
+            <button type="submit" class="btn btn-primary waves-effect waves-light">Lưu</button>
         </form>
     </div>
 

@@ -12,13 +12,14 @@ $ln = json_decode($ln->label_, true);
 
 @section('content')
 	<div class="container-fluid">
-        <form action="">
+        <form action="{{route('user.change_all_amount')}}" method="POST" class="form-submit" enctype="multipart/form-data">
+            @csrf
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                         <h4 class="mb-sm-0 font-size-18">{{$title}}</h4>
                         <div class="page-title-right">
-                            <button type="submit" href="{{route($create)}}" class="btn btn-primary waves-effect waves-light">{{__trans($language, 'All.edit', 'Edit')}}</button>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">{{__trans($language, 'All.edit', 'Lưu')}}</button>
                         </div>
 
                     </div>
@@ -31,10 +32,10 @@ $ln = json_decode($ln->label_, true);
                             <thead>
                             <tr style="cursor: pointer;">
                                 <th>{{isset($ln['id']) ?  $ln['id'] : 'ID'}}</th>
-                                <th>{{isset($ln['name']) ?  $ln['name'] : 'Name'}}</th>
+                                <th>{{isset($ln['name']) ?  $ln['name'] : 'Tên'}}</th>
                                 <th>{{isset($ln['email']) ?  $ln['email'] : 'Email'}}</th>
-                                <th style="text-align:center">{{isset($ln['amount']) ?  $ln['amount'] : 'Amount'}}</th>
-                                <th style="text-align:center">{{isset($ln['increase_amount']) ?  $ln['increase_amount'] : 'Increase Amount'}}</th>
+                                <th style="text-align:center">{{isset($ln['amount']) ?  $ln['amount'] : 'Số dư'}}</th>
+                                <th style="text-align:center">{{isset($ln['increase_amount']) ?  $ln['increase_amount'] : 'Cộng thêm'}}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -49,7 +50,7 @@ $ln = json_decode($ln->label_, true);
                                     </td>
                                     <td data-field="name" style="width: 50px;"><span class="badge rounded-pill badge-soft-primary">{{$item_->amount}}</span></td>
                                     <td style="width: 30px;padding: 0;" class="text-center">
-                                        <input type="number" value=""/>
+                                        <input type="number" name="amount[{{$item_->id}}]" value=""/>
                                     </td>
                             @endforeach
                             </tbody>

@@ -142,5 +142,6 @@ Route::prefix('admin')->group(function () {
     Route::middleware(['auth:sanctum', 'verified'])->get('user/change-amount/{id}', [AgencyController::class, 'viewChangeAmount'])->name('user.view_change_amount');
     Route::middleware(['auth:sanctum', 'verified'])->post('user/change-amount/{id}', [AgencyController::class, 'changeAmount'])->name('user.change_amount');
     Route::middleware(['auth:sanctum', 'verified'])->get('user/change-all-amount', [AgencyController::class, 'viewChangeAllAmount'])->name('user.view_change_all_amount');
+    Route::middleware(['auth:sanctum', 'verified'])->post('user/change-all-amount', [AgencyController::class, 'changeAllAmount'])->name('user.change_all_amount');
 
 });

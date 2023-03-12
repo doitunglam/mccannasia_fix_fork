@@ -292,7 +292,7 @@ class AgencyController extends Controller
         $data = [
             'search' => $search,
             'items' => $items,
-            'title' => 'Increase amount for all users',
+            'title' => 'Thay đổi số dư',
 
         ];
         $data['update'] = 'user.update';
@@ -309,9 +309,21 @@ class AgencyController extends Controller
         return view('app::user.change_amount', [
             'model' => $model,
             'store' => 'user.change_amount',
-            'title' => 'Change Amount',
+            'title' => 'Thay đổi số dư',
             'banks' => Bank::BANKS
         ]);
+    }
+
+    public function changeAllAmount(Request $request){
+        foreach ($request->amount as $key =>$plus_amount){
+            if(is_numeric($plus_amount)) {
+                $userModel = User::where('id',$key);
+                $user = $userModel->first();
+                $amount = $user->amount + $plus_amount;
+                $userModel->update(['amount' => $amount]);
+            }
+        }
+        return redirect()->back()->with('success', 'Cộng tiền thành công');
     }
 
     public function changeAmount(Request $request, $id){
