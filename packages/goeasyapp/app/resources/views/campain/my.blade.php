@@ -46,6 +46,16 @@
                             <br>
                             <a href="{{route('campain.resuft', $item->id)}}" class="btn btn-primary waves-effect waves-light">{{__trans($language, 'All.resuft', 'Resuft')}}</a>
                         </div>
+                        @if($item->is_hot)
+                            <span class="position-absolute top-0 translate-middle badge rounded-pill bg-danger me-2 py-2 hot-beginner">
+                                Hot
+                            </span>
+                        @endif
+                        @if($item->is_beginner)
+                            <span class="position-absolute top-0 translate-middle badge rounded-pill bg-success me-2 py-2 hot-beginner {{$item->is_hot ? 'is-beginner' : ''}}">
+                                Beginner
+                            </span>
+                        @endif
                     </div>
                 </div>
             @endforeach

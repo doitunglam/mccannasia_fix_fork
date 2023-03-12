@@ -107,3 +107,12 @@
 .flex.items-center.justify-between .relative.z-0.inline-flex.shadow-sm.rounded-md {
 	display: none !important;
 }
+
+.hot-beginner{
+    left: 90% !important;
+    width: 60px;
+}
+
+.is-beginner {
+    margin-top: 30px !important;
+}

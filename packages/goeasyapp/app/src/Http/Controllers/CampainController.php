@@ -152,9 +152,15 @@ class CampainController extends Controller
 
     public function registerStore(Request $request, $id)
     {
-
         $model = $this->useRepository->getModelById($id);
-        if ($model->registration_fee > Auth::user()->amount) {
+        $user = Auth::user();
+        if($user->is_beginner == 0 && $model->is_beginner == 1) {
+            return redirect()->back()->with('error_beginner', 'Chiến dịch này chỉ áp dụng cho người mới bắt đầu!');
+        }
+        if($user->campains != null) {
+            return redirect()->back()->with('error_more_campain', 'Bạn không thể đăng ký 2 chiến dịch cùng một thời điểm!');
+        }
+        if ($model->registration_fee > $user->amount) {
             return redirect()->back()->with('error', 'You don\'t have enough money to register!
             <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light modal-transfer-btn">
             Transfer
@@ -164,7 +170,8 @@ class CampainController extends Controller
         if ($request->use_ = '') {
             $request->use_ = Auth::user()->url;
         }
-        $this->useRepository->registerCampain($id, $request);
+        $update_beginner = $model->is_beginner == 1;
+        $this->useRepository->registerCampain($id, $request, $update_beginner);
         return redirect()->intended('admin/campain/my')->with('success', 'Update item success!');
     }
     public function status($id)

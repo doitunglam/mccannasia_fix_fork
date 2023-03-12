@@ -113,7 +113,7 @@ class CampainRepository
         }
     }
 
-    public function registerCampain($id, $request)
+    public function registerCampain($id, $request, $update_beginner)
     {
         $this->useModel = $this->useModel->find($id);
         $json = json($this->useModel->users);
@@ -132,6 +132,10 @@ class CampainRepository
             $this->useModel->save();
             $campain[] = $id;
             $user->campains = json_encode($campain);
+            $user->save();
+        }
+        if($update_beginner){
+            $user->is_beginner = 0;
             $user->save();
         }
     }

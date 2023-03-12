@@ -100,10 +100,40 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade error-beginner-modal" tabindex="-1" role="dialog" aria-labelledby="error-beginner-modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger" id="error-beginner-modalLabel">{{__trans($language, 'All.error', 'Lỗi')}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-4 error-dialog" style="margin-top: 10px;font-weight: bold"></p>
+                </div>
+            </div>
+        </div>
+    </div>
     @if(session()->has('error'))
         <script>
 			$(document).ready(function () {
 				$('.transaction-detailModal').modal('show');
+			})
+        </script>
+    @endif
+    @if(session()->has('error_beginner'))
+        <script>
+			$(document).ready(function () {
+			    $('.error-dialog').html('Chiến dịch này chỉ áp dụng cho người mới bắt đầu')
+				$('.error-beginner-modal').modal('show');
+			})
+        </script>
+    @endif
+    @if(session()->has('error_more_campain'))
+        <script>
+			$(document).ready(function () {
+			    $('.error-dialog').html('Bạn không thể đăng ký 2 chiến dịch cùng một thời điểm!')
+				$('.error-beginner-modal').modal('show');
 			})
         </script>
     @endif
