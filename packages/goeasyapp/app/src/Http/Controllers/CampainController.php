@@ -2,6 +2,7 @@
 
 namespace Goeasyapp\App\Http\Controllers;
 
+use App\Models\CampainMission;
 use App\Models\Config;
 use App\Models\Payment;
 use App\Models\ShortLink;
@@ -521,22 +522,30 @@ class CampainController extends Controller
 
     public function create()
     {
+		$categories = json_decode(file_get_contents(public_path().'/campain_category.json') ?? "[]", 1);
+	    $missions = CampainMission::query()->pluck('name', 'id');
         $item = $this->useRepository->getModel();
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.create', [
             'item' => $item,
             'title' => $this->useRepository->getConfig()['title'] . ' Create',
-            'route' => $this->useRepository->getConfig()['aciton'] . '.store'
+            'route' => $this->useRepository->getConfig()['aciton'] . '.store',
+	        'categories' => $categories,
+	        'missions' => $missions
         ]);
     }
     public function update($id)
     {
         $item = $this->useRepository->getModelById($id);
+	    $categories = json_decode(file_get_contents(public_path().'/campain_category.json') ?? "[]", 1);
+	    $missions = CampainMission::query()->pluck('name', 'id');
         $data = json($item->page_value);
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.edit', [
             'item' => $item,
             'data' => $data,
             'title' => $this->useRepository->getConfig()['title'] . ' Edit',
-            'route' => $this->useRepository->getConfig()['aciton'] . '.store'
+            'route' => $this->useRepository->getConfig()['aciton'] . '.store',
+            'categories' => $categories,
+            'missions' => $missions
         ]);
     }
     public function paymentRequestCheck(Request $request, $id)
@@ -587,7 +596,6 @@ class CampainController extends Controller
 
     public function store(Request $request)
     {
-
         if ($request->id == 0)
             $this->useHook->validate($request);
         $this->useRepository->updateModel($request);

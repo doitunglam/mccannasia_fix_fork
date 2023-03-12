@@ -1,6 +1,7 @@
 <?php
 
 use Goeasyapp\App\Http\Controllers\AppController;
+use Goeasyapp\App\Http\Controllers\CampainMissionController;
 use Goeasyapp\App\Http\Controllers\LanguageController;
 use Goeasyapp\App\Http\Controllers\CategoryNewController;
 use Goeasyapp\App\Http\Controllers\NewItemController;
@@ -100,6 +101,12 @@ Route::prefix('admin')->group(function () {
     Route::middleware(['auth:sanctum', 'verified'])->post('campain/resuft/check/{id}', [CampainController::class, 'resuftStoreCheck'])->name('campain.resuft.store.check');
     Route::middleware(['auth:sanctum', 'verified'])->get('campain/payment', [CampainController::class, 'payment'])->name('campain.payment');
     Route::middleware(['auth:sanctum', 'verified'])->get('campain/view/{id}', [CampainController::class, 'view'])->name('campain.view.info');
+	Route::middleware(['auth:sanctum', 'verified'])->get('campain/mission', [CampainMissionController::class, 'index'])->name('campain.mission.list');
+	Route::middleware(['auth:sanctum', 'verified'])->get('campain/mission/create', [CampainMissionController::class, 'getCreate'])->name('campain.mission.getCreate');
+	Route::middleware(['auth:sanctum', 'verified'])->post('campain/mission/create', [CampainMissionController::class, 'postCreate'])->name('campain.mission.postCreate');
+	Route::middleware(['auth:sanctum', 'verified'])->get('campain/mission/update/{id}', [CampainMissionController::class, 'getUpdate'])->name('campain.mission.getUpdate');
+	Route::middleware(['auth:sanctum', 'verified'])->post('campain/mission/update/{id}', [CampainMissionController::class, 'postUpdate'])->name('campain.mission.postUpdate');
+	Route::middleware(['auth:sanctum', 'verified'])->get('campain/mission/delete/{id}', [CampainMissionController::class, 'delete'])->name('campain.mission.delete');
 
     Route::middleware(['auth:sanctum', 'verified'])->get('campain/download', [CampainController::class, 'download'])->name('campain.download');
 

@@ -61,13 +61,43 @@
                                         <span data-language="{{$ln->code}}" class="add_task badge rounded-pill badge-soft-primary" style="cursor: pointer">{{__trans($language, 'All.add_task', 'Add Task')}}</span>    
                                         </div>
                                         <div class="task-wrap">
-                                          
+
                                         </div>
                                 </div>
-                                <div class="col-3">  
+                                <div class="col-3">
                                     <x-component::input.ckfinder name="image[{{$ln->code}}]" value="" key="all.image" default="Image" id="ckfinder_{{$ln->code}}"/>
                                     @if($index == 0)
                                     <x-component::form.text name="price" default="Price" value="" id="price" key="All.price" placeholder="All.enter_date" defaultplaceholder="Enter your price"/>
+                                        <div class="form-group mb-3">
+                                            <label for="campain_category">Category</label>
+                                            <select name="campain_category" id="campain_category" class="select2 form-control">
+                                                <option value="">Select</option>
+                                                @foreach($categories as $key => $val)
+                                                    <option value="{{ $key }}">{{ $val }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="mission">Mission</label>
+                                            <select name="mission_id" id="mission" class="select2 form-control">
+                                                <option value="">Select</option>
+                                                @foreach($missions as $key => $val)
+                                                    <option value="{{ $key }}">{{ $val }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label class="d-flex align-items-center">
+                                                <input type="checkbox" name="is_hot" value="1" class="me-2">
+                                                <span>Is Hot</span>
+                                            </label>
+                                        </div>
+                                        <div class="form-group mb-">
+                                            <label class="d-flex align-items-center">
+                                                <input type="checkbox" name="is_beginner" value="1" class="me-2">
+                                                <span>For Beginner</span>
+                                            </label>
+                                        </div>
                                     @endif
                                 </div>
                             </div>

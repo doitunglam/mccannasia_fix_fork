@@ -186,6 +186,20 @@ $cas = Category::all();
                             </ul>
                         </li>
                         <li>
+                            <a href="javascript:" class="waves-effect">
+                                <i class="fa fa-exclamation"></i>
+                                <span key="t-dashboards">{!! trans('Campain Mission')!!}</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="{{route('campain.mission.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('campain.mission.getCreate')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
                             <a href="javascript: void(0);" class="waves-effect">
                                 <i class="fa fa-people-arrows"></i>
                                 <span key="t-dashboards">{!!__trans($language, 'All.agency', 'Agency')!!}</span>

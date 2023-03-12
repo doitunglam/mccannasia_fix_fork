@@ -79,6 +79,36 @@
                                     <x-component::input.ckfinder name="image[{{$ln->code}}]" value="{{isset(json($item->image)[$ln->code]) ? json($item->image)[$ln->code] : $item->image}}" key="all.image" default="Image" id="ckfinder_{{$ln->code}}"/>
                                     @if($index == 0)
                                         <x-component::form.text name="price" default="Price" value="{{$item->price}}" id="price" key="All.price" placeholder="All.enter_date" defaultplaceholder="Enter your price"/>
+                                        <div class="form-group mb-3">
+                                            <label for="campain_category">Category</label>
+                                            <select name="campain_category" id="campain_category" class="select2 form-control">
+                                                <option value="">Select</option>
+                                                @foreach($categories as $key => $val)
+                                                    <option value="{{ $key }}" @if($key == $item->campain_category) selected @endif>{{ $val }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="mission">Mission</label>
+                                            <select name="mission_id" id="mission" class="select2 form-control">
+                                                <option value="">Select</option>
+                                                @foreach($missions as $key => $val)
+                                                    <option value="{{ $key }}" @if($key == $item->mission_id) selected @endif>{{ $val }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label class="d-flex align-items-center">
+                                                <input type="checkbox" name="is_hot" value="1" class="me-2" @if($item->is_hot == 1) checked @endif>
+                                                <span>Is Hot</span>
+                                            </label>
+                                        </div>
+                                        <div class="form-group mb-">
+                                            <label class="d-flex align-items-center">
+                                                <input type="checkbox" name="is_beginner" value="1" class="me-2" @if($item->is_beginner == 1) checked @endif>
+                                                <span>For Beginner</span>
+                                            </label>
+                                        </div>
                                     @endif
                                 </div>
                             </div>

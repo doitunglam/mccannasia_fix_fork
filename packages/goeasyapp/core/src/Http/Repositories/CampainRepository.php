@@ -290,6 +290,10 @@ class CampainRepository
         $this->useModel->date_public = $request->date_public;
         $this->useModel->price = $request->price;
         $this->useModel->list_task = json_encode($request->task);
+	    $this->useModel->is_hot = !empty($request->is_hot);
+	    $this->useModel->is_beginner = !empty($request->is_beginner);
+	    $this->useModel->campain_category = $request->campain_category;
+	    $this->useModel->mission_id = $request->mission_id;
         $this->useModel->save();
     }
 

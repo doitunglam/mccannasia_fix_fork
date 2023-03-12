@@ -102,3 +102,8 @@
 	overflow: hidden;
 	height: 60px;
 }
+
+
+.flex.items-center.justify-between .relative.z-0.inline-flex.shadow-sm.rounded-md {
+	display: none !important;
+}
