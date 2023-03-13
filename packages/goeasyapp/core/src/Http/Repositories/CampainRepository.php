@@ -296,7 +296,7 @@ class CampainRepository
         $this->useModel->list_task = json_encode($request->task);
 	    $this->useModel->is_hot = !empty($request->is_hot);
 	    $this->useModel->is_beginner = !empty($request->is_beginner);
-	    $this->useModel->campain_category = $request->campain_category;
+	    $this->useModel->category = $request->category;
 	    $this->useModel->mission_id = $request->mission_id;
         $this->useModel->save();
     }

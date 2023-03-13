@@ -4,7 +4,7 @@
 use App\Models\Category;
 use Illuminate\Support\Str;
 
-$cas = Category::all();
+$cas = json_decode(file_get_contents(public_path().'/campain_category.json') ?? "[]", 1);
 ?>
         <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -32,12 +32,37 @@ $cas = Category::all();
                     <a style="color: #fff;" href="{{route('campain.my')}}"><i class='bx bxs-customize'></i>
                         <span style="">{!!__trans($language, 'All.campain_my', 'My Campain')!!}</span></a>
                 </button>
-                <button type="button" class="btn btn-sm px-3 font-size-14 header-item dnm-cs waves-effect" id="">
+                <button type="button" class="btn d-none btn-sm px-3 font-size-14 header-item dnm-cs waves-effect" id="">
                     <a style="color: #fff;" href="{{route('campain.payment')}}"><i class='bx bxs-customize'></i>
                         <span style="">{!!__trans($language, 'All.payment', 'Payment')!!}</span></a>
                 </button>
             </div>
             <div class="d-flex align-items-center">
+                @if(Auth::user()->type == 'agency')
+                    <nav class="navbar navbar-expand-lg">
+                        <div class="container-fluid">
+                            <ul class="navbar-nav d-flex flex-row">
+                                <li class="nav-item">
+                                    <div class="dropdown">
+                                        <a class="me-3 dropdown-toggle hidden-arrow position-relative" href="javascript:" id="bell-notification" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            @php($amount = currency_format(Auth::user()->amount ?? 0))
+                                            <i class="fa fa-credit-card text-white fs-5 me-2"></i>
+                                            <span class="text-white border-bottom">{{ $amount }}</span>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="bell-notification-list">
+                                            <li>
+                                                <a href="{{route('payment.listRecharge')}}" class="dropdown-item" key="t-default">{!!__trans($language, 'All.list_recharge', 'Danh sách nạp tiền')!!}</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{route('payment.listWithdraw')}}" class="dropdown-item" key="t-default">{!!__trans($language, 'All.list_withdraw', 'Danh sách rút tiền')!!}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                @endif
                 <div class="d-inline-block px-2">
                     <a class="position-relative" href="javascript:" data-bs-toggle="modal" data-bs-target="#contact-form">
                         <i class="fas fa-envelope fs-5 text-white"></i>
@@ -69,16 +94,32 @@ $cas = Category::all();
                         </ul>
                     </div>
                 </nav>
+
+                @if(Auth::user()->type != 'agency')
+                    <nav class="navbar navbar-expand-lg">
+                        <ul class="navbar-nav d-flex flex-row">
+                            <li class="nav-item">
+                                <div class="dropdown">
+                                    <a class="me-3 dropdown-toggle hidden-arrow position-relative" href="javascript:" id="bell-notification" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span class="text-white">LAN</span>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="bell-notification-list">
+                                        <li>
+                                            <a href="{{ route('admin.locale.cn') }}" class="dropdown-item">Cn</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('admin.locale.en') }}" class="dropdown-item">En</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('admin.locale.vi') }}" class="dropdown-item">Vi</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                @endif
                 <div class="dropdown d-inline-block">
-                    <button type="button" class="btn header-item waves-effect text-white" id="page-header-user-dropdown" ata-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <a href="{{ route('admin.locale.cn') }}" class="mr-3">Cn</a>
-                    </button>
-                    <button type="button" class="btn header-item waves-effect text-white" id="page-header-user-dropdown" ata-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <a href="{{ route('admin.locale.en') }}" class="mr-3">En</a>
-                    </button>
-                    <button type="button" class="btn header-item waves-effect text-white" id="page-header-user-dropdown" ata-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <a href="{{ route('admin.locale.vi') }}" class="mr-3">Vi</a>
-                    </button>
                     <x-component::app.dropdown/>
                 </div>
             </div>
@@ -192,7 +233,7 @@ $cas = Category::all();
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="{{route('campain.mission.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a>
+                                    <a href="{{  route('campain.mission.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a>
                                 </li>
                                 <li>
                                     <a href="{{route('campain.mission.getCreate')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a>
@@ -217,23 +258,21 @@ $cas = Category::all();
                             </ul>
                         </li>
                         <li>
-                            <a href="{{route('payment.list')}}" class="waves-effect">
+                            <a href="javascript:" class="waves-effect">
                                 <i class="fa fa-credit-card"></i>
                                 <span key="t-dashboards">{!!__trans($language, 'All.payment', 'Thanh toán')!!}</span>
                             </a>
 
-                                <ul class="sub-menu  @if(\Request::route()->getName() == 'payment.list' ||
-                                \Request::route()->getName() == 'payment.listAdminRecharge' ||
-                                \Request::route()->getName() == 'payment.listAdminWithdraw') mm-show @endif">
-                                    <li>
-                                        <a href="{{route('payment.listAdminRecharge')}}" key="t-default">{!!__trans($language, 'All.list_admin_recharge', 'Danh sách nạp tiền')!!}</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{route('payment.listAdminWithdraw')}}" key="t-default">{!!__trans($language, 'All.list_admin_withdraw', 'Danh sách rút tiền')!!}</a>
-                                    </li>
-                                </ul>
-
-
+                            <ul class="sub-menu  @if(Request::route()->getName() == 'payment.list' ||
+                                Request::route()->getName() == 'payment.listAdminRecharge' ||
+                                Request::route()->getName() == 'payment.listAdminWithdraw') mm-show @endif">
+                                <li>
+                                    <a href="{{route('payment.listAdminRecharge')}}" key="t-default">{!!__trans($language, 'All.list_admin_recharge', 'Danh sách nạp tiền')!!}</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('payment.listAdminWithdraw')}}" key="t-default">{!!__trans($language, 'All.list_admin_withdraw', 'Danh sách rút tiền')!!}</a>
+                                </li>
+                            </ul>
                         </li>
                     @else
                         <li class="menu-title" key="t-menu">Menus</li>
@@ -251,10 +290,10 @@ $cas = Category::all();
 
                         </li>
                         <li class="menu-title" key="t-menu">Category</li>
-                        @foreach($cas as $ca)
+                        @foreach($cas as $id => $name)
                             <li>
-                                <a href="{{route('campain.category', $ca->id)}}" class="waves-effect">
-                                    @php($ca_name_slug = Str::slug($ca->name))
+                                <a href="{{route('campain.category', $id)}}" class="waves-effect">
+                                    @php($ca_name_slug = Str::slug($name))
                                     @if($ca_name_slug == Str::slug('Mobile app'))
                                         <i class="fa fa-mobile"></i>
                                     @elseif($ca_name_slug == Str::slug('Dịch vụ tài chính'))
@@ -272,11 +311,11 @@ $cas = Category::all();
                                     @elseif($ca_name_slug === Str::slug('Làm đẹp'))
                                         <i class="fa fa-heart"></i>
                                     @endif
-                                    <span key="t-dashboards">{{$ca->name}}</span>
+                                    <span key="t-dashboards">{{$name}}</span>
                                 </a>
                             </li>
                         @endforeach
-                        <li>
+                        <li class="d-none">
                             <a href="javascript: void(0);" class="waves-effect">
                                 <i class="fa fa-credit-card"></i>
                                 <span key="t-dashboards">{!!__trans($language, 'All.payment', 'Thanh toán')!!}</span>

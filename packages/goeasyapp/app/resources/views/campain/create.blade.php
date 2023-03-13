@@ -69,8 +69,8 @@
                                     @if($index == 0)
                                     <x-component::form.text name="price" default="Price" value="" id="price" key="All.price" placeholder="All.enter_date" defaultplaceholder="Enter your price"/>
                                         <div class="form-group mb-3">
-                                            <label for="campain_category">Category</label>
-                                            <select name="campain_category" id="campain_category" class="select2 form-control">
+                                            <label for="category">Category</label>
+                                            <select name="category" id="category" class="select2 form-control">
                                                 <option value="">Select</option>
                                                 @foreach($categories as $key => $val)
                                                     <option value="{{ $key }}">{{ $val }}</option>
