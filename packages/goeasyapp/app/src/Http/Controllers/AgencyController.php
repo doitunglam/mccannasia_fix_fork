@@ -46,11 +46,13 @@ class AgencyController extends Controller
     {
 
         $model = User::find($id);
+        $referral_list = User::where('parent_referral_code', $model->referral_code)->get();
         return view('app::user.edit', [
             'model' => $model,
             'store' => 'user.store',
             'title' => 'Users',
-            'banks' => Bank::BANKS
+            'banks' => Bank::BANKS,
+            'referral_list' => $referral_list
         ]);
     }
     public function reset(Request $request, $id)
@@ -106,6 +108,7 @@ class AgencyController extends Controller
 	    $model->bank_name = $request->bank_name;
 	    $model->bank_name_account = $request->bank_name_account;
         $model->bank_account = $request->bank_account;
+        $model->referral_code = $request->referral_code;
         if (!empty($request->password))
             $model->password = bcrypt($request->password);
 

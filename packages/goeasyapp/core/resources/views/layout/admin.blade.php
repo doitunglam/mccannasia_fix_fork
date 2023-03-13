@@ -118,6 +118,13 @@ $cas = json_decode(file_get_contents(public_path().'/campain_category.json') ?? 
                             </li>
                         </ul>
                     </nav>
+                    <nav class="navbar navbar-expand-lg">
+                        <div class="container-fluid">
+                            <a class="position-relative" href="{{route('setting.index')}}" id="setting" role="button">
+                                <i class="fas fa-cog text-white fs-5"></i>
+                            </a>
+                        </div>
+                    </nav>
                 @endif
                 <div class="dropdown d-inline-block">
                     <x-component::app.dropdown/>

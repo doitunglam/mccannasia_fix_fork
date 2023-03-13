@@ -99,6 +99,19 @@ $ln   = json_decode($ln->label_, TRUE);
                                 <input id="productname" name="" type="text" class="form-control" value="{{route('home.base.introduce', md5($model->id))}}" autocomplete="off">
                             </div>
                         </div>
+                        <div class="row mb-3 align-items-center">
+                            <div class="col-md-2">
+                                <label for="referral-code">Referral Code</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input id="referral-code" name="referral_code" type="text" value="{{!empty($model->referral_code) ? $model->referral_code : ''}}" class="form-control" readonly>
+                            </div>
+                            @if(empty($model->referral_code))
+                                <div class="col-md-1">
+                                    <i class="fa fa-random font-size-18 random-code" aria-hidden="true"></i>
+                                </div>
+                            @endif
+                        </div>
                     </div>
                     <hr>
                     <div class="group mb-4">
@@ -147,9 +160,25 @@ $ln   = json_decode($ln->label_, TRUE);
                             </div>
                         </div>
                     </div>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light">Save</button>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary waves-effect waves-light">Save</button>
+            @if(!empty($referral_list))
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Danh sách khách nhập mã mời</h4>
+                        <table class="table table-responsive table-striped mt-4">
+                            @foreach($referral_list as $key => $item)
+                                <tr>
+                                    <td>{{$key+1}}</td>
+                                    <td>{{$item->email}}</td>
+                                    <td>{{$item->name}}</td>
+                                </tr>
+                            @endforeach
+                        </table>
+                    </div>
+                </div>
+            @endif
         </form>
     </div>
 
@@ -474,6 +503,11 @@ $ln   = json_decode($ln->label_, TRUE);
 				}
 			})
 
+            $('.random-code').click(function () {
+                let random = (Math.random() + 1).toString(36).substring(6);
+                $('.referral_code').val(random+{{$model->id}});
+                document.getElementById('referral-code').value=random+{{$model->id}};
+            })
 
 		});
     </script>
