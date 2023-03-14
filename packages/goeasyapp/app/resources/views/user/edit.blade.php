@@ -149,37 +149,62 @@ $ln   = json_decode($ln->label_, TRUE);
                         </div>
                     </div>
                     <hr>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light">Save</button>
+                </div>
+            </div>
+        </form>
+        <form action="{{route('user.change_password', $model->id)}}" method="POST">
+            @csrf
+            <div class="card">
+                <div class="card-body">
                     <div class="group mb-4">
                         <div class="mb-3"><h4>Thay đổi mật khẩu</h4></div>
                         <div class="row mb-3">
                             <div class="col-md-2">
-                                <label for="productname">Password</label>
+                                <label for="productname">Mật khẩu hiện tại</label>
                             </div>
                             <div class="col-md-10">
                                 <input id="productname" name="password" type="password" class="form-control" value="" autocomplete="off">
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <div class="col-md-2">
+                                <label for="productname">Mật khẩu mới</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input id="productname" name="new_password" type="password" class="form-control" value="" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-2">
+                                <label for="productname">Nhập lại mật khẩu</label>
+                            </div>
+                            <div class="col-md-10">
+                                <input id="productname" name="confirm_password" type="password" class="form-control" value="" autocomplete="off">
+                            </div>
+                        </div>
+                        <hr>
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">Save</button>
                     </div>
-                    <button type="submit" class="btn btn-primary waves-effect waves-light">Save</button>
                 </div>
             </div>
-            @if(!empty($referral_list))
-                <div class="card">
-                    <div class="card-body">
-                        <h4>Danh sách khách nhập mã mời</h4>
-                        <table class="table table-responsive table-striped mt-4">
-                            @foreach($referral_list as $key => $item)
-                                <tr>
-                                    <td>{{$key+1}}</td>
-                                    <td>{{$item->email}}</td>
-                                    <td>{{$item->name}}</td>
-                                </tr>
-                            @endforeach
-                        </table>
-                    </div>
-                </div>
-            @endif
         </form>
+        @if(!empty($referral_list))
+            <div class="card">
+                <div class="card-body">
+                    <h4>Danh sách khách nhập mã mời</h4>
+                    <table class="table table-responsive table-striped mt-4">
+                        @foreach($referral_list as $key => $item)
+                            <tr>
+                                <td>{{$key+1}}</td>
+                                <td>{{$item->email}}</td>
+                                <td>{{$item->name}}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+            </div>
+        @endif
     </div>
 
 @endsection

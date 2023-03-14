@@ -10,6 +10,7 @@ use Goeasyapp\Core\Http\Repositories\CampainRepository;
 use Auth;
 use App\Models\Category;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AgencyController extends Controller
 {
@@ -342,5 +343,24 @@ class AgencyController extends Controller
         }
         return redirect()->back()
             ->with('error', 'The increase amount must be an number');
+    }
+
+    public function changePassword(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        if(empty($request->password) || empty($request->new_password) || empty($request->confirm_password)){
+            return redirect()->back()->with('error', 'Các trường mật khẩu không được bỏ trống');
+        }
+        if(Hash::check($request->password, $user->password)){
+            if ($request->new_password == $request->confirm_password){
+
+                $user->password = bcrypt($request->password);
+                $user->save();
+                return redirect()->back()->with('success', 'Thay đổi mật khẩu thành công');
+            }
+            return redirect()->back()->with('error', 'Nhập lại mật khẩu không chính xác');
+        }
+        return redirect()->back()->with('error', 'Mật khẩu củ không chính xác');
     }
 }
