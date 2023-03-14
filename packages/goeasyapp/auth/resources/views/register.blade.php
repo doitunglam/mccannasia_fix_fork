@@ -118,6 +118,14 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                <div class="row">
+                                                                    <div class="col-sm-12">
+                                                                        <div class="mb-3">
+                                                                            <label for="productname">Mã giới thiệu</label>
+                                                                            <input id="productname" name="parent_referral_code" type="text" class="form-control" value="" autocomplete="off">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
 
 
 

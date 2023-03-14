@@ -2,6 +2,7 @@
 
 namespace Goeasyapp\Auth\Http\Controllers;
 
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Goeasyapp\Core\Http\Hooks\LoginValidateHook;
@@ -64,7 +65,21 @@ class AuthController extends Controller
         $model->type = 'agency';
         if ($request->password != '')
             $model->password = bcrypt($request->password);
-        $model->save();
+
+        if ($model->save()){
+            if (!empty($request->parent_referral_code)){
+                $parent_user=User::where('referral_code', $request->parent_referral_code)->first();
+                if($parent_user != null) {
+                    $referral_bonus = Setting::where('key','referral_bonus')->first()->value ?? 50000;
+                    $parent_user->amount += $referral_bonus;
+                    $parent_user->save();
+                    $model->parent_referral_code = $request->parent_referral_code;
+                    $model->save();
+                }
+            }
+        }
+//        $model->save();
+
         if ($request->file('image')) {
             $file_name = $request->file('image')->getClientOriginalName();
             $end = explode('.', $file_name);

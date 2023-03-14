@@ -15,7 +15,7 @@
             <div class="card-body">
                 <div class="col-12">
                     <label class="form-label">Referral bonus</label>
-                    <input type="text" class="form-control content-language" name="referral_bonus" value="{{$referral_bonus ?? 50000}}"/>
+                    <input type="text" class="form-control content-language" name="referral_bonus" value="{{$referral_bonus ? ($referral_bonus->value ?? 50000) : 50000 }}"/>
                 </div>
             </div>
         </div>

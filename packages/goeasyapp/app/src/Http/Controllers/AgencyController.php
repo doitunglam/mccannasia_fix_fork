@@ -46,7 +46,9 @@ class AgencyController extends Controller
     {
 
         $model = User::find($id);
-        $referral_list = User::where('parent_referral_code', $model->referral_code)->get();
+        $referral_list = empty($model->referral_code)
+            ? []
+            : User::where('parent_referral_code', $model->referral_code)->get();
         return view('app::user.edit', [
             'model' => $model,
             'store' => 'user.store',
