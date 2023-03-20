@@ -163,16 +163,16 @@ $ln = json_decode($ln->label_, true);
                                     @else
                                         <td data-field="name" style="width: 50px;"><a
                                                 href="{{ route($status, $item_->id) }}"><span
-                                                    class="badge rounded-pill badge-soft-danger">{{ __trans($language, 'All.not_block', 'Not-Block') }}</span></a>
+                                                    class="badge rounded-pill badge-soft-danger">{{ __trans($language, 'All.not_block', 'Không chặn') }}</span></a>
                                         </td>
                                     @endif
                                     <td data-field="name" style="width: 50px;"><a
                                             href="{{ route('campain.view.info', $item_->id) }}"><span
-                                                class="badge rounded-pill badge-soft-success">{{ __trans($language, 'All.view', 'View') }}</span></a>
+                                                class="badge rounded-pill badge-soft-success">{{ __trans($language, 'All.view', 'Xem') }}</span></a>
                                     </td>
                                     <td data-field="name" style="width: 50px;"><a
                                             href="{{ route('user.reset', $item_->id) }}"><span
-                                                class="badge rounded-pill badge-soft-primary">{{ __trans($language, 'All.reset', 'Reset') }}</span></a>
+                                                class="badge rounded-pill badge-soft-primary">{{ __trans($language, 'All.reset', 'Cài lại') }}</span></a>
                                     </td>
                                     @if (!isset($restore))
                                         <td style="width: 30px;padding: 0;">

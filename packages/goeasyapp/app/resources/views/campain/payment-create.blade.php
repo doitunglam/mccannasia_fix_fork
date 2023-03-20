@@ -26,13 +26,13 @@
                         <div class="col-12">
                             <div class="row">
                                 <div class="col-9">
-                                    <x-component::form.text name="name" default="Reason" value="" id="reason" key="all.reason" placeholder="All.enter_reason" defaultplaceholder="Enter your reason"/>
-                                    <x-component::form.text name="price" default="Price" value="" id="Price" key="all.price" placeholder="All.enter_price" defaultplaceholder="Enter your price"/>
+                                    <x-component::form.text name="name" default="Reason" value="" id="reason" key="all.reason" placeholder="All.enter_reason" defaultplaceholder="Lý do"/>
+                                    <x-component::form.text name="price" default="Price" value="" id="Price" key="all.price" placeholder="All.enter_price" defaultplaceholder="Giá"/>
                                     <div class="mb-3">
-                                        <label for="slect" class="form-label">{{ __trans($language, 'All.slect', 'Select') }}</label>
+                                        <label for="slect" class="form-label">{{ __trans($language, 'All.slect', 'Chọn') }}</label>
                                         <select name="type" class="form-control get-type">
-                                            <option value="" selected="">{{ __trans($language, 'All.withdraw_money', 'Withdraw money') }}</option>
-                                            <option value="1">{{ __trans($language, 'All.recharge', 'Recharge') }}</option>
+                                            <option value="" selected="">{{ __trans($language, 'All.withdraw_money', 'Rút tiền') }}</option>
+                                            <option value="1">{{ __trans($language, 'All.recharge', 'Nạp tiền') }}</option>
                                         </select>
                                     </div>
                                 </div>

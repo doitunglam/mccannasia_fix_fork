@@ -2,7 +2,7 @@
 @extends('core::layout.admin')
 @section('content')
 <div class="container-fluid">
-    
+
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
@@ -12,7 +12,7 @@
     </div>
 
 
-   
+
     <div class="card">
         <div class="card-body">
             <div class="col-12">
@@ -24,8 +24,8 @@
                                     @foreach($td as $i)
                                     <th>{{ $i['title'] }}</th>
                                     @endforeach
-                                    <th>{{__trans($language, 'All.status', 'Status')}}</th>
-                                    <th colspan="2">{{__trans($language, 'All.edit', 'Edit')}}</th>
+                                    <th>{{__trans($language, 'All.status', 'Trạng thái')}}</th>
+                                    <th colspan="2">{{__trans($language, 'All.edit', 'Chỉnh sửa')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,23 +42,23 @@
                                     @endif
                                     @endforeach
                                     @if($item->status == 1)
-									<td data-field="name" style="width: 50px;"><a href="{{route($status, $item->id)}}"><span class="badge rounded-pill badge-soft-success">{{__trans($language, 'All.available', 'Available')}}</span></a></td>	
+									<td data-field="name" style="width: 50px;"><a href="{{route($status, $item->id)}}"><span class="badge rounded-pill badge-soft-success">{{__trans($language, 'All.available', 'Có sẵn')}}</span></a></td>
 									@else
-									<td data-field="name" style="width: 50px;"><a href="{{route($status, $item->id)}}"><span class="badge rounded-pill badge-soft-danger">{{__trans($language, 'All.unavailable', 'Unavailable')}}</span></a></td>		
+									<td data-field="name" style="width: 50px;"><a href="{{route($status, $item->id)}}"><span class="badge rounded-pill badge-soft-danger">{{__trans($language, 'All.unavailable', 'Không có sẵn')}}</span></a></td>
 									@endif
                                     <td style="width: 30px">
                                         <a class="btn btn-outline-secondary btn-sm edit" href="{{ route($update, $item->id)}}" title="Edit">
                                             <i class="fas fa-pencil-alt"></i>
                                         </a>
                                     </td>
-                                    
+
                                     <td style="width: 30px">
                                     <form action="{{ route($delete, $item->id)}}" method="post">
                                       {{ csrf_field() }}
                                       @method('DELETE')
                                       <button class="btn btn-outline-danger btn-sm btn-delete" type="button"><i class="fa fa-trash"></i></button>
                                     </form>
-                                        
+
                                     </td>
                                 </tr>
                                 @endforeach
@@ -79,7 +79,7 @@
             if (r == true) {
                 item.parent().submit();
             } else {
-                
+
             }
         });
     });

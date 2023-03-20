@@ -136,21 +136,48 @@ $popups = \App\Models\Banner::where('is_popup', true)
         @else
             <div class="row">
                 <div class="col-12">
-                    <div class="page-title-box d-flex flex-column justify-content-center align-items-center">
-                        <div class="total-amount mb-2">
-                            <span
-                                class="label">{{ __trans($language, 'All.totalRechargeAmountToday', 'Tổng nạp trong ngày') }}:</span>
-                            <span class="value">{{ $totalRechargeAmountToday }}</span>
-                        </div>
-                        <div class="total-amount  mb-2">
-                            <span
-                                class="label">{{ __trans($language, 'All.totalWithdrawAmountToday', 'Tổng rút trong ngày') }}:</span>
-                            <span class="value">{{ currency_format($totalWithdrawAmountToday) }}</span>
-                        </div>
-                        <div class="total-amount mb-2">
-                            <span
-                                class="label">{{ __trans($language, 'All.totalUserRegisterToday', 'Số lượng user đăng ký mới') }}:</span>
-                            <span class="value">{{ $totalUserRegisterToday }}</span>
+                    <div class="page-title-box">
+                        <div class="d-flex justify-content-around" style="width: 100%">
+                            <div class="card border-dark mb-3 border-success border-bottom " style="width: 20%">
+                                <div class="d-flex justify-content-between">
+                                    <div class="card-body text-dark">
+                                        <h5 class="card-title">
+                                            {{ __trans($language, 'All.totalRechargeAmountToday', 'Tổng nạp trong ngày') }}
+                                        </h5>
+                                        <p class="card-text">{{ $totalRechargeAmountToday }}</p>
+                                    </div>
+                                    <div class="d-flex align-items-center" style="width: 10%; scale: 1.5">
+                                        <span class="fa fa-credit-card checked"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card border-dark mb-3 border-bottom border-success" style="width: 20%">
+                                <div class="d-flex justify-content-between">
+                                    <div class="card-body text-dark">
+                                        <h5 class="card-title">
+                                            {{ __trans($language, 'All.totalWithdrawAmountToday', 'Tổng rút trong ngày') }}
+                                        </h5>
+                                        <p class="card-text">{{ $totalWithdrawAmountToday }}</p>
+                                    </div>
+                                    <div class="d-flex align-items-center" style="width: 10%; scale: 1.5">
+                                        {{-- withdraw icon --}}
+                                        <span class="fa fa-credit-card checked"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card border-dark mb-3 border-bottom border-success" style="width: 20%">
+                                <div class="d-flex justify-content-between">
+                                    <div class="card-body text-dark">
+                                        <h5 class="card-title">
+                                            {{ __trans($language, 'All.totalUserRegisterToday', 'Số lượng user đăng ký mới') }}
+                                        </h5>
+                                        <p class="card-text">{{ $totalUserRegisterToday }}</p>
+                                    </div>
+                                    <div class="d-flex align-items-center" style="width: 10%; scale: 1.5">
+                                        <span class="fa fa-star checked"></span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     @if (count($topByReferralCode) > 0)

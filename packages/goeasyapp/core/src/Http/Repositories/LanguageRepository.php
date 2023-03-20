@@ -16,7 +16,7 @@ class LanguageRepository
         $this->useModel = $model;
         $this->configs = [
             "aciton" => "language",
-            'title' => __trans($language, 'All.language', 'Language'),
+            'title' => __trans($language, 'All.language', 'Ngôn ngữ'),
         ];
     }
     public function getModel()

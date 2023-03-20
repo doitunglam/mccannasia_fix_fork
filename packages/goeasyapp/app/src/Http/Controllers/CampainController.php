@@ -158,11 +158,7 @@ class CampainController extends Controller
             return redirect()->back()->with('error_more_campain', 'Bạn không thể đăng ký 2 chiến dịch cùng một thời điểm!');
         }
         if ($model->registration_fee > $user->amount) {
-            return redirect()->back()->with('error', 'You don\'t have enough money to register!
-            <button type="button" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light modal-transfer-btn">
-            Transfer
-            </button>
-            ');
+            return redirect()->back()->with('error', '');
         }
         if ($request->use_ = '') {
             $request->use_ = Auth::user()->url;
@@ -271,6 +267,7 @@ class CampainController extends Controller
         $language = ($language && $language->value != '') ? json_decode($language->value, true) : [];
         $items = $this->useRepository->getMyPaymentRecharge_Withdraw($request, 1);
         $config = Config::where('status', 1)->first();
+        $user = Auth::user();
         $td = [
             ['title' => __trans($language, 'All.id', 'ID'), 'value' => 'id'],
 //            ['title' => __trans($language, 'All.user', 'User'), 'value' => 'user_name'],
@@ -283,7 +280,8 @@ class CampainController extends Controller
             'td' => $td,
             'items' => $items,
             'type' => 1,
-            'config' => $config
+            'config' => $config,
+            'user' => $user
         ]);
     }
 
@@ -359,8 +357,8 @@ class CampainController extends Controller
         $items = $this->useRepository->getMyPayment($request);
         $td = [
             ['title' => __trans($language, 'All.id', 'ID'), 'value' => 'id'],
-            ['title' => __trans($language, 'All.reason', 'Reason'), 'value' => 'name'],
-            ['title' => __trans($language, 'All.amount', 'Amount'), 'value' => 'amount'],
+            ['title' => __trans($language, 'All.reason', 'Lý do'), 'value' => 'name'],
+            ['title' => __trans($language, 'All.amount', 'Số tiền'), 'value' => 'amount'],
         ];
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.payment', [
             'title' => 'Your amount: ' . Auth::user()->amount,
@@ -377,10 +375,10 @@ class CampainController extends Controller
         $items = $this->useRepository->getResuftPaginatio();
         $td = [
             ['title' => __trans($language, 'All.id', 'ID'), 'value' => 'id'],
-            ['title' => __trans($language, 'All.user', 'User'), 'value' => 'user_name'],
-            ['title' => __trans($language, 'All.name', 'Name'), 'value' => 'campain_name'],
-            ['title' => __trans($language, 'All.image', 'Image'), 'value' => 'image', 'type' => 'image'],
-            ['title' => __trans($language, 'All.price', 'Price'), 'value' => 'price'],
+            ['title' => __trans($language, 'All.user', 'Người dùng'), 'value' => 'user_name'],
+            ['title' => __trans($language, 'All.name', 'Tên'), 'value' => 'campain_name'],
+            ['title' => __trans($language, 'All.image', 'Ảnh'), 'value' => 'image', 'type' => 'image'],
+            ['title' => __trans($language, 'All.price', 'Giá'), 'value' => 'price'],
         ];
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.list-resuft', [
             'title' => $this->useRepository->getConfig()['title'],
@@ -480,7 +478,9 @@ class CampainController extends Controller
         $totalWithdrawAmountToday = $this->useRepository->getTotalWithdrawAmountToday();
         $totalUserRegisterToday = $this->useRepository->getTotalUserRegisterToday();
         $topUserMostRefer = $this->useRepository->getTop5UserMostReferralCode();
-        return view('app::' . $this->useRepository->getConfig()['aciton'] . '.dashboard', [
+        $requestUri = $request->getRequestUri();
+        $page = $user->type == 'agency' || $requestUri == '/admin/campain/day' ? '.day' : '.dashboard';
+        return view('app::' . $this->useRepository->getConfig()['aciton'] . $page, [
             'items' => $items,
             'title' => "Dashboard",
             'user' => $user,
@@ -512,9 +512,9 @@ class CampainController extends Controller
         $language = ($language && $language->value != '') ? json_decode($language->value, true) : [];
         $td = [
             ['title' => __trans($language, 'All.id', 'ID'), 'value' => 'id'],
-            ['title' => __trans($language, 'All.name', 'Name'), 'value' => 'name'],
-            ['title' => __trans($language, 'All.image', 'Image'), 'value' => 'image', 'type' => 'image'],
-            ['title' => __trans($language, 'All.date_public', 'Date Public'), 'value' => 'date_public'],
+            ['title' => __trans($language, 'All.name', 'Tên'), 'value' => 'name'],
+            ['title' => __trans($language, 'All.image', 'Ảnh'), 'value' => 'image', 'type' => 'image'],
+            ['title' => __trans($language, 'All.date_public', 'Ngày công khai'), 'value' => 'date_public'],
         ];
         $items = $this->useRepository->getPaginateWithRelation();
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.list', [

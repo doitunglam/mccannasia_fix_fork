@@ -1,32 +1,32 @@
 @extends('core::layout.admin')
 @section('content')
 <div class="container-fluid">
-    
+
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                 <h4 class="mb-sm-0 font-size-18">{{$title}} : {{__transItem($item->name)}}</h4>
 
-                
+
 
             </div>
-            
+
         </div>
-        
+
     </div>
     <div class="card">
         <div class="card-body">
             <h5>{{__trans($language, 'All.description', 'Description')}}</h5>
                 {!!__transItem($item->description)!!}
-            <h5 style="margin-top: 20px;">{{__trans($language, 'All.Reason_for_cancellation', 'Reason for cancellation')}}</h5>
+            <h5 style="margin-top: 20px;">{{__trans($language, 'All.Reason_for_cancellation', 'Lý do huỷ')}}</h5>
                 {!!__transItem($item->reson_cancel)!!}
-            <h5 style="margin-top: 20px;">{{__trans($language, 'All.registration_fee', 'Registration Fee')}}</h5>
+            <h5 style="margin-top: 20px;">{{__trans($language, 'All.registration_fee', 'Phí đăng ký')}}</h5>
             <p>
                 {!!__transItem($item->registration_fee)!!}đ
             </p>
-            <h5 style="margin-top: 20px;">{{__trans($language, 'All.price', 'Price')}}</h5>
+            <h5 style="margin-top: 20px;">{{__trans($language, 'All.price', 'Giá')}}</h5>
             <p>
-                {!!__transItem($item->price)!!}đ/ {{__trans($language, 'All.day', 'Day')}}
+                {!!__transItem($item->price)!!}đ/ {{__trans($language, 'All.day', 'Ngày')}}
             </p>
             <h5 style="margin-top: 20px;">{{__trans($language, 'All.link', 'Link')}}</h5>
 
@@ -35,19 +35,19 @@
 
     <div class="card">
         <div class="card-body">
-    <form action="{{ route($route, $item->id) }}" method="POST" class="form-submit" enctype="multipart/form-data">	
+    <form action="{{ route($route, $item->id) }}" method="POST" class="form-submit" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="status" class="check-status"/>
         <input type="hidden" name="id" class="check-id"/>
         <h5>{{__trans($language, 'All.resuft', 'resuft')}}</h5>
             @foreach($resuft  as $r)
-                <h6>{{__trans($language, 'All.resuft', 'resuft')}}: {{$r->date}} 
+                <h6>{{__trans($language, 'All.resuft', 'resuft')}}: {{$r->date}}
                 @if($r->status == 1)
-                <span class="badge rounded-pill badge-soft-success">{{__trans($language, 'All.appect', 'Appect')}}</span>
+                <span class="badge rounded-pill badge-soft-success">{{__trans($language, 'All.appect', 'Chấp nhận')}}</span>
                 @elseif($r->status == 2)
-                <span class="badge rounded-pill badge-soft-danger">{{__trans($language, 'All.not_appect', 'Not Appect')}}</span>
+                <span class="badge rounded-pill badge-soft-danger">{{__trans($language, 'All.not_appect', 'Từ chối')}}</span>
                 @else
-                <span class="badge rounded-pill badge-soft-primary">{{__trans($language, 'All.waiting', 'Waiting')}}</span>
+                <span class="badge rounded-pill badge-soft-primary">{{__trans($language, 'All.waiting', 'Đang chờ')}}</span>
                 @endif
                 </h6>
                 <div class="imgArrList">
@@ -69,11 +69,11 @@
                 </div>
                 @endif
             @endforeach
-     
-        
-                
-                
-            
+
+
+
+
+
     </form>
 </div>
 </div>
@@ -105,7 +105,7 @@ $(document).ready(function(){
         }
         parent.parent().find('.task-wrap .content-item').last().find('input').val(val);
     })
-    
+
 })
 </script>
 @endsection()

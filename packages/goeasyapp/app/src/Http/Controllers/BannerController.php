@@ -38,7 +38,7 @@ class BannerController extends Controller
         $language = ($language && $language->value != '') ? json_decode($language->value, true) : [];
         $td = [
             ['title' => __trans($language, 'All.id', 'ID'), 'value' => 'id'],
-            ['title' => __trans($language, 'All.image', 'Image'), 'value' => 'image', 'type' => 'image'],
+            ['title' => __trans($language, 'All.image', 'Ảnh'), 'value' => 'image', 'type' => 'image'],
         ];
         $items = $this->useRepository->getPaginateWithRelation(['is_popup' => FALSE]);
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.list', [
@@ -85,7 +85,7 @@ class BannerController extends Controller
 		$language = ($language && $language->value != '') ? json_decode($language->value, true) : [];
 		$td = [
 			['title' => __trans($language, 'All.id', 'ID'), 'value' => 'id'],
-			['title' => __trans($language, 'All.image', 'Image'), 'value' => 'image', 'type' => 'image'],
+			['title' => __trans($language, 'All.image', 'Ảnh'), 'value' => 'image', 'type' => 'image'],
 		];
 		$items = $this->useRepository->getPaginateWithRelation(['is_popup' => TRUE]);
 		return view('app::' . $this->useRepository->getConfig()['aciton'] . '.list', [

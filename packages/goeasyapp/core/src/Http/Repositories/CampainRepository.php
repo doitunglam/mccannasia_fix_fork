@@ -23,7 +23,7 @@ class CampainRepository
         $this->useModel = $model;
         $this->configs = [
             "aciton" => "campain",
-            'title' => __trans($language, 'All.campain', 'Campain'),
+            'title' => __trans($language, 'All.campain', 'Chiến dịch'),
         ];
     }
     public function deleteItem($id)
@@ -52,7 +52,7 @@ class CampainRepository
     public function getModelByIdAndMissionInfo($id)
     {
         return $this->useModel->where('campains.id', $id)
-        ->join('campain_missions', 'campain_missions.id', '=', 'campains.mission_id')
+        ->leftJoin('campain_missions', 'campain_missions.id', '=', 'campains.mission_id')
         ->select('campains.*', 'campain_missions.id as mission_id', 'campain_missions.name as mission_name', 'campain_missions.daily_profit', 'campain_missions.binding_fee', 'campain_missions.content')
         ->first();
     }
@@ -105,7 +105,9 @@ class CampainRepository
         return $model->where(function ($query) use ($day) {
             $query->where('date_public', $day)
                 ->orWhere('date_public', null);
-        })->get();
+        })->leftJoin('campain_categories', 'campain_categories.id', '=', 'campains.category')
+            ->select('campains.*', 'campain_categories.name as category_name')
+            ->get();
     }
     public function getTotalRechargeAmountToday() {
         $day = date('Y-m-d');

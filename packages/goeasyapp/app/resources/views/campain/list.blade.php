@@ -22,7 +22,7 @@
                         <input type="file" class="form-control" id="name" placeholder="" name="file_upload" value="">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-danger waves-effect waves-light" style="height: 36px;margin-top: 26px;">{{__trans($language, 'All.search', 'Search')}}</button>
+                <button type="submit" class="btn btn-danger waves-effect waves-light" style="height: 36px;margin-top: 26px;">{{__trans($language, 'All.search', 'Tìm kiếm')}}</button>
             </div>
             </form>
         </div>
@@ -39,8 +39,8 @@
                                     @foreach($td as $i)
                                     <th>{{ $i['title'] }}</th>
                                     @endforeach
-                                    <th>{{__trans($language, 'All.status', 'Status')}}</th>
-                                    <th colspan="2">{{__trans($language, 'All.edit', 'Edit')}}</th>
+                                    <th>{{__trans($language, 'All.status', 'Trạng thái')}}</th>
+                                    <th colspan="2">{{__trans($language, 'All.edit', 'Sửa')}}</th>
                                 </tr>
                             </thead>
                             <tbody>

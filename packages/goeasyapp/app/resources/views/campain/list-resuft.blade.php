@@ -2,7 +2,7 @@
 @extends('core::layout.admin')
 @section('content')
 <div class="container-fluid">
-    
+
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
@@ -21,8 +21,8 @@
                                     @foreach($td as $i)
                                     <th>{{ $i['title'] }}</th>
                                     @endforeach
-                                    <th>{{__trans($language, 'All.status', 'Status')}}</th>
-                                    <th colspan="1">{{__trans($language, 'All.edit', 'Edit')}}</th>
+                                    <th>{{__trans($language, 'All.status', 'Trạng thái')}}</th>
+                                    <th colspan="1">{{__trans($language, 'All.edit', 'Chỉnh sửa')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,19 +39,19 @@
                                     @endif
                                     @endforeach
                                     @if($item->status == 1)
-									<td data-field="name" style="width: 50px;"><span class="badge rounded-pill badge-soft-success">{{__trans($language, 'All.appect', 'Appect')}}</span></td>	
+									<td data-field="name" style="width: 50px;"><span class="badge rounded-pill badge-soft-success">{{__trans($language, 'All.appect', 'Chấp nhận')}}</span></td>
 									@elseif($item->status == 2)
-                                    <td data-field="name" style="width: 50px;"><span class="badge rounded-pill badge-soft-danger">{{__trans($language, 'All.not_appect', 'Not Appect')}}</span></td>		
+                                    <td data-field="name" style="width: 50px;"><span class="badge rounded-pill badge-soft-danger">{{__trans($language, 'All.not_appect', 'Từ chối')}}</span></td>
 									@else
-                                    <td data-field="name" style="width: 50px;"><span class="badge rounded-pill badge-soft-default">{{__trans($language, 'All.unavailable', 'Unavailable')}}</span></td>		
+                                    <td data-field="name" style="width: 50px;"><span class="badge rounded-pill badge-soft-default">{{__trans($language, 'All.unavailable', 'Không khả dụng')}}</span></td>
                                     @endif
                                     <td style="width: 30px">
-                                        <a class="btn btn-outline-secondary btn-sm edit" href="{{ route($route, ['id'=>$item->campain, 'user'=> $item->user ])}}" title="Edit">
+                                        <a class="btn btn-outline-secondary btn-sm edit" href="{{ route($route, ['id'=>$item->campain, 'user'=> $item->user ])}}" title="Chỉnh sửa">
                                             <i class="fas fa-pencil-alt"></i>
                                         </a>
                                     </td>
-                                    
-                                    
+
+
                                 </tr>
                                 @endforeach
                             </tbody>

@@ -23,7 +23,7 @@
                                     <th>Lợi nhuận hàng ngày(VNĐ)</th>
                                     <th>Thời hạn hợp đồng(Ngày)</th>
                                     <th>Nhiệm Vụ</th>
-                                    <th colspan="2">{{__trans($language, 'All.edit', 'Edit')}}</th>
+                                    <th colspan="2">{{__trans($language, 'All.edit', 'Chỉnh sửa')}}</th>
                                 </tr>
                                 </thead>
                                 <tbody>

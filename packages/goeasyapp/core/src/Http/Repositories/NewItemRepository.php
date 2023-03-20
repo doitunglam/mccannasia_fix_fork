@@ -17,7 +17,7 @@ class NewItemRepository
         $this->useModel = $model;
         $this->configs = [
             "aciton" => "blog",
-            'title' => __trans($language, 'All.blog', 'Blog'),
+            'title' => __trans($language, 'All.blog', 'Bài viết'),
         ];
     }
     public function deleteItem($id)

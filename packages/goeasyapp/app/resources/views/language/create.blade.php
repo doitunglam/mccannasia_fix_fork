@@ -2,36 +2,36 @@
 @section('content')
 
 <div class="container-fluid">
-    
+
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                 <h4 class="mb-sm-0 font-size-18">{{$title}}</h4>
 
-                
+
 
             </div>
-            
+
         </div>
-        
+
     </div>
 
 
-   
-    <form action="{{ route($route, 0) }}" method="POST" class="form-submit" enctype="multipart/form-data">	
+
+    <form action="{{ route($route, 0) }}" method="POST" class="form-submit" enctype="multipart/form-data">
         @csrf
         <div class="card">
             <div class="card-body">
                 <div class="col-12">
                     <div class="row">
-                        
-                        <div class="col-9">  
-                            <x-component::form.text :messages="$errors->get('name')" name="name" default="Name" value="" id="name" key="all.name" placeholder="all.enter_name" defaultplaceholder="Enter your name"/>
-                            <x-component::form.text :messages="$errors->get('code')" name="code" default="Code" value="" id="code" key="all.code" placeholder="all.enter_code" defaultplaceholder="Enter your code"/>
-                            <x-component::form.text messages="" name="add_page" default="Name page" value="" id="add_page" key="all.name_page" placeholder="all.enter_name_page" defaultplaceholder="Enter your name page"/>
-                            <span class="add_page badge rounded-pill badge-soft-primary" style="cursor: pointer">{{__trans($language, 'All.add_page', 'Add Page')}}</span>    
+
+                        <div class="col-9">
+                            <x-component::form.text :messages="$errors->get('name')" name="name" default="Name" value="" id="name" key="all.name" placeholder="all.enter_name" defaultplaceholder="Nhập tên"/>
+                            <x-component::form.text :messages="$errors->get('code')" name="code" default="Code" value="" id="code" key="all.code" placeholder="all.enter_code" defaultplaceholder="Nhập mã"/>
+                            <x-component::form.text messages="" name="add_page" default="Name page" value="" id="add_page" key="all.name_page" placeholder="all.enter_name_page" defaultplaceholder="Nhập tên trang"/>
+                            <span class="add_page badge rounded-pill badge-soft-primary" style="cursor: pointer">{{__trans($language, 'All.add_page', 'Thêm trang')}}</span>
                         </div>
-                        <div class="col-3">  
+                        <div class="col-3">
                             <x-component::input.ckfinder name="image" value="" key="all.image" default="Image" id="ckfinder"/>
                         </div>
                     </div>
@@ -44,21 +44,21 @@
                     <input type="text" class="form-control content-language" name="" value=""/>
                 </div>
                 <div class="col-6">
-                    <input type="text" class="form-control get-key" value=""/>    
+                    <input type="text" class="form-control get-key" value=""/>
                 </div>
             </div>
         </div>
         <div class="wrap-pages">
             @if(count($data_en) == 0)
             <div class="card item-page get-page" data-page="All">
-                
+
                 <div class="card-body">
                     <div class="col-12">
                         <div class="row">
                             <div class="col-3">
                                 <label class="form-label">Name page: <span class="name-page">All</span></label>
-                                <input type="text" class="form-control get-value-content" placeholder="{{__trans($language, 'all.enter_key_language','Enter your content language')}}" style="margin: 10px 0; "/> 
-                                <span class="add_language badge rounded-pill badge-soft-primary" style="cursor: pointer">{{__trans($language, 'All.add_language', 'Add Language')}}</span>   
+                                <input type="text" class="form-control get-value-content" placeholder="{{__trans($language, 'all.enter_key_language','Enter your content language')}}" style="margin: 10px 0; "/>
+                                <span class="add_language badge rounded-pill badge-soft-primary" style="cursor: pointer">{{__trans($language, 'All.add_language', 'Add Language')}}</span>
                             </div>
                             <div class="col-9">
                                 <div class="row" style="">
@@ -66,7 +66,7 @@
                                         <label class="form-label">Content</label>
                                     </div>
                                     <div class="col-6">
-                                        <label class="form-label">Key</label> 
+                                        <label class="form-label">Key</label>
                                     </div>
                                 </div>
                                 <div class="content-key">
@@ -80,14 +80,14 @@
             @else
             @foreach($data_en as $key => $value)
             <div class="card item-page{{($key == 'Ge') ? ' get-page' : ''}}" data-page="{{$key}}">
-                
+
                 <div class="card-body">
                     <div class="col-12">
                         <div class="row">
                             <div class="col-3">
                                 <label class="form-label">Name page: <span class="name-page">{{$key}}</span></label>
-                                <input type="text" class="form-control get-value-content" placeholder="{{__trans($language, 'all.enter_key_language','Enter your content language')}}" style="margin: 10px 0; "/> 
-                                <span class="add_language badge rounded-pill badge-soft-primary" style="cursor: pointer">{{__trans($language, 'All.add_language', 'Add Language')}}</span>   
+                                <input type="text" class="form-control get-value-content" placeholder="{{__trans($language, 'all.enter_key_language','Enter your content language')}}" style="margin: 10px 0; "/>
+                                <span class="add_language badge rounded-pill badge-soft-primary" style="cursor: pointer">{{__trans($language, 'All.add_language', 'Add Language')}}</span>
                             </div>
                             <div class="col-9">
                                 <div class="row" style="">
@@ -95,7 +95,7 @@
                                         <label class="form-label">Content</label>
                                     </div>
                                     <div class="col-6">
-                                        <label class="form-label">Key</label> 
+                                        <label class="form-label">Key</label>
                                     </div>
                                 </div>
                                 <div class="content-key">
@@ -105,7 +105,7 @@
                                             <input type="text" class="form-control content-language" name="language[{{$key}}][{{$key_}}]" value=""/>
                                         </div>
                                         <div class="col-6">
-                                            <input type="text" class="form-control get-key" value="{{$key_}}"/>    
+                                            <input type="text" class="form-control get-key" value="{{$key_}}"/>
                                         </div>
                                     </div>
                                     @endforeach
@@ -123,11 +123,11 @@
                 <div class="col-12">
                     <div class="row">
                         <div class="d-flex flex-wrap gap-2">
-                            <x-component::form.submit default="Save"  key="all.save"/>   
+                            <x-component::form.submit default="Save"  key="all.save"/>
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </form>

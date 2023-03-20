@@ -25,7 +25,7 @@
                             <div class="col-12">
                                 <div class="row">
                                     <div class="col-9">
-                                        <x-component::form.text name="name" default="Link" value="{{$item->link_}}" id="link" key="all.link" placeholder="All.enter_link" defaultplaceholder="Enter your link"/>
+                                        <x-component::form.text name="name" default="Link" value="{{$item->link_}}" id="link" key="all.link" placeholder="All.enter_link" defaultplaceholder="Nhập link của bạn"/>
                                         <label>
                                             <input type="checkbox" name="is_popup" value="1" @if($item->is_popup == 1) checked @endif>
                                             <span>Is Popup</span>

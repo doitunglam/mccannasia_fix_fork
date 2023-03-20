@@ -20,22 +20,22 @@ $cas = json_decode(file_get_contents(public_path().'/campain_category.json') ?? 
                     <x-component::app.navbar/>
                 </div>
 
-                <button type="button" class="btn btn-sm px-3 font-size-14 header-item dnm-cs waves-effect" id="">
-                    <a style="color: #fff;" href="{{route('campain.statistical')}}"><i class='bx bx-notification'></i>
-                        <span style="">{!!__trans($language, 'All.statistical', 'Thống kê')!!}</span></a>
-                </button>
-                <button type="button" class="btn btn-sm px-3 font-size-14 header-item dnm-cs waves-effect" id="">
-                    <a style="color: #fff;" href="{{route('campain.day')}}"><i class='bx bx-notification'></i>
-                        <span style="">{!!__trans($language, 'All.campain_day', 'Chiến dịch ngày')!!}</span></a>
-                </button>
-                <button type="button" class="btn btn-sm px-3 font-size-14 header-item dnm-cs waves-effect" id="">
-                    <a style="color: #fff;" href="{{route('campain.my')}}"><i class='bx bxs-customize'></i>
-                        <span style="">{!!__trans($language, 'All.campain_my', 'Chiến dịch của tôi')!!}</span></a>
-                </button>
-                <button type="button" class="btn d-none btn-sm px-3 font-size-14 header-item dnm-cs waves-effect" id="">
-                    <a style="color: #fff;" href="{{route('campain.payment')}}"><i class='bx bxs-customize'></i>
-                        <span style="">{!!__trans($language, 'All.payment', 'Thanh toán')!!}</span></a>
-                </button>
+                <span class="btn custom-height btn-sm d-flex flex-column justify-content-center px-3 font-size-14 header-item dnm-cs waves-effect" id="">
+                    <a class="d-flex" style="color: #fff;" href="{{route('campain.statistical')}}"><i class='bx bx-notification'></i>
+                        <span class="d-none d-sm-block">{!!__trans($language, 'All.statistical', 'Thống kê')!!}</span></a>
+                </span>
+                <span class="btn custom-height btn-sm d-flex flex-column justify-content-center px-3 font-size-14 header-item dnm-cs waves-effect" id="">
+                    <a class="d-flex" style="color: #fff;" href="{{route('campain.day')}}"><i class='bx bx-notification'></i>
+                        <span class="d-none d-sm-block">{!!__trans($language, 'All.campain_day', 'Chiến dịch ngày')!!}</span></a>
+                </span>
+                <span class="btn btn-sm custom-height d-flex flex-column justify-content-center px-3 font-size-14 header-item dnm-cs waves-effect" id="">
+                    <a class="d-flex" style="color: #fff;" href="{{route('campain.my')}}"><i class='bx bxs-customize'></i>
+                        <span class="d-none d-sm-block">{!!__trans($language, 'All.campain_my', 'Chiến dịch của tôi')!!}</span></a>
+                </span>
+                <span class="btn d-none custom-height d-flex flex-column justify-content-center btn-sm px-3 font-size-14 header-item dnm-cs waves-effect" id="">
+                    <a class="d-flex" style="color: #fff;" href="{{route('campain.payment')}}"><i class='bx bxs-customize'></i>
+                        <span class="d-none d-sm-block">{!!__trans($language, 'All.payment', 'Thanh toán')!!}</span></a>
+                </span>
             </div>
             <div class="d-flex align-items-center">
                 @if(Auth::user()->type == 'agency')
@@ -44,10 +44,10 @@ $cas = json_decode(file_get_contents(public_path().'/campain_category.json') ?? 
                             <ul class="navbar-nav d-flex flex-row">
                                 <li class="nav-item">
                                     <div class="dropdown">
-                                        <a class="me-3 dropdown-toggle hidden-arrow position-relative" href="javascript:" id="bell-notification" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <a class="me-3 d-flex dropdown-toggle hidden-arrow position-relative" href="javascript:" id="bell-notification" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             @php($amount = currency_format(Auth::user()->amount ?? 0))
                                             <i class="fa fa-credit-card text-white fs-5 me-2"></i>
-                                            <span class="text-white border-bottom">{{ $amount }}</span>
+                                            <span class="text-white border-bottom d-none d-sm-block">{{ $amount }}</span>
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="bell-notification-list">
                                             <li>
@@ -63,7 +63,7 @@ $cas = json_decode(file_get_contents(public_path().'/campain_category.json') ?? 
                         </div>
                     </nav>
                 @endif
-                <div class="d-inline-block px-2">
+                <div class="d-inline-block">
                     <a class="position-relative" href="javascript:" data-bs-toggle="modal" data-bs-target="#contact-form">
                         <i class="fas fa-envelope fs-5 text-white"></i>
                         <span class="badge rounded-pill badge-notification bg-danger position-absolute" style="right: -10px; top: -5px;">!</span>
@@ -149,24 +149,24 @@ $cas = json_decode(file_get_contents(public_path().'/campain_category.json') ?? 
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="{{route('config.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a>
+                                    <a href="{{route('config.list')}}" key="t-default">{!!__trans($language, 'All.list', 'Danh sách')!!}</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('config.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a>
+                                    <a href="{{route('config.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Thêm mới')!!}</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
                             <a href="javascript: void(0);" class="waves-effect">
                                 <i class="fa fa-language"></i>
-                                <span key="t-dashboards">{!!__trans($language, 'All.language', 'Language')!!}</span>
+                                <span key="t-dashboards">{!!__trans($language, 'All.language', 'Ngôn ngữ')!!}</span>
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="{{route('language.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a>
+                                    <a href="{{route('language.list')}}" key="t-default">{!!__trans($language, 'All.list', 'Danh sách')!!}</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('language.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a>
+                                    <a href="{{route('language.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Thêm mới')!!}</a>
                                 </li>
                             </ul>
                         </li>
@@ -174,59 +174,59 @@ $cas = json_decode(file_get_contents(public_path().'/campain_category.json') ?? 
                         <li>
                             <a href="javascript: void(0);" class="waves-effect">
                                 <i class="fa fa-image"></i>
-                                <span key="t-dashboards">{!!__trans($language, 'All.banner', 'Banner')!!}</span>
+                                <span key="t-dashboards">{!!__trans($language, 'All.banner', 'Ảnh')!!}</span>
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="{{route('banner.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a>
+                                    <a href="{{route('banner.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Thêm mới')!!}</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('banner.list')}}" key="t-default">{!!__trans($language, 'All.banner.list', 'Banner List')!!}</a>
+                                    <a href="{{route('banner.list')}}" key="t-default">{!!__trans($language, 'All.banner.list', 'Danh sách ảnh')!!}</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('banner.popup.list')}}" key="t-default">{!!__trans($language, 'All.popup.list', 'Popup List')!!}</a>
+                                    <a href="{{route('banner.popup.list')}}" key="t-default">{!!__trans($language, 'All.popup.list', 'Danh sách popup')!!}</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
                             <a href="javascript: void(0);" class="waves-effect">
                                 <i class="fa fa-list"></i>
-                                <span key="t-dashboards">{!!__trans($language, 'All.category_new', 'Category New')!!}</span>
+                                <span key="t-dashboards">{!!__trans($language, 'All.category_new', 'Phân loại mới')!!}</span>
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="{{route('category-new.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a>
+                                    <a href="{{route('category-new.list')}}" key="t-default">{!!__trans($language, 'All.list', 'Danh sách')!!}</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('category-new.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a>
+                                    <a href="{{route('category-new.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Thêm mới')!!}</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
                             <a href="javascript: void(0);" class="waves-effect">
                                 <i class="fa fa-blog"></i>
-                                <span key="t-dashboards">{!!__trans($language, 'All.blog', 'Blog')!!}</span>
+                                <span key="t-dashboards">{!!__trans($language, 'All.blog', 'Bài viết')!!}</span>
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="{{route('blog.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a>
+                                    <a href="{{route('blog.list')}}" key="t-default">{!!__trans($language, 'All.list', 'Danh sách')!!}</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('blog.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a>
+                                    <a href="{{route('blog.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Thêm mới')!!}</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
                             <a href="javascript: void(0);" class="waves-effect">
                                 <i class="fa fa-industry"></i>
-                                <span key="t-dashboards">{!!__trans($language, 'All.campain', 'Campain')!!}</span>
+                                <span key="t-dashboards">{!!__trans($language, 'All.campain', 'Chiến dịch')!!}</span>
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="{{route('campain.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a>
+                                    <a href="{{route('campain.list')}}" key="t-default">{!!__trans($language, 'All.list', 'Danh sách')!!}</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('campain.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a>
+                                    <a href="{{route('campain.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Thêm mới')!!}</a>
                                 </li>
                                 <li>
                                     <a href="{{route('campain.resuft.list')}}" key="t-default">{!!__trans($language, 'All.resuft', 'Resuft')!!}</a>
@@ -236,42 +236,42 @@ $cas = json_decode(file_get_contents(public_path().'/campain_category.json') ?? 
                         <li>
                             <a href="javascript:" class="waves-effect">
                                 <i class="fa fa-exclamation"></i>
-                                <span key="t-dashboards">{!! trans('Campain Mission')!!}</span>
+                                <span key="t-dashboards">{!! __trans('$language', 'All.campain_mission', "Nhiệm vụ chiến dịch")!!}</span>
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="{{  route('campain.mission.list')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a>
+                                    <a href="{{  route('campain.mission.list')}}" key="t-default">{!!__trans($language, 'All.list', 'Danh sách')!!}</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('campain.mission.getCreate')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a>
+                                    <a href="{{route('campain.mission.getCreate')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Thêm mới')!!}</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
                             <a href="javascript: void(0);" class="waves-effect">
                                 <i class="fa fa-people-arrows"></i>
-                                <span key="t-dashboards">{!!__trans($language, 'All.agency', 'Agency')!!}</span>
+                                <span key="t-dashboards">{!!__trans($language, 'All.agency', 'Đại lý')!!}</span>
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="{{route('user')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a>
+                                    <a href="{{route('user')}}" key="t-default">{!!__trans($language, 'All.list', 'Danh sách')!!}</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('user.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Add New')!!}</a>
+                                    <a href="{{route('user.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Thêm mới')!!}</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('user.view_change_all_amount')}}" key="t-default">{!!__trans($language, 'All.change_amount', 'Change Amount')!!}</a>
+                                    <a href="{{route('user.view_change_all_amount')}}" key="t-default">{!!__trans($language, 'All.change_amount', 'Đổi số dư')!!}</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
                             <a href="javascript: void(0);" class="waves-effect">
                                 <i class="fa fa-user"></i>
-                                <span key="t-dashboards">{!!__trans($language, 'All.resuft_management', 'Resuft Management')!!}</span>
+                                <span key="t-dashboards">{!!__trans($language, 'All.resuft_management', 'Quản lý Resuft')!!}</span>
                             </a>
                             <ul class="sub-menu">
                                 <li>
-                                    <a href="{{route('resuft.management')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a>
+                                    <a href="{{route('resuft.management')}}" key="t-default">{!!__trans($language, 'All.list', 'Danh sách')!!}</a>
                                 </li>
                             </ul>
                         </li>

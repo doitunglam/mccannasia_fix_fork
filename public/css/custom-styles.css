@@ -161,3 +161,10 @@
       border-color: mix($color, $background, percentage($table-border-factor));
     }
   }
+
+  @media (max-width:560px){
+    .custom-height{
+      height: 43px;
+    }
+
+  }

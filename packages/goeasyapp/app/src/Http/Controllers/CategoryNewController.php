@@ -38,8 +38,8 @@ class CategoryNewController extends Controller
         $language = ($language && $language->value != '') ? json_decode($language->value, true) : [];
         $td = [
             ['title' => __trans($language, 'All.id', 'ID'), 'value' => 'id'],
-            ['title' => __trans($language, 'All.name', 'Name'), 'value' => 'name'],
-            ['title' => __trans($language, 'All.image', 'Image'), 'value' => 'image', 'type' => 'image'],
+            ['title' => __trans($language, 'All.name', 'Tên'), 'value' => 'name'],
+            ['title' => __trans($language, 'All.image', 'Ảnh'), 'value' => 'image', 'type' => 'image'],
         ];
         $items = $this->useRepository->getPaginateWithRelation();
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.list', [

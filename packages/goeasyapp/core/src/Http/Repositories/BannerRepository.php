@@ -17,7 +17,7 @@ class BannerRepository
         $this->useModel = $model;
         $this->configs = [
             "aciton" => "banner",
-            'title' => __trans($language, 'All.banner', 'Banner'),
+            'title' => __trans($language, 'All.banner', 'Ảnh'),
         ];
     }
     public function getModel()

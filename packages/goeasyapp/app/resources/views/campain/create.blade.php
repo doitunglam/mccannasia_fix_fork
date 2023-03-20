@@ -35,30 +35,30 @@
                                         <div class="col-9">
                                             <x-component::form.text name="name[{{ $ln->code }}]" default="Name"
                                                 value="" id="name" key="all.name" placeholder="All.enter_name"
-                                                defaultplaceholder="Enter your name" />
+                                                defaultplaceholder="Nhập tên" />
                                             <x-component::input.ckeditor name="description[{{ $ln->code }}]"
                                                 default="Description" value="" id="description" key="All.description"
                                                 placeholder="All.enter_description"
-                                                defaultplaceholder="Enter your description" />
+                                                defaultplaceholder="Nhập mô tả" />
                                             <x-component::form.text name="short_content[{{ $ln->code }}]"
                                                 default="Short Content" value="" id="short_content"
                                                 key="all.short_content" placeholder="All.enter_short_content"
-                                                defaultplaceholder="Enter your short content" />
+                                                defaultplaceholder="Nhập nội dung" />
 
                                             @if ($index == 0)
                                                 <x-component::form.date name="date_public" default="Date Public"
                                                     value="" id="date_public" key="All.date_public"
-                                                    placeholder="All.enter_date" defaultplaceholder="Enter your date" />
+                                                    placeholder="All.enter_date" defaultplaceholder="Nhập ngày" />
                                                 <x-component::form.text name="link_" default="Link" value=""
                                                     id="link_" key="all.link" placeholder="All.link"
-                                                    defaultplaceholder="Enter your link" />
+                                                    defaultplaceholder="Nhập đường dẫn" />
                                             @endif
 
                                             <div>
-                                                <x-component::form.text messages="" name="add_task" default="Task"
+                                                <x-component::form.text messages="" name="add_task" default="Nhiệm vụ"
                                                     value="" id="task" key="all.task"
                                                     placeholder="all.enter_name_task"
-                                                    defaultplaceholder="Enter your task" />
+                                                    defaultplaceholder="Nhập nhiệm vụ" />
                                                 <div class="get-html" style="display: none">
                                                     <div class="row content-item" style="margin-top: 10px; ">
                                                         <div class="col-9">
@@ -69,7 +69,7 @@
                                                 </div>
                                                 <span data-language="{{ $ln->code }}"
                                                     class="add_task badge rounded-pill badge-soft-primary"
-                                                    style="cursor: pointer">{{ __trans($language, 'All.add_task', 'Add Task') }}</span>
+                                                    style="cursor: pointer">{{ __trans($language, 'All.add_task', 'Thêm nhiệm vụ') }}</span>
                                             </div>
                                             <div class="task-wrap">
 
@@ -80,8 +80,8 @@
                                                 key="all.image" default="Image" id="ckfinder_{{ $ln->code }}" />
                                             @if ($index == 0)
                                                 <x-component::form.text name="price" default="Price" value=""
-                                                    id="price" key="All.price" placeholder="All.enter_date"
-                                                    defaultplaceholder="Enter your price" />
+                                                    id="price" key="All.price" placeholder="All.price"
+                                                    defaultplaceholder="Nhập giá" />
                                                 <div class="form-group mb-3">
                                                     <label for="category">Category</label>
                                                     <select name="category" id="category" class="select2 form-control">

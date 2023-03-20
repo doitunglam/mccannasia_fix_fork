@@ -17,7 +17,7 @@ class CategoryNewRepository
         $this->useModel = $model;
         $this->configs = [
             "aciton" => "category-new",
-            'title' => __trans($language, 'All.category_new', 'Category New'),
+            'title' => __trans($language, 'All.category_new', 'Phân loại mới'),
         ];
     }
     public function getModel()

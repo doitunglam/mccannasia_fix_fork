@@ -2,7 +2,7 @@
 @extends('core::layout.admin')
 @section('content')
 <div class="container-fluid">
-    
+
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
@@ -12,7 +12,7 @@
     </div>
 
 
-   
+
     <div class="card">
         <div class="card-body">
             <div class="col-12">
@@ -24,7 +24,7 @@
                                     @foreach($td as $i)
                                     <th>{{ $i['title'] }}</th>
                                     @endforeach
-                                    <th>{{__trans($language, 'All.status', 'Status')}}</th>
+                                    <th>{{__trans($language, 'All.status', 'Trạng thái')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,11 +41,11 @@
                                     @endif
                                     @endforeach
                                     @if($item->status == 1)
-									<td data-field="name" style="width: 50px;"><span class="badge rounded-pill badge-soft-success">{{__trans($language, 'All.appect', 'Appect')}}</span></td>	
+									<td data-field="name" style="width: 50px;"><span class="badge rounded-pill badge-soft-success">{{__trans($language, 'All.appect', 'Chấp nhận')}}</span></td>
 									@elseif($item->status == 2)
-									<td data-field="name" style="width: 50px;"><span class="badge rounded-pill badge-soft-danger">{{__trans($language, 'All.not_appect', 'Not Appect')}}</span></td>		
+									<td data-field="name" style="width: 50px;"><span class="badge rounded-pill badge-soft-danger">{{__trans($language, 'All.not_appect', 'Từ chối')}}</span></td>
 									@else
-                                    <td data-field="name" style="width: 50px;"><span class="badge rounded-pill badge-soft-default">{{__trans($language, 'All.waiting', 'Waiting')}}</span></td>
+                                    <td data-field="name" style="width: 50px;"><span class="badge rounded-pill badge-soft-default">{{__trans($language, 'All.waiting', 'Đang chờ')}}</span></td>
                                     @endif
                                 </tr>
                                 @endforeach
@@ -59,7 +59,7 @@
 <div class="card">
     <div class="card-body">
         <div class="d-flex flex-wrap gap-2">
-            <a type="button" class="btn btn-danger waves-effect waves-light" href="{{route($create)}}">{{__trans($language, 'All.create','Create')}}</a>
+            <a type="button" class="btn btn-danger waves-effect waves-light" href="{{route($create)}}">{{__trans($language, 'All.create','Tạo')}}</a>
         </div>
     </div>
 

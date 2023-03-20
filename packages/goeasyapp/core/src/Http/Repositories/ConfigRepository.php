@@ -17,7 +17,7 @@ class ConfigRepository
         $this->useModel = $model;
         $this->configs = [
             "aciton" => "config",
-            'title' => __trans($language, 'All.config', 'Config'),
+            'title' => __trans($language, 'All.config', 'Cấu hình'),
         ];
     }
     public function getModel()

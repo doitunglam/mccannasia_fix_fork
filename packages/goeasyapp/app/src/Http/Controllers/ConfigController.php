@@ -40,8 +40,8 @@ class ConfigController extends Controller
         $td = [
             ['title' => __trans($language, 'All.id', 'ID'), 'value' => 'id'],
 
-            ['title' => __trans($language, 'All.account', 'Account'), 'value' => 'value'],
-            ['title' => __trans($language, 'All.image', 'Image'), 'value' => 'image', 'type' => 'image'],
+            ['title' => __trans($language, 'All.account', 'Tài khoản'), 'value' => 'value'],
+            ['title' => __trans($language, 'All.image', 'Ảnh'), 'value' => 'image', 'type' => 'image'],
         ];
         $items = $this->useRepository->getPaginateWithRelation();
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.list', [

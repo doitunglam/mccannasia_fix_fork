@@ -19,7 +19,7 @@ class ResuftManagementRepository
         $this->useModel = $model;
         $this->configs = [
             "aciton" => "Resuft",
-            'title' => __trans($language, 'All.campain', 'Campain'),
+            'title' => __trans($language, 'All.campain', 'Chiến dịch'),
         ];
     }
     public function getConfig()
