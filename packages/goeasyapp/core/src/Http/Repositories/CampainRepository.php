@@ -8,6 +8,7 @@ use App\Models\Payment;
 use App\Models\User;
 use App\Models\Language;
 use App\Models\CampainItem;
+use Illuminate\Support\Facades\DB;
 use Auth;
 
 class CampainRepository
@@ -48,6 +49,13 @@ class CampainRepository
     {
         return $this->useModel->find($id);
     }
+    public function getModelByIdAndMissionInfo($id)
+    {
+        return $this->useModel->where('campains.id', $id)
+        ->join('campain_missions', 'campain_missions.id', '=', 'campains.mission_id')
+        ->select('campains.*', 'campain_missions.id as mission_id', 'campain_missions.name as mission_name', 'campain_missions.daily_profit', 'campain_missions.binding_fee', 'campain_missions.content')
+        ->first();
+    }
     public function getSon($items, $level)
     {
         $string = '';
@@ -71,6 +79,7 @@ class CampainRepository
         } else {
             $user = User::find($request->id);
         }
+        // ["1", "2"]
         $campain = json($user->campains);
         return $this->useModel->whereIn('id', $campain)->get();
     }
@@ -97,6 +106,64 @@ class CampainRepository
             $query->where('date_public', $day)
                 ->orWhere('date_public', null);
         })->get();
+    }
+    public function getTotalRechargeAmountToday() {
+        $day = date('Y-m-d');
+        return Payment::where('type', 1)->where('created_at', 'like', '%' . $day . '%')
+        ->where('status', 1)
+        ->sum('amount');
+    }
+    public function getTotalWithdrawAmountToday() {
+        $day = date('Y-m-d');
+        return Payment::whereNull('type')->where('created_at', 'like', '%' . $day . '%')
+        ->where('status', 1)
+        ->sum('amount');
+    }
+    public function getTotalUserRegisterToday() {
+        $day = date('Y-m-d');
+        return User::where('created_at', 'like', '%' . $day . '%')->count();
+    }
+    public function getTop5UserMostReferralCode() {
+        $groupByReferralCode = User::select('parent_referral_code', 'id', DB::raw('count(*) as user_count'))
+            ->groupBy('parent_referral_code', 'id')
+            ->whereNotNull('parent_referral_code')
+            ->orderByDesc('user_count')
+            ->get();
+        $summary = User::whereIn('users.id', $groupByReferralCode->pluck('id'))
+            ->leftJoin('payments', 'payments.user', '=', 'users.id')
+            ->where('payments.status', 1)
+            ->select('users.parent_referral_code',
+                    DB::raw('SUM(CASE WHEN payments.type = 1 THEN payments.amount ELSE 0 END) as totalRechargeAmount'),
+                    DB::raw('SUM(CASE WHEN payments.type IS NULL THEN payments.amount ELSE 0 END) as totalWithdrawAmount'))
+            ->groupBy('users.parent_referral_code')
+            ->get();
+        $topAgency = User::whereIn('referral_code', $groupByReferralCode->pluck('parent_referral_code')->toArray())
+            ->get()
+            ->map(function ($user) use ($groupByReferralCode) {
+                $user->user_count = $groupByReferralCode->where('parent_referral_code', $user->referral_code)->first()->user_count;
+                return $user;
+            })
+            ->map(function ($user) use ($summary) {
+                $user->total_recharge_amount = $summary->where('parent_referral_code', $user->referral_code)->first()->totalRechargeAmount;
+                $user->total_withdraw_amount = $summary->where('parent_referral_code', $user->referral_code)->first()->totalWithdrawAmount;
+                return $user;
+            });
+        $topByReferralCode = $topAgency->sortByDesc('user_count')->take(20);
+        $topByRechargeAmount = $topAgency->sortByDesc('total_recharge_amount')->where('total_recharge_amount', '>', 0)->take(20);
+        $topByWithdrawAmount = $topAgency->sortByDesc('total_withdraw_amount')->where('total_withdraw_amount', '>', 0)->take(20);
+        return [
+            'topByReferralCode' => $topByReferralCode,
+            'topByRechargeAmount' => $topByRechargeAmount,
+            'topByWithdrawAmount' => $topByWithdrawAmount
+        ];
+
+    }
+    public function getTopAgencyHaveMostRechargeAmount() {
+        $groupByAgency = User::select('parent_referral_code', DB::raw('count(*) as user_count'))
+        ->groupBy('parent_referral_code')
+        ->whereNotNull('parent_referral_code')
+        ->get();
+
     }
     public function getModelEn()
     {
@@ -151,7 +218,17 @@ class CampainRepository
 
     public function getResuftUser($id)
     {
-        return Resuft::where('user', Auth::user()->id)->where('campain', $id)->get();
+        $results = Resuft::where('user', Auth::user()->id)->where('campain', $id)->get();
+        foreach ($results as $result) {
+            $json_data = json_decode($result->resuft);
+
+            if (json_last_error() === JSON_ERROR_NONE) {
+                $result->resuft = $json_data;
+            } else {
+                $result->resuft = [];
+            }
+        }
+        return $results;
     }
     public function getResuft($id, $user)
     {
@@ -165,9 +242,9 @@ class CampainRepository
             $user = User::select('id')->where('name', 'like', '%' . $request->s_name . '%')->get()->toArray();
         }
         if (count($user) != 0) {
-            return Payment::orderBy('updated_at')->whereIn('user', $user)->paginate(20);
+            return Payment::orderBy('created_at')->whereIn('user', $user)->paginate(20);
         }
-        return Payment::orderBy('updated_at')->paginate(20);
+        return Payment::orderBy('created_at')->paginate(20);
     }
 
     public function getAdminPaymentRecharge_Withdraw($request, $type)
@@ -177,14 +254,14 @@ class CampainRepository
             $user = User::select('id')->where('name', 'like', '%' . $request->s_name . '%')->get()->toArray();
         }
         if (count($user) != 0) {
-            return Payment::where('type', $type)->orderBy('updated_at')->whereIn('user', $user)->paginate(20);
+            return Payment::where('type', $type)->orderBy('created_at')->whereIn('user', $user)->paginate(20);
         }
-        return Payment::where('type', $type)->orderBy('updated_at')->paginate(20);
+        return Payment::where('type', $type)->orderBy('created_at', 'DESC')->paginate(20);
     }
 
     public function getMyPaymentRecharge_Withdraw($request, $type)
     {
-        return Payment::where('type', $type)->where('user', Auth::id())->orderBy('updated_at')->paginate(20);
+        return Payment::where('type', $type)->where('user', Auth::id())->orderBy('created_at', 'DESC')->paginate(20);
     }
 
     public function savePayment($request)
@@ -209,11 +286,13 @@ class CampainRepository
     {
         $model = Payment::find($request->id);
         $user = Auth::user();
-        if ($model->status == 1) {
+        if ($model->status == 1 || $request->status == "2") {
             $user = User::find($model->user);
             $amount = $user->amount;
-            if ($request->type == 1)
+            if ($request->type == 1 || $request->status == "2")
+            {
                 $amount = $user->amount + $model->amount;
+            }
             $user->amount = $amount;
             $user->save();
         }
@@ -278,7 +357,12 @@ class CampainRepository
         $model->status = 0;
         $model->use_ = $use_;
         $model->date = date('d-m-Y');
-        $model->resuft = json_encode($request->resuft);
+        $new_resuft = array_merge(json_decode($model->resuft, true) ?: [], $request->resuft);
+        $decoded_resuft_explain = json_decode($model->resuft_explain, true) ?: [];
+        array_push($decoded_resuft_explain, $request->resuft_explain);
+        $new_resuft_explain = $decoded_resuft_explain;
+        $model->resuft = json_encode($new_resuft);
+        $model->resuft_explain = json_encode($new_resuft_explain);
         $model->save();
     }
     public function updateModel($request)

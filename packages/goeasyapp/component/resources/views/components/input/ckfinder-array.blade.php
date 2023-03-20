@@ -1,5 +1,4 @@
 <div class="p-3" id="{{$id}}">
-    <label for="{{$id}}" class="form-label">{{ $key }}</label>
     <div class="imgArrList" class="grid grid-cols-2">
         @if($value != null)
         @foreach($value as $data)
@@ -15,11 +14,11 @@
     <div>
         <button class="array_add_click btn btn-primary waves-effect waves-light" type="button"
             class="array_add text-text mt-3 block w-full rounded-lg bg-primary px-[21px] py-[11px] text-center text-sm font-medium">
-            Upload image
+            Tải lên ảnh
         </button>
         <button class="resetArrImage btn btn-danger waves-effect waves-light" type="button"
             class="array_add text-text mt-3 block w-full rounded-lg bg-primary px-[21px] py-[11px] text-center text-sm font-medium">
-            Reset
+            Làm mới
         </button>
     </div>
 </div>
@@ -33,7 +32,7 @@
 
     var array_add = $("#{{$id}} .array_add_click");
     $("#{{$id}} .array_add_click").click(function(){
-       
+
         CKFinder.modal({
             language: "en",
             chooseFiles: true,
@@ -56,8 +55,8 @@
                 });
             }
         });
-        
+
     });
-    
+
 </script>
 @endpush

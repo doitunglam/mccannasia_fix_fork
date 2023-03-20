@@ -33,9 +33,9 @@
                             </div>
                             <div>
                                 @if(!$info)
-                                    <x-component::form.submit default="Register" key="all.register"/>
+                                    <x-component::form.submit default="Đăng ký" key="all.register"/>
                                 @else
-                                    <a href="{{ route('campain.link', $item->id) }}" class="btn btn-primary waves-effect waves-light">{{ __trans($language, 'all.create_link', 'Create link') }}</a>
+                                    <a href="{{ route('campain.link', $item->id) }}" class="btn btn-primary waves-effect waves-light">{{ __trans($language, 'all.create_link', 'Tạo link') }}</a>
                                 @endif
                             </div>
                         </div>
@@ -49,16 +49,31 @@
             @endif
             <div class="card">
                 <div class="card-body">
-                    <h5>{{__trans($language, 'All.description', 'Description')}}</h5>
+                    <h5>{{__trans($language, 'All.description', 'Mô tả')}}</h5>
                     {!!__transItem($item->description)!!}
-                    <h5 style="margin-top: 20px;">{{__trans($language, 'All.Reason_for_cancellation', 'Reason for cancellation')}}</h5>
+                    <h5 style="margin-top: 20px;">{{__trans($language, 'All.Reason_for_cancellation', 'Lý do huỷ')}}</h5>
                     {!!__transItem($item->reson_cancel)!!}
-                    <h5 style="margin-top: 20px;">{{__trans($language, 'All.registration_fee', 'Registration Fee')}}</h5>
+                    <h5 style="margin-top: 20px;">{{__trans($language, 'All.registration_fee', 'Phí đăng ký')}}</h5>
                     <p>
-                        {!!__transItem($item->registration_fee)!!}đ </p>
-                    <h5 style="margin-top: 20px;">{{__trans($language, 'All.price', 'Price')}}</h5>
+                        {!!currency_format(__transItem($item->registration_fee))!!} </p>
+                    <h5 style="margin-top: 20px;">{{__trans($language, 'All.price', 'Giá')}}</h5>
                     <p>
-                        {!!__transItem($item->price)!!}đ/ {{__trans($language, 'All.day', 'Day')}}
+                        {!!currency_format(__transItem($item->price))!!}/ {{__trans($language, 'All.day', 'Số ngày')}}
+                    </p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5>{{__trans($language, 'All.mission_name', 'Tên nhiệm vụ')}}</h5>
+                    {!!__transItem($item->mission_name)!!}
+                    <h5 style="margin-top: 20px;">{{__trans($language, 'All.mission_content', 'Nội dung nhiệm vụ')}}</h5>
+                    {!!__transItem($item->content)!!}
+                    <h5 style="margin-top: 20px;">{{__trans($language, 'All.daily_profit', 'Lợi nhuận hàng ngày')}}</h5>
+                    <p>
+                        {!!currency_format(__transItem($item->daily_profit))!!} </p>
+                    <h5 style="margin-top: 20px;">{{__trans($language, 'All.binding_fee', 'Phí ràng buộc')}}</h5>
+                    <p>
+                        {!!currency_format(__transItem($item->binding_fee))!!}
                     </p>
                 </div>
             </div>
@@ -91,11 +106,11 @@
                         </div>
                     @endforeach
 
-                    <p class="mb-4" style="margin-top: 10px;font-weight: bold">{{__trans($language, 'All.Amount', 'Số tiền cần chuyển')}}: <span class="text-primary">{!!__transItem($item->registration_fee)!!}đ</span></p>
+                    <p class="mb-4" style="margin-top: 10px;font-weight: bold">{{__trans($language, 'All.Amount', 'Số tiền cần chuyển')}}: <span class="text-primary">{!!__transItem(currency_format($item->registration_fee))!!}</span></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success done-payment" data-bs-dismiss="modal">{{__trans($language, 'All.done', 'Done')}}</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__trans($language, 'All.close', 'Close')}}</button>
+                    <button type="button" class="btn btn-success done-payment" data-bs-dismiss="modal">{{__trans($language, 'All.done', 'Hoàn thành')}}</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__trans($language, 'All.close', 'Đóng')}}</button>
                 </div>
             </div>
         </div>

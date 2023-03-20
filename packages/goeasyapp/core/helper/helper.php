@@ -19,9 +19,12 @@ function __language()
 {
     return Language::all();
 }
-function currency_format($number, $suffix = 'đ') {
+function currency_format($number, $suffix = '₫') {
         if (!empty($number)) {
-            return number_format($number, 0, ',', '.') . "{$suffix}";
+            return number_format($number, 2, '.', ',') . "{$suffix}";
+        } else {
+            return 0 . "{$suffix}";
         }
+
     }
 ?>

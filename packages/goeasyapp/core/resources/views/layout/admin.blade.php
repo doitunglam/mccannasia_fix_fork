@@ -22,19 +22,19 @@ $cas = json_decode(file_get_contents(public_path().'/campain_category.json') ?? 
 
                 <button type="button" class="btn btn-sm px-3 font-size-14 header-item dnm-cs waves-effect" id="">
                     <a style="color: #fff;" href="{{route('campain.statistical')}}"><i class='bx bx-notification'></i>
-                        <span style="">{!!__trans($language, 'All.statistical', 'Statistical')!!}</span></a>
+                        <span style="">{!!__trans($language, 'All.statistical', 'Thống kê')!!}</span></a>
                 </button>
                 <button type="button" class="btn btn-sm px-3 font-size-14 header-item dnm-cs waves-effect" id="">
                     <a style="color: #fff;" href="{{route('campain.day')}}"><i class='bx bx-notification'></i>
-                        <span style="">{!!__trans($language, 'All.campain_day', 'Campain Day')!!}</span></a>
+                        <span style="">{!!__trans($language, 'All.campain_day', 'Chiến dịch ngày')!!}</span></a>
                 </button>
                 <button type="button" class="btn btn-sm px-3 font-size-14 header-item dnm-cs waves-effect" id="">
                     <a style="color: #fff;" href="{{route('campain.my')}}"><i class='bx bxs-customize'></i>
-                        <span style="">{!!__trans($language, 'All.campain_my', 'My Campain')!!}</span></a>
+                        <span style="">{!!__trans($language, 'All.campain_my', 'Chiến dịch của tôi')!!}</span></a>
                 </button>
                 <button type="button" class="btn d-none btn-sm px-3 font-size-14 header-item dnm-cs waves-effect" id="">
                     <a style="color: #fff;" href="{{route('campain.payment')}}"><i class='bx bxs-customize'></i>
-                        <span style="">{!!__trans($language, 'All.payment', 'Payment')!!}</span></a>
+                        <span style="">{!!__trans($language, 'All.payment', 'Thanh toán')!!}</span></a>
                 </button>
             </div>
             <div class="d-flex align-items-center">
@@ -261,6 +261,17 @@ $cas = json_decode(file_get_contents(public_path().'/campain_category.json') ?? 
                                 </li>
                                 <li>
                                     <a href="{{route('user.view_change_all_amount')}}" key="t-default">{!!__trans($language, 'All.change_amount', 'Change Amount')!!}</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript: void(0);" class="waves-effect">
+                                <i class="fa fa-user"></i>
+                                <span key="t-dashboards">{!!__trans($language, 'All.resuft_management', 'Resuft Management')!!}</span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="{{route('resuft.management')}}" key="t-default">{!!__trans($language, 'All.list', 'List')!!}</a>
                                 </li>
                             </ul>
                         </li>

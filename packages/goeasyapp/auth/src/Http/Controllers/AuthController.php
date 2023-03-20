@@ -31,7 +31,7 @@ class AuthController extends Controller
             'password' => 'required',
             'phone' => 'required|unique:users',
             'email' => 'unique:users|email',
-            'g-recaptcha-response' => ['required', new \App\Rules\ValidRecaptcha]
+            // 'g-recaptcha-response' => ['required', new \App\Rules\ValidRecaptcha]
         ], [
                 'username.required' => 'Tên không được để trống',
                 'phone.required' => 'Số điện thoại không được để trống',
@@ -49,6 +49,13 @@ class AuthController extends Controller
             if ($check) {
                 return redirect()->back()
                     ->with('success', 'Email already exists in the system.');
+            }
+        }
+        if($request->phone != ''){
+            $check = User::where('phone', $request->phone)->first();
+            if ($check) {
+                return redirect()->back()
+                    ->with('success', 'Phone already exists in the system.');
             }
         }
         $model = new User;

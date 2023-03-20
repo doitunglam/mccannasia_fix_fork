@@ -11,6 +11,7 @@ use Auth;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class AgencyController extends Controller
 {
@@ -49,7 +50,14 @@ class AgencyController extends Controller
         $model = User::find($id);
         $referral_list = empty($model->referral_code)
             ? []
-            : User::where('parent_referral_code', $model->referral_code)->get();
+            : DB::table('users')
+            ->leftJoin('payments', 'payments.user', '=', 'users.id')
+            ->select('users.*',
+                        DB::raw('SUM(CASE WHEN payments.type = 1 THEN payments.amount ELSE 0 END) as total_recharge'),
+                        DB::raw('SUM(CASE WHEN payments.type IS NULL THEN payments.amount ELSE 0 END) as total_withdraw'))
+            ->where('users.parent_referral_code', $model->referral_code)
+            ->groupBy('users.id')
+            ->get();
         return view('app::user.edit', [
             'model' => $model,
             'store' => 'user.store',

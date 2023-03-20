@@ -46,9 +46,6 @@ class CampainController extends Controller
     }
     public function download(Request $request)
     {
-
-
-
         $lang = (session('locale') ? session('locale') : 'en');
         $language = Language::orderBy('updated_at', 'DESC')->where('code', $lang)->first();
         $language = ($language && $language->value != '') ? json_decode($language->value, true) : [];
@@ -230,9 +227,9 @@ class CampainController extends Controller
 
         $td = [
             ['title' => __trans($language, 'All.id', 'ID'), 'value' => 'id'],
-            ['title' => __trans($language, 'All.user', 'User'), 'value' => 'user_name'],
-            ['title' => __trans($language, 'All.reason', 'Reason'), 'value' => 'name'],
-            ['title' => __trans($language, 'All.amount', 'Amount'), 'value' => 'amount'],
+            ['title' => __trans($language, 'All.user', 'Người dùng'), 'value' => 'user_name'],
+            ['title' => __trans($language, 'All.reason', 'Lý do'), 'value' => 'name'],
+            ['title' => __trans($language, 'All.amount', 'Số lượng'), 'value' => 'amount'],
         ];
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.payment-all', [
             'title' => 'Danh sách yêu cầu nạp tiền',
@@ -253,9 +250,9 @@ class CampainController extends Controller
 
         $td = [
             ['title' => __trans($language, 'All.id', 'ID'), 'value' => 'id'],
-            ['title' => __trans($language, 'All.user', 'User'), 'value' => 'user_name'],
-            ['title' => __trans($language, 'All.reason', 'Reason'), 'value' => 'name'],
-            ['title' => __trans($language, 'All.amount', 'Amount'), 'value' => 'amount'],
+            ['title' => __trans($language, 'All.user', 'Người dùng'), 'value' => 'user_name'],
+            ['title' => __trans($language, 'All.reason', 'Lý do'), 'value' => 'name'],
+            ['title' => __trans($language, 'All.amount', 'Số tiền'), 'value' => 'amount'],
         ];
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.payment-all', [
             'title' => 'Danh sách yêu cầu rút tiền',
@@ -277,8 +274,8 @@ class CampainController extends Controller
         $td = [
             ['title' => __trans($language, 'All.id', 'ID'), 'value' => 'id'],
 //            ['title' => __trans($language, 'All.user', 'User'), 'value' => 'user_name'],
-            ['title' => __trans($language, 'All.reason', 'Reason'), 'value' => 'name'],
-            ['title' => __trans($language, 'All.amount', 'Amount'), 'value' => 'amount'],
+            ['title' => __trans($language, 'All.reason', 'Lý do'), 'value' => 'name'],
+            ['title' => __trans($language, 'All.amount', 'Số tiền'), 'value' => 'amount'],
         ];
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.payment-list-recharge', [
             'title' => 'Danh sách yêu cầu nạp tiền',
@@ -300,8 +297,8 @@ class CampainController extends Controller
         $td = [
             ['title' => __trans($language, 'All.id', 'ID'), 'value' => 'id'],
 //            ['title' => __trans($language, 'All.user', 'User'), 'value' => 'user_name'],
-            ['title' => __trans($language, 'All.reason', 'Reason'), 'value' => 'name'],
-            ['title' => __trans($language, 'All.amount', 'Amount'), 'value' => 'amount'],
+            ['title' => __trans($language, 'All.reason', 'Lý do'), 'value' => 'name'],
+            ['title' => __trans($language, 'All.amount', 'Số tiền'), 'value' => 'amount'],
         ];
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.payment-list-recharge', [
             'title' => 'Danh sách yêu cầu rút tiền',
@@ -332,12 +329,21 @@ class CampainController extends Controller
     public function paymentWithdraw(Request $request){
         if(is_numeric($request->payment)){
             $user = Auth::user();
+            $userModel = User::find($user->id);
+            if($userModel->amount < $request->payment) {
+                return redirect()->back()->with('error', 'Số dư tài khoản không đủ để thực hiện yêu cầu rút tiền');
+            }
+            if($request->payment < 200000) {
+                return redirect()->back()->with('error', 'Số tiền yêu cầu rút phải lớn hơn 200.000');
+            }
+            $balance = $userModel->amount - $request->payment;
+            $user->amount =  $balance;
+            $user->save();
             $input['user'] = $user->id;
             $input['user_name'] = $user->name;
             $input['amount'] = $request->payment;
             $input['name'] = $request->reason;
             $input['type'] = null;
-
             Payment::create($input);
 
             return redirect()->back()->with('success', 'Yêu cầu rút tiền thành công');
@@ -411,7 +417,7 @@ class CampainController extends Controller
     }
     public function resuft($id)
     {
-        $item = $this->useRepository->getModelById($id);
+        $item = $this->useRepository->getModelByIdAndMissionInfo($id);
         $resuft = $this->useRepository->getResuftUser($id);
         $info = $this->useRepository->getCampainInfo($id);
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.resuft', [
@@ -444,7 +450,6 @@ class CampainController extends Controller
     public function my(Request $request)
     {
         $items = $this->useRepository->getCampainMy($request);
-
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.my', [
             'items' => $items,
             'title' => $this->useRepository->getConfig()['title'] . ' My',
@@ -470,18 +475,32 @@ class CampainController extends Controller
     public function day(Request $request)
     {
         $items = $this->useRepository->getCampainDay($request);
-        return view('app::' . $this->useRepository->getConfig()['aciton'] . '.day', [
+        $user = Auth::user();
+        $totalRechargeAmountToday = $this->useRepository->getTotalRechargeAmountToday();
+        $totalWithdrawAmountToday = $this->useRepository->getTotalWithdrawAmountToday();
+        $totalUserRegisterToday = $this->useRepository->getTotalUserRegisterToday();
+        $topUserMostRefer = $this->useRepository->getTop5UserMostReferralCode();
+        return view('app::' . $this->useRepository->getConfig()['aciton'] . '.dashboard', [
             'items' => $items,
-            'title' => $this->useRepository->getConfig()['title'] . ' Day',
+            'title' => "Dashboard",
+            'user' => $user,
+            'totalRechargeAmountToday' => $totalRechargeAmountToday,
+            'totalWithdrawAmountToday' => $totalWithdrawAmountToday,
+            'totalUserRegisterToday' => $totalUserRegisterToday,
+            'topByReferralCode' => $topUserMostRefer['topByReferralCode'],
+            'topByRechargeAmount' => $topUserMostRefer['topByRechargeAmount'],
+            'topByWithdrawAmount' => $topUserMostRefer['topByWithdrawAmount'],
         ]);
     }
     public function register($id)
     {
-        $item = $this->useRepository->getModelById($id);
+        $item = $this->useRepository->getModelByIdAndMissionInfo($id);
         $info = $this->useRepository->getCampainInfo($id);
+        $user = Auth::user();
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.register', [
             'item' => $item,
             'info' => $info,
+            'user' => $user,
             'route' => 'campain.register.store',
             'title' => $this->useRepository->getConfig()['title'] . ' Register',
         ]);
@@ -564,9 +583,6 @@ class CampainController extends Controller
             if($payment->type == 1){
                 $amount = $user->amount + $payment->amount;
                 $userModel->update(['amount' => $amount]);
-            }else{
-                $amount = $user->amount - $payment->amount;
-                $userModel->update(['amount' => $amount]);
             }
         }
 
@@ -589,9 +605,6 @@ class CampainController extends Controller
             $userModel = User::where('id',$payment->user);
             if($payment->type == 1){
                 $amount = $user->amount + $payment->amount;
-                $userModel->update(['amount' => $amount]);
-            }else{
-                $amount = $user->amount - $payment->amount;
                 $userModel->update(['amount' => $amount]);
             }
             $payment->update(['status' => 1]);

@@ -29,7 +29,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-xl-2">
+                {{-- <div class="col-md-6 col-xl-2">
                     <div class="card rounded-3 position-relative card-hover campaign-item">
                         <div class="wrap-image p-2">
                             <img class="card-img-top img-fluid h-100 img-campaign" src="{!! env('APP_URL').__transItem($item->image) !!}" onerror="this.src='{{asset('upload/no-image.png')}}'" alt="add alternative text here">
@@ -57,7 +57,7 @@
                             </span>
                         @endif
                     </div>
-                </div>
+                </div> --}}
             @endforeach
         </div>
     </div>

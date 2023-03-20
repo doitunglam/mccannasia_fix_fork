@@ -1,31 +1,31 @@
 @extends('core::layout.admin')
 @section('content')
 <div class="container-fluid">
-    
+
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                 <h4 class="mb-sm-0 font-size-18">{{$title}}</h4>
 
-                
+
 
             </div>
-            
+
         </div>
-        
+
     </div>
 
 
-   
-    <form action="{{ route($route) }}" method="POST" class="form-submit" enctype="multipart/form-data">	
+
+    <form action="{{ route($route) }}" method="POST" class="form-submit" enctype="multipart/form-data">
         @csrf
         <div class="card">
             <div class="card-body">
-                
-                
+
+
                         <div class="col-12">
                             <div class="row">
-                                <div class="col-9">  
+                                <div class="col-9">
                                     <x-component::form.text name="name" default="Reason" value="" id="reason" key="all.reason" placeholder="All.enter_reason" defaultplaceholder="Enter your reason"/>
                                     <x-component::form.text name="price" default="Price" value="" id="Price" key="all.price" placeholder="All.enter_price" defaultplaceholder="Enter your price"/>
                                     <div class="mb-3">
@@ -36,12 +36,12 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-3">  
-                                    
+                                <div class="col-3">
+
                                 </div>
                             </div>
                         </div>
-                    
+
             </div>
         </div>
         <div class="card">
@@ -49,11 +49,11 @@
                 <div class="col-12">
                     <div class="row">
                         <div class="d-flex flex-wrap gap-2">
-                            <x-component::form.submit default="Save" key="all.save"/>   
+                            <x-component::form.submit default="Save" key="all.save"/>
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </form>
@@ -81,7 +81,7 @@ $(document).ready(function(){
         }
         parent.parent().find('.task-wrap .content-item').last().find('input').val(val);
     })
-    
+
 })
 </script>
 @endsection()

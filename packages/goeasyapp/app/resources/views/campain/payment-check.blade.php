@@ -1,52 +1,48 @@
 @extends('core::layout.admin')
 @section('content')
 <div class="container-fluid">
-    
+
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                 <h4 class="mb-sm-0 font-size-18">{{$title}} : {{__transItem($item->user_name)}}</h4>
-
-                
-
             </div>
-            
         </div>
-        
+
     </div>
 
 
-   
-    <form action="{{ route($route, $item->id) }}" method="POST" class="form-submit" enctype="multipart/form-data">	
+
+    <form action="{{ route($route, $item->id) }}" method="POST" class="form-submit" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="status" class="check-status"/>
-        
+
         <div class="card">
             <div class="card-body">
                 <div class="col-12">
                     <div class="mb-3">
-                    <label class="form-label">{{ __trans($language, 'All.reason', 'Reason') }}: {{$item->name}}</label>
+                    <label class="form-label">{{ __trans($language, 'All.reason', 'Lý do') }}: {{$item->name}}</label>
                     </div>
                     <div class="mb-3">
-                    <label class="form-label">{{ __trans($language, 'All.amount', 'Amount') }}: {{$item->amount}}</label>
+                    <label class="form-label">{{ __trans($language, 'All.amount', 'Số tiền') }}: {{currency_format($item->amount)}}</label>
                 </div>
                 @if($item->type == '')
                 <div class="mb-3">
-                    <label class="form-label">{{__trans($language, 'All.withdraw_money', 'Withdraw Money')}}</label>
+                    <label class="form-label">{{__trans($language, 'All.withdraw_money', 'Rút tiền')}}</label>
                 </div>
                 @else
                 <div class="mb-3">
-                    <label class="form-label">{{__trans($language, 'All.recharge', 'Recharge')}}</label>
+                    <label class="form-label">{{__trans($language, 'All.recharge', 'Nạp tiền')}}</label>
                 </div>
                 @endif
                     <div class="row">
                         <div class="d-flex flex-wrap gap-2">
-                            <button class="btn btn-primary waves-effect waves-light appect" type="button">{{ __trans($language, 'all.appect', 'Appect') }}</button>
-                            <button class="btn btn-danger waves-effect waves-light not_appect" type="button">{{ __trans($language, 'all.not_appect', 'Not Appect') }}</button>
+                            <button class="btn btn-primary waves-effect waves-light appect" type="button">{{ __trans($language, 'all.appect', 'Chấp nhận') }}</button>
+                            <button class="btn btn-danger waves-effect waves-light not_appect" type="button">{{ __trans($language, 'all.not_appect', 'Từ chối') }}</button>
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </form>
@@ -76,7 +72,7 @@ $(document).ready(function(){
         }
         parent.parent().find('.task-wrap .content-item').last().find('input').val(val);
     })
-    
+
 })
 </script>
 @endsection()

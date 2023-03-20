@@ -62,9 +62,9 @@ $popups = \App\Models\Banner::where('is_popup', TRUE)->where('status', 1)->get()
                 <form method="GET">
                     <div class="d-flex flex-wrap gap-2">
                         <div class="col-sm-2">
-                            <x-component::form.text name="s_name" default="Name" value="{{request()->s_name}}" id="name" key="all.name" placeholder="all.enter_name" defaultplaceholder="Enter your name"/>
+                            <x-component::form.text name="s_name" default="Tên" value="{{request()->s_name}}" id="name" key="all.name" placeholder="all.enter_name" defaultplaceholder="Nhập tên bạn"/>
                         </div>
-                        <button type="submit" class="btn btn-danger waves-effect waves-light add-new" style="height: 36px;margin-top: 26px;">Search</button>
+                        <button type="submit" class="btn btn-danger waves-effect waves-light add-new" style="height: 36px;margin-top: 26px;">Tìm kiếm</button>
                     </div>
                 </form>
             </div>
@@ -78,7 +78,7 @@ $popups = \App\Models\Banner::where('is_popup', TRUE)->where('status', 1)->get()
                     <div class="card rounded-3 position-relative card-hover campaign-item">
                         <div class="wrap-image p-2">
                             <div class="wrap-button">
-                                <a href="{{route('campain.register', $item->id)}}" class="btn waves-effect waves-light btn-register">{{__trans($language, 'All.register', 'Register')}}</a>
+                                <a href="{{route('campain.register', $item->id)}}" class="btn waves-effect waves-light btn-register">{{__trans($language, 'All.register', 'Đăng ký')}}</a>
                             </div>
                             <img class="card-img-top img-fluid h-100 img-campaign" src="{!! env('APP_URL').__transItem($item->image) !!}" onerror="this.src='{{asset('upload/no-image.png')}}'" alt="add alternative text here">
                         </div>
@@ -89,8 +89,11 @@ $popups = \App\Models\Banner::where('is_popup', TRUE)->where('status', 1)->get()
 								?>
                             <h5 class="card-title campaign-name text-truncate" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __transItem($item->name) }}">{{ __transItem($item->name) }}</h5>
                             <hr>
-                            <p class="card-text text-short-description mb-2">{{__trans($language, 'All.registration_fee', 'Registration fee')}}: {{currency_format($item->registration_fee, 'đ')}}</p>
-                            <p class="card-text text-short-description mb-2">{{__trans($language, 'All.subscriber_number', 'Subscriber number')}}: {{$count}}</p>
+                            <p class="card-text text-short-description mb-2 text-truncate">{{__trans($language, 'All.registration_fee', 'Phí đăng ký')}}: {{currency_format($item->registration_fee, 'đ')}}</p>
+                            <p class="card-text text-short-description mb-2 text-truncate">{{__trans($language, 'All.subscriber_number', 'Số người đăng ký')}}: {{$count}}</p>
+                            <p class="card-text text-short-description mb-2 text-truncate">{{__trans($language, 'All.daily_profit', 'Lợi nhuận hàng ngày')}}: {{currency_format($item->daily_profit)}}</p>
+                            <p class="card-text text-short-description mb-2 text-truncate">{{__trans($language, 'All.date_end', 'Ngày kết thúc')}}: {{$item->date_end}}</p>
+
                             {{--                            <a href="{{route('campain.register', $item->id)}}" class="btn btn-primary waves-effect waves-light">{{__trans($language, 'All.register', 'Register')}}</a>--}}
                         </div>
                         @if($item->is_hot)

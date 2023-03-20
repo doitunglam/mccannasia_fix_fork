@@ -10,6 +10,7 @@ use Goeasyapp\App\Http\Controllers\AgencyController;
 use Goeasyapp\App\Http\Controllers\BannerController;
 use Goeasyapp\App\Http\Controllers\ConfigController;
 use Goeasyapp\App\Http\Controllers\SettingController;
+use Goeasyapp\App\Http\Controllers\ResuftManagementController;
 
 use Goeasyapp\App\Http\Controllers\ShortLinkController;
 use Illuminate\Support\Facades\Route;
@@ -108,6 +109,9 @@ Route::prefix('admin')->group(function () {
 	Route::middleware(['auth:sanctum', 'verified'])->get('campain/mission/update/{id}', [CampainMissionController::class, 'getUpdate'])->name('campain.mission.getUpdate');
 	Route::middleware(['auth:sanctum', 'verified'])->post('campain/mission/update/{id}', [CampainMissionController::class, 'postUpdate'])->name('campain.mission.postUpdate');
 	Route::middleware(['auth:sanctum', 'verified'])->get('campain/mission/delete/{id}', [CampainMissionController::class, 'delete'])->name('campain.mission.delete');
+
+    Route::middleware(['auth:sanctum', 'verified'])->get('resuft/management', [ResuftManagementController::class, 'list'])->name('resuft.management');
+    Route::middleware(['auth:sanctum', 'verified'])->post('resuft/management/{id}', [ResuftManagementController::class, 'handleAction'])->name('resuft.handle.action');
 
     Route::middleware(['auth:sanctum', 'verified'])->get('campain/download', [CampainController::class, 'download'])->name('campain.download');
 
