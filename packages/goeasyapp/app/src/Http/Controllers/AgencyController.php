@@ -142,7 +142,7 @@ class AgencyController extends Controller
     {
         return view('app::user.create', [
             'store' => 'user.store',
-            'title' => 'Agency',
+            'title' => 'Đại lý',
             'type_' => 'agency',
 
         ]);
@@ -271,12 +271,12 @@ class AgencyController extends Controller
         $items = $items->get();
         $search = $request->all();
 
-
+        $user = Auth::user();
         $data = [
             'search' => $search,
             'items' => $items,
-            'title' => 'Agency',
-
+            'title' => 'Đại lý',
+            'user' => $user,
         ];
         $data['update'] = 'user.update';
         $data['delete'] = 'user.delete';

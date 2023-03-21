@@ -25,7 +25,7 @@
                                 {{ __transItem($item->short_content) }}
                             </div>
                             <br>
-                            <a href="{{route('campain.resuft', $item->id)}}" class="btn btn-primary waves-effect waves-light">{{__trans($language, 'All.resuft', 'Resuft')}}</a>
+                            <a href="{{route('campain.resuft', $item->id)}}" class="btn btn-primary waves-effect waves-light">{{__trans($language, 'All.resuft', 'Kết quả')}}</a>
                         </div>
                     </div>
                 </div>

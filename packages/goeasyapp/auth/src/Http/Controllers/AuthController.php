@@ -31,7 +31,7 @@ class AuthController extends Controller
             'password' => 'required',
             'phone' => 'required|unique:users',
             'email' => 'unique:users|email',
-            // 'g-recaptcha-response' => ['required', new \App\Rules\ValidRecaptcha]
+            'g-recaptcha-response' => ['required', new \App\Rules\ValidRecaptcha]
         ], [
                 'username.required' => 'Tên không được để trống',
                 'phone.required' => 'Số điện thoại không được để trống',

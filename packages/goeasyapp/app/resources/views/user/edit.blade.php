@@ -167,7 +167,7 @@ $ln = json_decode($ln->label_, true);
                         </div>
                     </div>
                     <hr>
-                    <button type="submit" class="btn btn-primary waves-effect waves-light">Save</button>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light">Lưu</button>
                 </div>
             </div>
         </form>
@@ -207,7 +207,7 @@ $ln = json_decode($ln->label_, true);
                             </div>
                         </div>
                         <hr>
-                        <button type="submit" class="btn btn-primary waves-effect waves-light">Save</button>
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">Lưu</button>
                     </div>
                 </div>
             </div>

@@ -62,15 +62,15 @@
 
                                             <p class="mb-2" style="margin-top: 10px;font-weight: bold">
                                                 {{ 'Tên tài khoản' }}:
-                                                <span class="text-primary">{!! $user->bank_name_account !!}</span>
+                                                <span class="text-primary">{!! $user->bank_name_account ?? 'Unknown' !!}</span>
                                             </p>
                                             <p class="mb-2" style="margin-top: 10px;font-weight: bold">
                                                 {{ __trans($language, 'All.bank_name', 'Tên ngân hàng') }}:
-                                                <span class="text-primary">{!! $user->bank_name !!}</span>
+                                                <span class="text-primary">{!! $user->bank_name ?? 'Unknown' !!}</span>
                                             </p>
                                             <p class="mb-4" style="margin-bottom: 9px !important;font-weight: bold">
                                                 {{ __trans($language, 'All.bank_account', 'Số tài khoản') }}:
-                                                <span class="text-primary">{!! $user->bank_account !!}</span>
+                                                <span class="text-primary">{!! $user->bank_account ?? 'Unknown' !!}</span>
                                             </p>
                                         </div>
                                     @endif
@@ -226,8 +226,11 @@
                 </div>
                 <div class="modal-body">
                     <div style="border-bottom: 1px solid #ddd;position: relative">
+                        <?php
+                        $err = session('error');
+                        ?>
                         <p class="mb-2" style="margin-top: 10px;font-weight: bold">
-                            {{ 'Bạn không đủ số dư để có thể yêu cầu rút số tiền này' }} </span>
+                            {{ $err }} </span>
                         </p>
                         <p class="mb-2" style="margin-top: 10px;font-weight: bold">
                             {{ 'Nếu có thắc mắc xin liên hệ hỗ trợ' }} </span>

@@ -401,7 +401,7 @@ class CampainController extends Controller
             'item' => $item,
             'resuft' => $resuft,
             'route' => 'campain.resuft.store.check',
-            'title' => $this->useRepository->getConfig()['title'] . ' Resuft',
+            'title' => ' Kết quả',
         ]);
     }
     public function resuftCheck(Request $request, $id)
@@ -426,7 +426,7 @@ class CampainController extends Controller
             'resuft' => $resuft,
             'info' => $info,
             'route' => 'campain.resuft.store',
-            'title' => $this->useRepository->getConfig()['title'] . ' Resuft',
+            'title' => "Kết quả",
         ]);
     }
     public function view(Request $request, $id)
@@ -521,7 +521,7 @@ class CampainController extends Controller
         ];
         $items = $this->useRepository->getPaginateWithRelation();
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.list', [
-            'title' => $this->useRepository->getConfig()['title'],
+            'title' => "Chiến dịch",
             'delete' => $this->useRepository->getConfig()['aciton'] . '.delete',
             'update' => $this->useRepository->getConfig()['aciton'] . '.update',
             'status' => $this->useRepository->getConfig()['aciton'] . '.status',
@@ -556,7 +556,7 @@ class CampainController extends Controller
         $item = $this->useRepository->getModel();
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.create', [
             'item' => $item,
-            'title' => $this->useRepository->getConfig()['title'] . ' Create',
+            'title' => 'Tạo chiến dịch',
             'route' => $this->useRepository->getConfig()['aciton'] . '.store',
 	        'categories' => $categories,
 	        'missions' => $missions

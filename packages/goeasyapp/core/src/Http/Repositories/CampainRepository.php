@@ -372,7 +372,6 @@ class CampainRepository
         if ($request->id != 0) {
             $this->useModel = $this->useModel->find($request->id);
         }
-        dd($request);
         $this->useModel->name = json_encode($request->name);
         $this->useModel->description = json_encode($request->description);
         $this->useModel->image = json_encode($request->image);

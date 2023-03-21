@@ -16,16 +16,16 @@ $ln = json_decode($ln->label_, true);
             <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                     <h4 class="mb-sm-0 font-size-18">{{ $title }}</h4>
-
                     <div class="page-title-right">
                         @if (!isset($restore))
                             <form action="{{ route('user.delete.all') }}" method="POST" class="delete-form">
                                 @csrf
                                 <input type="hidden" name="delete_all" class="delete-input" />
                             </form>
-
+                            @if ($user->type == 'super-admin')
                             <a href="{{ route($create) }}" class="btn btn-primary waves-effect waves-light">Thêm mới</a>
                             <a class="btn btn-danger waves-effect waves-light delete-all">Xóa</a>
+                            @endif
                         @else
                             <form action="{{ route('user.restore.all') }}" method="POST" class="delete-form">
                                 @csrf

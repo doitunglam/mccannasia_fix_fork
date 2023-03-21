@@ -30,7 +30,7 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <h5>{{ __trans($language, 'All.resuft', 'Resuft') }}</h5>
+                <h5>{{ __trans($language, 'All.resuft', 'Kết quả') }}</h5>
                 @foreach ($resuft as $r)
                     <h6>{{ $r->date }}
 

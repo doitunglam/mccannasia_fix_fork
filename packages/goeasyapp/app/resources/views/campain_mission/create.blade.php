@@ -43,7 +43,7 @@
                         </div>
                     </div>
                     <div class="py-3">
-                        <button class="btn btn-primary">Save</button>
+                        <button class="btn btn-primary">Lưu</button>
                     </div>
                 </form>
             </div>

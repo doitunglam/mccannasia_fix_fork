@@ -46,7 +46,7 @@
                     <div class="col-12">
                         <div class="row">
                             <div class="d-flex flex-wrap gap-2">
-                                <x-component::form.submit default="Save" key="all.save"/>
+                                <x-component::form.submit default="Lưu" key="all.save"/>
                             </div>
                         </div>
                     </div>

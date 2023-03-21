@@ -39,9 +39,9 @@
         @csrf
         <input type="hidden" name="status" class="check-status"/>
         <input type="hidden" name="id" class="check-id"/>
-        <h5>{{__trans($language, 'All.resuft', 'resuft')}}</h5>
+        <h5>{{__trans($language, 'All.resuft', 'Kết quả')}}</h5>
             @foreach($resuft  as $r)
-                <h6>{{__trans($language, 'All.resuft', 'resuft')}}: {{$r->date}}
+                <h6>{{__trans($language, 'All.resuft', 'Kết quả ngày')}}: {{$r->date}}
                 @if($r->status == 1)
                 <span class="badge rounded-pill badge-soft-success">{{__trans($language, 'All.appect', 'Chấp nhận')}}</span>
                 @elseif($r->status == 2)

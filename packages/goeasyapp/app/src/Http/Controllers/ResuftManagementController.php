@@ -28,8 +28,8 @@ class ResuftManagementController extends Controller
     {
         $user = Auth::user();
         $items = $this->useRepository->getResuftToday();
-        return view('app::'. $this->useRepository->getConfig()['aciton'] . '.list', [
-            'title' => 'List Resuft',
+        return view('app::'. 'resuft' . '.list', [
+            'title' => 'Danh sách kết quả',
             'route' => 'resuft.management',
             'items' => $items,
         ]);

@@ -229,7 +229,7 @@ $cas = json_decode(file_get_contents(public_path().'/campain_category.json') ?? 
                                     <a href="{{route('campain.create')}}" key="t-default">{!!__trans($language, 'All.add_new', 'Thêm mới')!!}</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('campain.resuft.list')}}" key="t-default">{!!__trans($language, 'All.resuft', 'Resuft')!!}</a>
+                                    <a href="{{route('campain.resuft.list')}}" key="t-default">{!!__trans($language, 'All.resuft', 'Kết quả')!!}</a>
                                 </li>
                             </ul>
                         </li>
@@ -267,7 +267,7 @@ $cas = json_decode(file_get_contents(public_path().'/campain_category.json') ?? 
                         <li>
                             <a href="javascript: void(0);" class="waves-effect">
                                 <i class="fa fa-user"></i>
-                                <span key="t-dashboards">{!!__trans($language, 'All.resuft_management', 'Quản lý Resuft')!!}</span>
+                                <span key="t-dashboards">{!!__trans($language, 'All.resuft_management', 'Quản lý Kết quả')!!}</span>
                             </a>
                             <ul class="sub-menu">
                                 <li>

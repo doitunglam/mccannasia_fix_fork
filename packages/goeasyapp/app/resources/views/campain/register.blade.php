@@ -49,6 +49,8 @@
                                         <a href="{{ route('campain.link', $item->id) }}"
                                             class="btn btn-primary waves-effect waves-light">{{ __trans($language, 'all.create_link', 'Tạo link') }}</a>
                                     @endif
+                                @else
+                                    <span>Đã hết thời gian đăng ký</span>
                                 @endif
                             </div>
                         </div>

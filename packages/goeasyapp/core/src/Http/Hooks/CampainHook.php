@@ -23,6 +23,15 @@ class CampainHook
         $language = ($language && $language->value != '') ? json_decode($language->value, true) : [];
         $request->validate([
             'name' => 'required|unique:campains|max:255',
+            'description' => 'required',
+            'image' => 'required',
+            'short_content' => 'required',
+            'link_' => 'required',
+            'date_public' => 'required',
+            'price' => 'required',
+            'task' => 'required',
+            'mission_id' => 'required',
+            'date_end' => 'required',
         ], [
                 'name.required' => __trans($language, 'required', 'Required'),
                 'name.unique' => __trans($language, 'unique', 'Unique'),
