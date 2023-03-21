@@ -106,6 +106,7 @@ class CampainRepository
             $query->where('date_public', $day)
                 ->orWhere('date_public', null);
         })
+        ->orderBy('id', 'DESC')
             ->get();
     }
     public function getTotalRechargeAmountToday() {
@@ -371,6 +372,7 @@ class CampainRepository
         if ($request->id != 0) {
             $this->useModel = $this->useModel->find($request->id);
         }
+        dd($request);
         $this->useModel->name = json_encode($request->name);
         $this->useModel->description = json_encode($request->description);
         $this->useModel->image = json_encode($request->image);
@@ -383,6 +385,7 @@ class CampainRepository
 	    $this->useModel->is_beginner = !empty($request->is_beginner);
 	    $this->useModel->category = $request->category;
 	    $this->useModel->mission_id = $request->mission_id;
+        $this->useModel->date_end = $request->date_end;
         $this->useModel->save();
     }
 

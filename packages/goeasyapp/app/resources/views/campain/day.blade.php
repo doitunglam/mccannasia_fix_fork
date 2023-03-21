@@ -92,7 +92,15 @@ $popups = \App\Models\Banner::where('is_popup', TRUE)->where('status', 1)->get()
                             <p class="card-text text-short-description mb-2 text-truncate">{{__trans($language, 'All.registration_fee', 'Phí đăng ký')}}: {{currency_format($item->registration_fee, 'đ')}}</p>
                             <p class="card-text text-short-description mb-2 text-truncate">{{__trans($language, 'All.subscriber_number', 'Số người đăng ký')}}: {{$count}}</p>
                             <p class="card-text text-short-description mb-2 text-truncate">{{__trans($language, 'All.daily_profit', 'Lợi nhuận hàng ngày')}}: {{currency_format($item->daily_profit)}}</p>
-                            <p class="card-text text-short-description mb-2 text-truncate">{{__trans($language, 'All.date_end', 'Ngày kết thúc')}}: {{$item->date_end}}</p>
+                            <?php
+                            $date_to_end = '';
+                            if( $item->date_public != null) {
+                                $date_public = DateTime::createFromFormat('d/m/Y', $item->date_public);
+                                $date_public->add(new DateInterval('P' . $item->date_end . 'D'));
+                                $date_to_end = $date_public->format('d/m/Y');
+                            }
+                            ?>
+                            <p class="card-text text-short-description mb-2 text-truncate">{{__trans($language, 'All.date_end', 'Ngày kết thúc')}}: {{$date_to_end}}</p>
 
                             {{--                            <a href="{{route('campain.register', $item->id)}}" class="btn btn-primary waves-effect waves-light">{{__trans($language, 'All.register', 'Register')}}</a>--}}
                         </div>

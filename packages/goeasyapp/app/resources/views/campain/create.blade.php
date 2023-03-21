@@ -38,8 +38,7 @@
                                                 defaultplaceholder="Nhập tên" />
                                             <x-component::input.ckeditor name="description[{{ $ln->code }}]"
                                                 default="Description" value="" id="description" key="All.description"
-                                                placeholder="All.enter_description"
-                                                defaultplaceholder="Nhập mô tả" />
+                                                placeholder="All.enter_description" defaultplaceholder="Nhập mô tả" />
                                             <x-component::form.text name="short_content[{{ $ln->code }}]"
                                                 default="Short Content" value="" id="short_content"
                                                 key="all.short_content" placeholder="All.enter_short_content"
@@ -55,10 +54,9 @@
                                             @endif
 
                                             <div>
-                                                <x-component::form.text messages="" name="add_task" default="Nhiệm vụ"
+                                                <x-component::form.text messages="" name="add_task" default="Công việc"
                                                     value="" id="task" key="all.task"
-                                                    placeholder="all.enter_name_task"
-                                                    defaultplaceholder="Nhập nhiệm vụ" />
+                                                    placeholder="all.enter_name_task" defaultplaceholder="Nhập công việc" />
                                                 <div class="get-html" style="display: none">
                                                     <div class="row content-item" style="margin-top: 10px; ">
                                                         <div class="col-9">
@@ -71,6 +69,11 @@
                                                     class="add_task badge rounded-pill badge-soft-primary"
                                                     style="cursor: pointer">{{ __trans($language, 'All.add_task', 'Thêm nhiệm vụ') }}</span>
                                             </div>
+                                            @if ($index == 0)
+                                                <x-component::form.number name="date_end" default="Số ngày làm nhiệm vụ"
+                                                    value="" id="date_end" key="all.date_end"
+                                                    placeholder="all.date_end" defaultplaceholder="Nhập số ngày" />
+                                            @endif
                                             <div class="task-wrap">
 
                                             </div>

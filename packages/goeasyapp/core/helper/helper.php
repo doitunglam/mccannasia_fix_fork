@@ -5,7 +5,16 @@ function __transItem($string)
 {
     $lang = (session('locale') ? session('locale') : 'en');
     $json = ($string) ? json_decode($string, true) : [];
-    return (isset($json[$lang])) ? $json[$lang] : $string;
+    $displayString = "";
+    // check type is array or object
+    if($json != null && is_array($json) && count($json) > 0) {
+        foreach ($json as $key => $value) {
+            if($displayString == "") {
+                $displayString = $value;
+            }
+        }
+    }
+    return (isset($json[$lang])) ? ($json[$lang]) :( $displayString ? $displayString : $string);
 }
 function __trans($language, $key, $default)
 {

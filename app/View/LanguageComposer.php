@@ -13,7 +13,10 @@ class LanguageComposer
     public function compose(View $view)
     {
         $config = Config::where('status', 1)->get();
-        $lang = (session('locale') ? session('locale') : 'en');
+        $lang = (session('locale') ? session('locale') : 'vi');
+        if(Auth::check() && Auth::user()-> type == "agency"){
+            $lang = 'vi';
+        }
         $language = Language::orderBy('updated_at', 'DESC')->where('code', $lang)->first();
         $language = ($language && $language->value != '') ? json_decode($language->value, true) : [];
         $view->with('config', $config);

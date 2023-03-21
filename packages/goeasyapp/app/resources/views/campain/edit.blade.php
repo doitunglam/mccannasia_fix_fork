@@ -47,7 +47,7 @@
                                         <x-component::form.text name="link_" default="Link" value="{{$item->link_}}" id="link_" key="all.link" placeholder="All.link" defaultplaceholder="Nhập đường dẫn"/>
                                     @endif
                                     <div>
-                                        <x-component::form.text messages="" name="add_task" default="Task" value="" id="task" key="all.task" placeholder="all.enter_name_task" defaultplaceholder="Nhập nhiệm vụ"/>
+                                        <x-component::form.text name="mission_id" default="Id Nhiệm vụ" value="{{$item->mission_id}}" id="mission_id" key="all.mission_id" placeholder="All.mission_id" defaultplaceholder="Nhập ID nhiệm vụ"/>
                                         <div class="get-html" style="display: none">
                                             <div class="row content-item" style="margin-top: 10px; ">
                                                 <div class="col-9">
@@ -57,6 +57,12 @@
                                         </div>
                                         <span data-language="{{$ln->code}}" class="add_task badge rounded-pill badge-soft-primary" style="cursor: pointer">{{__trans($language, 'All.add_task', 'Thêm nhiệm vụ')}}</span>
                                         </div>
+                                        @if ($index == 0)
+                                            <x-component::form.number messages="" name="date_end"
+                                                default="Số ngày làm nhiệm vụ" value="{{$item->date_end}}" id="date_end"
+                                                key="all.date_end" placeholder="all.date_end"
+                                                defaultplaceholder="Nhập số ngày" />
+                                        @endif
                                         <div class="task-wrap">
                                            <?php
                                                 $tasks = json($item->list_task);
