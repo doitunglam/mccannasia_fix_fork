@@ -271,8 +271,8 @@ class CampainController extends Controller
         $td = [
             ['title' => __trans($language, 'All.id', 'ID'), 'value' => 'id'],
 //            ['title' => __trans($language, 'All.user', 'User'), 'value' => 'user_name'],
-            ['title' => __trans($language, 'All.reason', 'Lý do'), 'value' => 'name'],
-            ['title' => __trans($language, 'All.amount', 'Số tiền'), 'value' => 'amount'],
+            ['title' => "Lý do", 'value' => 'name'],
+            ['title' => "Số tiền", 'value' => 'amount'],
         ];
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.payment-list-recharge', [
             'title' => 'Danh sách yêu cầu nạp tiền',
@@ -295,8 +295,8 @@ class CampainController extends Controller
         $td = [
             ['title' => __trans($language, 'All.id', 'ID'), 'value' => 'id'],
 //            ['title' => __trans($language, 'All.user', 'User'), 'value' => 'user_name'],
-            ['title' => __trans($language, 'All.reason', 'Lý do'), 'value' => 'name'],
-            ['title' => __trans($language, 'All.amount', 'Số tiền'), 'value' => 'amount'],
+            ['title' => 'Lý do', 'value' => 'name'],
+            ['title' =>'Số tiền', 'value' => 'amount'],
         ];
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.payment-list-recharge', [
             'title' => 'Danh sách yêu cầu rút tiền',
@@ -309,6 +309,8 @@ class CampainController extends Controller
     }
 
     public function paymentRecharge(Request $request){
+        // remove , . in $request->payment
+        $request->payment = str_replace(',', '', $request->payment);
         if(is_numeric($request->payment)){
             $user = Auth::user();
             $input['user'] = $user->id;
@@ -325,6 +327,7 @@ class CampainController extends Controller
     }
 
     public function paymentWithdraw(Request $request){
+        $request->payment = str_replace(',', '', $request->payment);
         if(is_numeric($request->payment)){
             $user = Auth::user();
             $userModel = User::find($user->id);
@@ -482,7 +485,7 @@ class CampainController extends Controller
         $page = $user->type == 'agency' || $requestUri == '/admin/campain/day' ? '.day' : '.dashboard';
         return view('app::' . $this->useRepository->getConfig()['aciton'] . $page, [
             'items' => $items,
-            'title' => "Dashboard",
+            'title' => "Trang chủ",
             'user' => $user,
             'totalRechargeAmountToday' => $totalRechargeAmountToday,
             'totalWithdrawAmountToday' => $totalWithdrawAmountToday,

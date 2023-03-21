@@ -29,7 +29,8 @@ function __language()
     return Language::all();
 }
 function currency_format($number, $suffix = '₫') {
-        if (!empty($number)) {
+    // check is number
+        if (!empty($number) && is_numeric($number)) {
             return number_format($number, 2, '.', ',') . "{$suffix}";
         } else {
             return 0 . "{$suffix}";

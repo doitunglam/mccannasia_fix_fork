@@ -26,6 +26,7 @@
                                             @foreach ($config as $index => $n)
                                                 <?php
                                                 $info = json($n->name);
+                                                $user = Auth::user();
                                                 ?>
                                                 <div class="mb-3">
                                                     <h5 class="modal-title" id="transaction-detailModalLabel">
@@ -48,7 +49,7 @@
                                                     <p class="mb-4"
                                                         style="margin-bottom: 9px !important;font-weight: bold">
                                                         {{ 'Nội dung chuyển khoản' }}:
-                                                        <span class="text-primary">{!! $info['name'] !!}</span>
+                                                        <span class="text-primary">{!! $user ? $user->username : '' !!}</span>
                                                     </p>
                                                     <i class="text-danger">* Nội dung chuyển khoản không được thay đổi</i>
                                                 </div>
@@ -83,9 +84,36 @@
                                                 <label for="name"
                                                     class="form-label">{{ __trans($language, 'All.payment_withdraw', 'Rút tiền') }}</label>
                                             @endif
-                                            <input type="number" class="form-control s_name" id="payment" placeholder=""
+                                            <input type="text" class="form-control s_name" id="payment" placeholder=""
                                                 name="payment" value="{{ request()->payment }}">
+                                            <script>
+                                                function numberFormat(number, decimals = 0, decPoint = '.', thousandsSep = ',') {
+                                                    number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+                                                    const n = !isFinite(+number) ? 0 : +number;
+                                                    const prec = !isFinite(+decimals) ? 0 : Math.abs(decimals);
+                                                    const sep = thousandsSep;
+                                                    const dec = decPoint;
+                                                    const toFixedFix = (n, prec) => {
+                                                        const k = Math.pow(10, prec);
+                                                        return '' + Math.round(n * k) / k;
+                                                    };
+                                                    let s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+                                                    if (s[0].length > 3) {
+                                                        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+                                                    }
+                                                    if ((s[1] || '').length < prec) {
+                                                        s[1] = s[1] || '';
+                                                        s[1] += new Array(prec - s[1].length + 1).join('0');
+                                                    }
+                                                    return s.join(dec);
+                                                }
 
+                                                const payment = document.getElementById('payment');
+                                                payment.addEventListener('keyup', function(e) {
+                                                    const value = e.target.value;
+                                                    e.target.value = numberFormat(value);
+                                                });
+                                            </script>
                                         </div>
                                     </div>
                                     <div>
@@ -115,12 +143,10 @@
                                         @foreach ($td as $i)
                                             <th>{{ $i['title'] }}</th>
                                         @endforeach
-                                        {{--                                    <th>{{__trans($language, 'All.id_user', 'ID user')}}</th> --}}
                                         <th>{{ __trans($language, 'All.type', 'Loại') }}</th>
                                         <th>{{ __trans($language, 'All.status', 'Trạng thái') }}</th>
                                         <th>{{ __trans($language, 'All.created_at', 'Thời gian tạo') }}</th>
                                         <th>{{ __trans($language, 'All.review_date', 'Thời gian xem xét') }}</th>
-                                        {{--                                    <th>{{__trans($language, 'All.edit', 'Edit')}}</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -143,7 +169,6 @@
                                                     <td style="">{{ __transItem($value) }}</td>
                                                 @endif
                                             @endforeach
-                                            {{--                                    <td style="">{{ $item->user }}</td> --}}
                                             @if ($item->type == '')
                                                 <td data-field="name" style="width: 50px;">
                                                     <span

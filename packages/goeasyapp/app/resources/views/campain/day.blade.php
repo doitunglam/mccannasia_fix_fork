@@ -84,7 +84,6 @@ $popups = \App\Models\Banner::where('is_popup', TRUE)->where('status', 1)->get()
                         </div>
                         <div class="card-body p-2">
 								<?php
-
 								$count = count(CampainItem::where('cid', $item->id)->get());
 								?>
                             <h5 class="card-title campaign-name text-truncate" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __transItem($item->name) }}">{{ __transItem($item->name) }}</h5>
@@ -111,7 +110,7 @@ $popups = \App\Models\Banner::where('is_popup', TRUE)->where('status', 1)->get()
                         @endif
                         @if($item->is_beginner)
                             <span class="position-absolute top-0 translate-middle badge rounded-pill bg-success me-2 py-2 hot-beginner {{$item->is_hot ? 'is-beginner' : ''}}">
-                                Beginner
+                                Mới bắt đầu
                             </span>
                         @endif
                     </div>
@@ -120,13 +119,6 @@ $popups = \App\Models\Banner::where('is_popup', TRUE)->where('status', 1)->get()
             @endforeach
         </div>
     </div>
-    @if(session()->has('success'))
-        <div class="alert alert-success alert-dismissible fade show mt-5" role="alert" style="margin-left: 13px;margin-right: 13px;">
-            <i class="mdi mdi-check-all me-2"></i>
-            {!! session()->get('success') !!}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
 @endsection()
 @section('script')
     @stack('c-script')
