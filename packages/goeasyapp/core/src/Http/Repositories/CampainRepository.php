@@ -105,8 +105,7 @@ class CampainRepository
         return $model->where(function ($query) use ($day) {
             $query->where('date_public', $day)
                 ->orWhere('date_public', null);
-        })->leftJoin('campain_categories', 'campain_categories.id', '=', 'campains.category')
-            ->select('campains.*', 'campain_categories.name as category_name')
+        })
             ->get();
     }
     public function getTotalRechargeAmountToday() {
