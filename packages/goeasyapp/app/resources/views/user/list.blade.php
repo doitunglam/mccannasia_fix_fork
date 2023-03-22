@@ -51,6 +51,7 @@ $ln = json_decode($ln->label_, true);
                                 <th style="text-align:center">{{ isset($ln['email']) ? $ln['email'] : 'Email' }}</th>
                                 <th style="text-align:center">{{ isset($ln['phone']) ? $ln['phone'] : 'Số điện thoại' }}</th>
                                 <th style="text-align:center">{{ isset($ln['note']) ? $ln['note'] : 'Ghi chú' }}</th>
+                                <th style="text-align:center">{{ isset($ln['last_login_time']) ? $ln['last_login_time'] : 'Lần đăng nhập cuối' }}</th>
                                 <th style="text-align:center">{{ isset($ln['recharge']) ? $ln['recharge'] : 'Nạp' }}
                                 </th>
                                 <th style="text-align:center">{{ isset($ln['withdraw']) ? $ln['withdraw'] : 'Rút' }}
@@ -128,6 +129,19 @@ $ln = json_decode($ln->label_, true);
                                     <td>
                                         <h5 class="text-truncate font-size-14"><a href="javascript: void(0);"
                                                 class="text-dark">{{ $item_->address }}</a></h5>
+
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <h5 class="text-truncate font-size-14"><a href="javascript: void(0);"
+                                                    class="text-dark">{{ $item_->last_login_time }}</a></h5>
+
+                                                </a></h5>
+                                                <h5 class="text-truncate font-size-14"><a href="javascript: void(0);"
+                                                    class="text-dark">{{ $item_->last_login_ip }}</a></h5>
+
+                                                </a></h5>
+                                        </div>
 
                                     </td>
                                     <?php
