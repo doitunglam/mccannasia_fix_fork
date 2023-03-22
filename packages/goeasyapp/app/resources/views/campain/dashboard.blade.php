@@ -150,7 +150,7 @@ $popups = \App\Models\Banner::where('is_popup', true)
                                         <h5 class="card-title">
                                             {{ __trans($language, 'All.totalRechargeAmountToday', 'Tổng nạp trong ngày') }}
                                         </h5>
-                                        <p class="card-text">{{ $totalRechargeAmountToday }}</p>
+                                        <p class="card-text">{{ currency_format($totalRechargeAmountToday) }}</p>
                                     </div>
                                     <div class="d-flex align-items-center" style="width: 10%; scale: 1.5">
                                         <span class="fa fa-credit-card checked"></span>
@@ -163,7 +163,7 @@ $popups = \App\Models\Banner::where('is_popup', true)
                                         <h5 class="card-title">
                                             {{ __trans($language, 'All.totalWithdrawAmountToday', 'Tổng rút trong ngày') }}
                                         </h5>
-                                        <p class="card-text">{{ $totalWithdrawAmountToday }}</p>
+                                        <p class="card-text">{{ currency_format($totalWithdrawAmountToday) }}</p>
                                     </div>
                                     <div class="d-flex align-items-center" style="width: 10%; scale: 1.5">
                                         {{-- withdraw icon --}}
@@ -201,7 +201,7 @@ $popups = \App\Models\Banner::where('is_popup', true)
                                     <th scope="col">{{ __trans($language, 'All.Id', 'Id') }}</th>
                                     <th scope="col">{{ __trans($language, 'All.Name', 'Tên') }}</th>
                                     <th scope="col">{{ __trans($language, 'All.display_name', 'Tên hiển thị') }}</th>
-                                    <th scope="col">{{ __trans($language, 'All.total_refer', 'Số lượng đại lý') }}</th>
+                                    <th scope="col">{{ __trans($language, 'All.total_refer', 'Số lượng cấp dưới') }}</th>
                                 </tr>
                                 @foreach ($topByReferralCode as $recharge)
                                     <tr>

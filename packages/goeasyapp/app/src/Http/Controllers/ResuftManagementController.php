@@ -45,7 +45,7 @@ class ResuftManagementController extends Controller
         $item = $this->useRepository->getResuftId($id);
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.payment-check', [
             'item' => $item,
-            'title' => 'Payment Check of User: ',
+            'title' => 'Kiểm tra thanh toán: ',
             'route' => 'payment.request.check'
         ]);
     }

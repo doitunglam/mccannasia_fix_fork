@@ -42,7 +42,7 @@ class BannerController extends Controller
         ];
         $items = $this->useRepository->getPaginateWithRelation(['is_popup' => FALSE]);
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.list', [
-            'title' => $this->useRepository->getConfig()['title'],
+            'title' => 'Danh sách Banner',
             'delete' => $this->useRepository->getConfig()['aciton'] . '.delete',
             'update' => $this->useRepository->getConfig()['aciton'] . '.update',
             'status' => $this->useRepository->getConfig()['aciton'] . '.status',
@@ -56,7 +56,7 @@ class BannerController extends Controller
         $item = $this->useRepository->getModel();
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.create', [
             'item' => $item,
-            'title' => $this->useRepository->getConfig()['title'] . ' Create',
+            'title' => 'Tạo',
             'route' => $this->useRepository->getConfig()['aciton'] . '.store'
         ]);
     }
@@ -67,7 +67,7 @@ class BannerController extends Controller
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.edit', [
             'item' => $item,
             'data' => $data,
-            'title' => $this->useRepository->getConfig()['title'] . ' Edit',
+            'title' => 'Sửa',
             'route' => $this->useRepository->getConfig()['aciton'] . '.store'
         ]);
     }

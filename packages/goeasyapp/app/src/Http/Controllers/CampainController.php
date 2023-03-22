@@ -41,7 +41,7 @@ class CampainController extends Controller
             'info' => $info,
             'use_' => $use_,
             'route' => 'campain.register.store',
-            'title' => $this->useRepository->getConfig()['title'] . ' Register',
+            'title' => 'Đăng ký',
         ]);
     }
     public function download(Request $request)
@@ -364,7 +364,7 @@ class CampainController extends Controller
             ['title' => __trans($language, 'All.amount', 'Số tiền'), 'value' => 'amount'],
         ];
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.payment', [
-            'title' => 'Your amount: ' . Auth::user()->amount,
+            'title' => 'Số dư của bạn: ' . Auth::user()->amount,
             'create' => 'campain.payment.create',
             'td' => $td,
             'items' => $items
@@ -384,7 +384,7 @@ class CampainController extends Controller
             ['title' => __trans($language, 'All.price', 'Giá'), 'value' => 'price'],
         ];
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.list-resuft', [
-            'title' => $this->useRepository->getConfig()['title'],
+            'title' => "Danh sách kết quả",
             'route' => 'campain.resuft.check',
             'td' => $td,
             'items' => $items
@@ -413,7 +413,7 @@ class CampainController extends Controller
             'item' => $item,
             'resuft' => $resuft,
             'route' => 'campain.resuft.store.check',
-            'title' => $this->useRepository->getConfig()['title'] . ' Resuft',
+            'title' => 'Kiểm tra kết quả',
         ]);
     }
     public function resuft($id)
@@ -436,7 +436,7 @@ class CampainController extends Controller
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.statistical', [
             'items' => $items,
             'id' => $id,
-            'title' => $this->useRepository->getConfig()['title'] . ' Statistical',
+            'title' => 'Thống kê',
         ]);
     }
     public function statistical(Request $request)
@@ -445,7 +445,7 @@ class CampainController extends Controller
 
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.statistical', [
             'items' => $items,
-            'title' => $this->useRepository->getConfig()['title'] . ' Statistical',
+            'title' => 'Thống kê',
         ]);
     }
     public function my(Request $request)
@@ -461,7 +461,7 @@ class CampainController extends Controller
         $items = $this->useRepository->getCampainCategory($id);
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.day', [
             'items' => $items,
-            'title' => $this->useRepository->getConfig()['title'] . ' Day',
+            'title' => 'Chiến dịch ngày',
         ]);
     }
 
@@ -470,7 +470,7 @@ class CampainController extends Controller
         $items = $this->useRepository->getCampainHot();
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.day', [
             'items' => $items,
-            'title' => $this->useRepository->getConfig()['title'] . ' Day',
+            'title' => 'Chiến dịch hot',
         ]);
     }
     public function day(Request $request)
@@ -505,7 +505,7 @@ class CampainController extends Controller
             'info' => $info,
             'user' => $user,
             'route' => 'campain.register.store',
-            'title' => $this->useRepository->getConfig()['title'] . ' Register',
+            'title' => 'Đăng ký chiến dịch',
         ]);
     }
     public function list()
@@ -544,7 +544,7 @@ class CampainController extends Controller
     {
 
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.payment-create', [
-            'title' => 'Payment Create',
+            'title' => 'Tạo',
             'route' => 'payment.store'
         ]);
     }
@@ -571,7 +571,7 @@ class CampainController extends Controller
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.edit', [
             'item' => $item,
             'data' => $data,
-            'title' => $this->useRepository->getConfig()['title'] . ' Edit',
+            'title' => 'Sửa chiến dịch',
             'route' => $this->useRepository->getConfig()['aciton'] . '.store',
             'categories' => $categories,
             'missions' => $missions
