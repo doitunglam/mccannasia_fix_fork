@@ -45,7 +45,7 @@ class LanguageController extends Controller
         ];
         $items = $this->useRepository->getPaginateWithRelation();
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.list', [
-            'title' => $this->useRepository->getConfig()['title'],
+            'title' => 'Ngôn ngữ',
             'delete' => $this->useRepository->getConfig()['aciton'] . '.delete',
             'update' => $this->useRepository->getConfig()['aciton'] . '.update',
             'status' => $this->useRepository->getConfig()['aciton'] . '.status',
@@ -65,7 +65,7 @@ class LanguageController extends Controller
             'item' => $item,
             'en' => $en,
             'data_en' => $data_en,
-            'title' => $this->useRepository->getConfig()['title'] . ' Create',
+            'title' => 'Tạo ngôn ngữ',
             'route' => $this->useRepository->getConfig()['aciton'] . '.store'
         ]);
     }
@@ -80,7 +80,7 @@ class LanguageController extends Controller
             'data' => $data,
             'data_en' => $data_en,
             'en' => $en,
-            'title' => $this->useRepository->getConfig()['title'] . ' Edit',
+            'title' => 'Sửa ngôn ngữ',
             'route' => $this->useRepository->getConfig()['aciton'] . '.store'
         ]);
     }
