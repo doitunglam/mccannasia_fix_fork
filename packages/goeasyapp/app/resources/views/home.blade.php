@@ -1025,13 +1025,14 @@
 		}
 		#popup-banner .popup {
 			z-index: 9999;
-			margin: 70px auto;
 			background: #fff;
             padding: 1rem;
-			width: 30%;
+			max-width: 800px;
+			margin: 1.75rem auto;
 			position: relative;
 			transition: all 5s ease-in-out;
 		}
+
 		#popup-banner .popup h2 {
 			z-index: 9999;
 			margin-top: 0;
@@ -1058,7 +1059,7 @@
 			overflow: auto;
 		}
 
-		@media screen and (max-width: 700px) {
+		@media screen and (max-width: 850px) {
 			#popup-banner .popup {
 				width: 70%;
 			}

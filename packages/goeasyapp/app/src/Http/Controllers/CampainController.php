@@ -154,11 +154,11 @@ class CampainController extends Controller
         if($user->is_beginner == 0 && $model->is_beginner == 1) {
             return redirect()->back()->with('error_beginner', 'Chiến dịch này chỉ áp dụng cho người mới bắt đầu!');
         }
-        if($user->campains != null) {
+        if(!empty(json_decode((!empty($user->campains) ? $user->campains : '[]'), 1))) {
             return redirect()->back()->with('error_more_campain', 'Bạn không thể đăng ký 2 chiến dịch cùng một thời điểm!');
         }
         if ($model->registration_fee > $user->amount) {
-            return redirect()->back()->with('error', '');
+            return redirect()->back()->with('error', 'Tài khoản của bạn không đủ đăng ký chiến dịch này!');
         }
         if ($request->use_ = '') {
             $request->use_ = Auth::user()->url;

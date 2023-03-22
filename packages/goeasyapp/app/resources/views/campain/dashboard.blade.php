@@ -17,7 +17,7 @@ $popups = \App\Models\Banner::where('is_popup', true)
                 Launch demo modal
             </button>
             <div class="modal" tabindex="-1" id="popup-modal">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content rounded-0 ">
                         <div class="modal-body position-relative">
                             <button type="button" class="btn-close position-absolute top-0 end-0 p-4"

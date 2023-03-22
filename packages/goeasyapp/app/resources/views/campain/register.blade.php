@@ -120,7 +120,7 @@
                                 {{ __trans($language, 'All.bank_account', 'Số tài khoản') }}: <span
                                     class="text-primary">{!! __transItem($n->value) !!}</span></p>
                             <p class="mb-4" style="margin-bottom: 9px !important;font-weight: bold">
-                                {{ 'Nội dung chuyển khoản' }}: <span class="text-primary">{!! $info['name'] !!}</span>
+                                {{ 'Nội dung chuyển khoản' }}: <span class="text-primary">{!! auth()->user()->name !!}</span>
                             </p>
                             <i class="text-danger">* Nội dung chuyển khoản không được thay đổi</i>
                             <img src="{{ asset($n->image) }}"

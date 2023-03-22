@@ -135,7 +135,7 @@ class AgencyController extends Controller
         }
 
         $model->save();
-        return redirect()->route('user')
+        return redirect()->back()
             ->with('success', 'Updated the user information successfully!');
     }
     public function create(Request $request)
