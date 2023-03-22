@@ -104,7 +104,7 @@ class CampainRepository
         }
         return $model
         ->leftJoin('campain_missions', 'campain_missions.id', '=', 'campains.mission_id')
-        ->select('campains.*', 'campain_missions.id as mission_id', 'campain_missions.contract_term as contract_term')
+        ->select('campains.*', 'campain_missions.id as mission_id', 'campain_missions.contract_term as contract_term', 'campain_missions.daily_profit as daily_profit', 'campain_missions.binding_fee as binding_fee')
         ->orderBy('id', 'DESC')
             ->get();
     }

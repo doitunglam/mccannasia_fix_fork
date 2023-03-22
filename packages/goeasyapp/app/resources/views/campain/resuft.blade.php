@@ -75,6 +75,11 @@
                 @if ($task)
                     <?php
                     $value = '';
+                    $_index = 1;
+                    // check type of $index is    string
+                    if(!is_string($index)){
+                        $_index = $index + 1;
+                    }
                     ?>
                     <div class="card">
                         <div class="card-body">
@@ -87,8 +92,8 @@
                                 <input id="resuft_explain" name="resuft_explain" type="text" class="form-control mb-2" value="" autocomplete="off">
                                 </input>
                             </div>
-                            <x-component::input.ckfinder-array id="task_{{ $index }}" key="{{ $index }}"
-                                name="resuft[{{ $index + 1 }}][]" :value="$value" />
+                            <x-component::input.ckfinder-array id="task_{{ $_index }}" key="{{ $_index }}"
+                                name="resuft[{{ $_index + 1 }}][]" :value="$value" />
                         </div>
                     </div>
                 @endif
