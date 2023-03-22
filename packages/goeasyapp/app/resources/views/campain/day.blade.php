@@ -62,17 +62,14 @@ $popups = \App\Models\Banner::where('is_popup', TRUE)->where('status', 1)->get()
                 <form method="GET">
                     <div class="d-flex flex-wrap gap-2">
                         <div class="col-sm-2">
-                            <x-component::form.text name="s_name" default="Tên" value="{{request()->s_name}}" id="name" key="all.name" placeholder="all.enter_name" defaultplaceholder="Nhập tên bạn"/>
+                            <x-component::form.text name="s_name" default="Tên chiến dịch" value="{{request()->s_name}}" id="name" key="all.name" placeholder="all.enter_name_campain" defaultplaceholder="Nhập tên chiến dịch"/>
                         </div>
                         <button type="submit" class="btn btn-danger waves-effect waves-light add-new" style="height: 36px;margin-top: 26px;">Tìm kiếm</button>
                     </div>
                 </form>
             </div>
-
         </div>
-
         <div class="row">
-
             @foreach($items as $item)
                 <div class="col-md-6 col-xl-2">
                     <div class="card rounded-3 position-relative card-hover campaign-item">
@@ -95,7 +92,7 @@ $popups = \App\Models\Banner::where('is_popup', TRUE)->where('status', 1)->get()
                             $date_to_end = '';
                             if( $item->date_public != null) {
                                 $date_public = DateTime::createFromFormat('d/m/Y', $item->date_public);
-                                $date_public->add(new DateInterval('P' . $item->date_end . 'D'));
+                                $date_public->add(new DateInterval('P' . $item->contract_term . 'D'));
                                 $date_to_end = $date_public->format('d/m/Y');
                             }
                             ?>

@@ -48,12 +48,43 @@ $ln = json_decode($ln->label_, true);
                                     <td>
                                         <h5 class="text-truncate font-size-14"><a href="javascript: void(0);" class="text-dark">{{$item_->email}}</a></h5>
                                     </td>
-                                    <td data-field="name" style="width: 50px;"><span class="badge rounded-pill badge-soft-primary">{{$item_->amount}}</span></td>
+                                    <td data-field="name" style="width: 50px;"><span class="badge rounded-pill badge-soft-primary">{{currency_format($item_->amount)}}</span></td>
                                     <td style="width: 30px;padding: 0;" class="text-center">
-                                        <input type="number" name="amount[{{$item_->id}}]" value=""/>
+                                        <input type="text" name="amount[{{$item_->id}}]" value="" class="change_all_amount"/>
                                     </td>
+                                </tr>
                             @endforeach
                             </tbody>
+                            <script>
+                                function numberFormat(number, decimals = 0, decPoint = '.', thousandsSep = ',') {
+                                    number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+                                    const n = !isFinite(+number) ? 0 : +number;
+                                    const prec = !isFinite(+decimals) ? 0 : Math.abs(decimals);
+                                    const sep = thousandsSep;
+                                    const dec = decPoint;
+                                    const toFixedFix = (n, prec) => {
+                                        const k = Math.pow(10, prec);
+                                        return '' + Math.round(n * k) / k;
+                                    };
+                                    let s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+                                    if (s[0].length > 3) {
+                                        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+                                    }
+                                    if ((s[1] || '').length < prec) {
+                                        s[1] = s[1] || '';
+                                        s[1] += new Array(prec - s[1].length + 1).join('0');
+                                    }
+                                    return s.join(dec);
+                                }
+
+                                const plus_amount = document.getElementsByClassName('change_all_amount');
+                                for (let i = 0; i < plus_amount.length; i++) {
+                                    plus_amount[i].addEventListener('keyup', function(e) {
+                                        const value = e.target.value;
+                                        e.target.value = numberFormat(value);
+                                    });
+                                }
+                            </script>
                         </table>
                     </div>
                 </div>

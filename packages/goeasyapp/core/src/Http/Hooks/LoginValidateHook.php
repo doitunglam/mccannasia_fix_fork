@@ -41,6 +41,11 @@ class LoginValidateHook
             return ['resuft' => false, 'validator' => $validator];
         }
         if ($user) {
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $now = date('Y-m-d H:i:s');
+            $user->last_login_time = $now;
+            $user->last_login_ip = $ip;
+            $user->save();
             Auth::login($user);
             return ['resuft' => true];
         }

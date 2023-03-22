@@ -6,16 +6,9 @@
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                 <h4 class="mb-sm-0 font-size-18">{{$title}}</h4>
-
-
-
             </div>
-
         </div>
-
     </div>
-
-
 
     <form action="{{ route($route, $item->id) }}" method="POST" class="form-submit" enctype="multipart/form-data">
         @csrf
@@ -33,7 +26,6 @@
                 </ul>
                 <div class="tab-content p-3 text-muted">
                     @foreach(__language() as $index=>$ln)
-
                     <div class="tab-pane{{($index == 0) ? ' active show': ''}}" id="{{$ln->code}}" role="tabpanel">
                         <div class="col-12">
                             <div class="row">
@@ -57,12 +49,7 @@
                                         </div>
                                         <span data-language="{{$ln->code}}" class="add_task badge rounded-pill badge-soft-primary" style="cursor: pointer">{{__trans($language, 'All.add_task', 'Thêm nhiệm vụ')}}</span>
                                         </div>
-                                        @if ($index == 0)
-                                            <x-component::form.number messages="" name="date_end"
-                                                default="Số ngày làm nhiệm vụ" value="{{$item->date_end}}" id="date_end"
-                                                key="all.date_end" placeholder="all.date_end"
-                                                defaultplaceholder="Nhập số ngày" />
-                                        @endif
+
                                         <div class="task-wrap">
                                            <?php
                                                 $tasks = json($item->list_task);

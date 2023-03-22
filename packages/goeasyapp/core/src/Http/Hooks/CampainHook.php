@@ -31,7 +31,6 @@ class CampainHook
             'price' => 'required',
             'task' => 'required',
             'mission_id' => 'required',
-            'date_end' => 'required',
         ], [
                 'name.required' => __trans($language, 'required', 'Required'),
                 'name.unique' => __trans($language, 'unique', 'Unique'),

@@ -98,6 +98,12 @@ $popups = \App\Models\Banner::where('is_popup', true)
                                 <?php
 
                                 $count = count(CampainItem::where('cid', $item->id)->get());
+                                $date_to_end = '';
+                                if ($item->date_public != null) {
+                                    $date_public = DateTime::createFromFormat('d/m/Y', $item->date_public);
+                                    $date_public->add(new DateInterval('P' . $item->contract_term . 'D'));
+                                    $date_to_end = $date_public->format('d/m/Y');
+                                }
                                 ?>
                                 <h5 class="card-title campaign-name text-truncate" data-bs-toggle="tooltip"
                                     data-bs-placement="top" title="{{ __transItem($item->name) }}">
@@ -113,7 +119,7 @@ $popups = \App\Models\Banner::where('is_popup', true)
                                     {{ __trans($language, 'All.daily_profit', 'Lợi nhuận hàng ngày') }}:
                                     {{ currency_format($item->daily_profit) }}</p>
                                 <p class="card-text text-short-description mb-2 text-truncate">
-                                    {{ __trans($language, 'All.date_end', 'Ngày kết thúc') }}: {{ $item->date_end }}</p>
+                                    {{ __trans($language, 'All.date_end', 'Ngày kết thúc') }}: {{ $date_to_end}}</p>
 
                                 {{--                            <a href="{{route('campain.register', $item->id)}}" class="btn btn-primary waves-effect waves-light">{{__trans($language, 'All.register', 'Register')}}</a> --}}
                             </div>

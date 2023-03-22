@@ -132,7 +132,7 @@ class CampainController extends Controller
                 $campain->price = str_replace(',', '',str_replace('.', '', $item[7]));
                 $campain->image = $item[8];
                 $campain->date_public = $item[9];
-                $campain->date_end = $item[10];
+                // $campain->date_end = $item[10];
                 $campain->category = $check->id;
                 $campain->save();
             }
@@ -453,7 +453,7 @@ class CampainController extends Controller
         $items = $this->useRepository->getCampainMy($request);
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.my', [
             'items' => $items,
-            'title' => $this->useRepository->getConfig()['title'] . ' My',
+            'title' => "Chiến dịch của tôi",
         ]);
     }
     public function category($id)

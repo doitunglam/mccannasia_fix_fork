@@ -49,4 +49,10 @@ class ResuftManagementController extends Controller
             'route' => 'payment.request.check'
         ]);
     }
+    public function handleAcceptAll(Request $request)
+    {
+        $this->useRepository->handleAcceptAll($request);
+        return redirect()->back()
+        ->with('success', 'Đã chấp nhận tất cả kết quả!');
+    }
 }

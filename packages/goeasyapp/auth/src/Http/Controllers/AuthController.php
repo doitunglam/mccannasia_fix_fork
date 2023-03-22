@@ -31,13 +31,15 @@ class AuthController extends Controller
             'password' => 'required',
             'phone' => 'required|unique:users',
             'email' => 'unique:users|email',
-            'g-recaptcha-response' => ['required', new \App\Rules\ValidRecaptcha]
+            'parent_referral_code' => 'required',
+            'g-recaptcha-response' => ['required', new \App\Rules\ValidRecaptcha],
         ], [
                 'username.required' => 'Tên không được để trống',
                 'phone.required' => 'Số điện thoại không được để trống',
                 'phone.unique' => 'Số điện thoại đã tồn tại trên hệ thống',
                 'email.unique' => 'Email đã tồn tại trên hệ thống',
                 'password.required' => 'Mật khẩu không được để trống',
+                'parent_referral_code.required' => 'Mã giới thiệu là bắt buộc. Vui lòng liên hệ hỗ trợ online',
             ]);
         if ($request->type_ == 'nhanvien') {
             $r = 'staff';

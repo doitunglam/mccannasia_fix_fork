@@ -19,7 +19,22 @@ $ln = json_decode($ln->label_, true);
                 </div>
             </div>
         </div>
-
+        <div class="row">
+            <form action="{{ route('resuft.accept_all_resuft') }}" method="POST" class="form-submit"
+                enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                            <div class="page-title-right">
+                                <button type="submit"
+                                    class="btn btn-primary waves-effect waves-light">{{ __trans($language, 'All.accept_all', 'Chấp nhận tất cả') }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive">
@@ -64,10 +79,11 @@ $ln = json_decode($ln->label_, true);
                                         }
                                         ?>
                                         <img src="{{ $image[0] ?? '' }}" alt=""
-                                            style="width: 100px; height: 100px; pointer: cursor;" onclick="window.open(this.src)" />
+                                            style="width: 100px; height: 100px; pointer: cursor;"
+                                            onclick="window.open(this.src)" />
                                     </td>
                                     <td style="text-align:center">
-                                        <form action="{{ route($route)."/".$item->id }}" method="POST"
+                                        <form action="{{ route($route) . '/' . $item->id }}" method="POST"
                                             class="form-submit{{ $item->id }}" enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" name="status" class="check-status{{ $item->id }}" />

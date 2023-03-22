@@ -52,11 +52,11 @@
                                             @foreach ($td as $i)
                                                 <?php
                                                 $key = $i['value'];
-                                                $date_end = "";
+                                                $date_to_end = '';
                                                 if ($item->date_public != null) {
                                                     $date_public = DateTime::createFromFormat('d/m/Y', $item->date_public);
-                                                    $date_public->add(new DateInterval('P' . $item->date_end . 'D'));
-                                                    $date_end = $date_public->format('d/m/Y');
+                                                    $date_public->add(new DateInterval('P' . $item->contract_term . 'D'));
+                                                    $date_to_end = $date_public->format('d/m/Y');
                                                 }
                                                 ?>
                                                 @if (isset($i['type']) && $i['type'] == 'image')
@@ -68,7 +68,7 @@
                                                 @endif
                                             @endforeach
                                             <td>
-                                                {{ $date_end }}
+                                                {{ $date_to_end }}
                                             </td>
                                             @if ($item->status == 1)
                                                 <td data-field="name" style="width: 50px;"><a

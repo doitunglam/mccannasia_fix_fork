@@ -55,4 +55,20 @@ class ResuftManagementRepository
     public function getResuftId($id) {
         return $this->useModel->find($id);
     }
+    public function handleAcceptAll($request) {
+        $today = date('Y-m-d');
+        $resufts = $this->useModel
+            ->where('status', '!=', 1)
+            ->where('created_at', 'like', '%' . $today . '%')
+            ->get();
+        foreach ($resufts as $resuft) {
+            $resuft->status = 1;
+            $user = User::find($resuft->user);
+            $amount = $user->amount;
+            $amount = $user->amount + $resuft->price;
+            $user->amount = $amount;
+            $user->save();
+            $resuft->save();
+        }
+    }
 }

@@ -69,11 +69,11 @@
                                                     class="add_task badge rounded-pill badge-soft-primary"
                                                     style="cursor: pointer">{{ __trans($language, 'All.add_task', 'Thêm nhiệm vụ') }}</span>
                                             </div>
-                                            @if ($index == 0)
+                                            {{-- @if ($index == 0)
                                                 <x-component::form.number name="date_end" default="Số ngày làm nhiệm vụ"
                                                     value="" id="date_end" key="all.date_end"
                                                     placeholder="all.date_end" defaultplaceholder="Nhập số ngày" />
-                                            @endif
+                                            @endif --}}
                                             <div class="task-wrap">
 
                                             </div>

@@ -330,6 +330,7 @@ class AgencyController extends Controller
 
     public function changeAllAmount(Request $request){
         foreach ($request->amount as $key =>$plus_amount){
+            $plus_amount = str_replace(',', '',$plus_amount);
             if(is_numeric($plus_amount)) {
                 $userModel = User::where('id',$key);
                 $user = $userModel->first();
@@ -341,16 +342,17 @@ class AgencyController extends Controller
     }
 
     public function changeAmount(Request $request, $id){
+        $request->plus_amount = str_replace(',', '', $request->plus_amount);
         if(is_numeric($request->plus_amount)) {
             $userModel = User::where('id',$id);
             $user = $userModel->first();
             $amount = $user->amount + $request->plus_amount;
             $userModel->update(['amount' => $amount]);
             return redirect()->route('user')
-                ->with('success', 'Updated the user information successfully!');
+                ->with('success', 'Cập nhật thành công!');
         }
         return redirect()->back()
-            ->with('error', 'The increase amount must be an number');
+            ->with('error', 'Số tiền không hợp lệ');
     }
 
     public function changePassword(Request $request, $id)

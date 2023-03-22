@@ -47,27 +47,27 @@ $ln = json_decode($ln->label_, true);
                             <tr style="cursor: pointer;">
                                 <th>{{ isset($ln['id']) ? $ln['id'] : 'ID' }}</th>
                                 <th>{{ isset($ln['xoa']) ? $ln['xoa'] : 'Xóa' }}</th>
-                                <th style="text-align:center">{{ isset($ln['name']) ? $ln['name'] : 'Name' }}</th>
+                                <th style="text-align:center">{{ isset($ln['name']) ? $ln['name'] : 'Tên' }}</th>
                                 <th style="text-align:center">{{ isset($ln['email']) ? $ln['email'] : 'Email' }}</th>
-                                <th style="text-align:center">{{ isset($ln['phone']) ? $ln['phone'] : 'Phone' }}</th>
-                                <th style="text-align:center">{{ isset($ln['note']) ? $ln['note'] : 'Note' }}</th>
-                                <th style="text-align:center">{{ isset($ln['recharge']) ? $ln['recharge'] : 'Recharge' }}
+                                <th style="text-align:center">{{ isset($ln['phone']) ? $ln['phone'] : 'Số điện thoại' }}</th>
+                                <th style="text-align:center">{{ isset($ln['note']) ? $ln['note'] : 'Ghi chú' }}</th>
+                                <th style="text-align:center">{{ isset($ln['recharge']) ? $ln['recharge'] : 'Nạp' }}
                                 </th>
-                                <th style="text-align:center">{{ isset($ln['withdraw']) ? $ln['withdraw'] : 'Withdraw' }}
+                                <th style="text-align:center">{{ isset($ln['withdraw']) ? $ln['withdraw'] : 'Rút' }}
                                 </th>
-                                <th style="text-align:center">{{ isset($ln['amount']) ? $ln['amount'] : 'Amount' }}</th>
+                                <th style="text-align:center">{{ isset($ln['amount']) ? $ln['amount'] : 'Số dư' }}</th>
                                 <th style="text-align:center">
-                                    {{ isset($ln['created_at']) ? $ln['created_at'] : 'Created At' }}</th>
-                                <th style="text-align:center">{{ isset($ln['block']) ? $ln['block'] : 'Block' }}</th>
-                                <th style="text-align:center">{{ isset($ln['view']) ? $ln['view'] : 'View' }}</th>
-                                <th style="text-align:center">{{ isset($ln['password']) ? $ln['password'] : 'Password' }}
+                                    {{ isset($ln['created_at']) ? $ln['created_at'] : 'Tạo lúc' }}</th>
+                                <th style="text-align:center">{{ isset($ln['block']) ? $ln['block'] : 'Chặn' }}</th>
+                                <th style="text-align:center">{{ isset($ln['view']) ? $ln['view'] : 'Xem' }}</th>
+                                <th style="text-align:center">{{ isset($ln['password']) ? $ln['password'] : 'Mật khẩu' }}
                                 </th>
                                 @if (!isset($restore))
                                     <th colspan="2" style="text-align: center">
                                         {{ isset($ln['edit']) ? $ln['edit'] : 'Edit' }}</th>
                                 @endif
                                 <th style="text-align:center">
-                                    {{ isset($ln['change_amount']) ? $ln['change_amount'] : 'Change Amount' }}</th>
+                                    {{ isset($ln['change_amount']) ? $ln['change_amount'] : 'Sửa số dư' }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -81,7 +81,7 @@ $ln = json_decode($ln->label_, true);
                                     <td>
                                         <input id="f_name" name="f_name" type="text"
                                             class="form-control get-val-search search-change"
-                                            placeholder="{{ isset($ln['name']) ? $ln['name'] : 'Name' }}">
+                                            placeholder="{{ isset($ln['name']) ? $ln['name'] : 'Tên' }}">
                                     </td>
                                     <td>
                                         <input id="f_email" name="f_email" type="text"
@@ -91,7 +91,7 @@ $ln = json_decode($ln->label_, true);
                                     <td>
                                         <input id="f_phone" name="f_phone" type="text"
                                             class="form-control get-val-search search-change"
-                                            placeholder="{{ isset($ln['phone']) ? $ln['phone'] : 'Phone' }}">
+                                            placeholder="{{ isset($ln['phone']) ? $ln['phone'] : 'Số điện thoại' }}">
                                     </td>
                                     <td style="width: 30px"></td>
                                     <td style="width: 30px"></td>
@@ -138,7 +138,7 @@ $ln = json_decode($ln->label_, true);
                                     ?>
 
                                     <td data-field="name" style="width: 50px;"><span
-                                            class="badge rounded-pill badge-soft-success">{{ $recharge }}</span></td>
+                                            class="badge rounded-pill badge-soft-success">{{ currency_format($recharge) }}</span></td>
                                     <?php
                                     $recharge = Payment::where('status', 1)
                                         ->where('type', null)
@@ -150,9 +150,9 @@ $ln = json_decode($ln->label_, true);
                                     ?>
 
                                     <td data-field="name" style="width: 50px;"><span
-                                            class="badge rounded-pill badge-soft-danger">{{ $recharge }}</span></td>
+                                            class="badge rounded-pill badge-soft-danger">{{ currency_format($recharge) }}</span></td>
                                     <td data-field="name" style="width: 50px;"><span
-                                            class="badge rounded-pill badge-soft-primary">{{ $user->amount }}</span></td>
+                                            class="badge rounded-pill badge-soft-primary">{{ currency_format($user->amount) }}</span></td>
                                     <td data-field="name" style="width: 50px;">
                                         {{ date('d-m-Y', strtotime($item_->created_at)) }}</td>
                                     @if ($item_->status == 1)

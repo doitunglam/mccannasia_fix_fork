@@ -38,7 +38,7 @@
                                 $is_before_now = false;
                                 if ($item->date_public != null) {
                                     $date_public = DateTime::createFromFormat('d/m/Y', $item->date_public);
-                                    $date_public->add(new DateInterval('P' . $item->date_end . 'D'));
+                                    $date_public->add(new DateInterval('P' . $item->contract_term . 'D'));
                                     $is_before_now = \Carbon\Carbon::parse($date_public)->isBefore(\Carbon\Carbon::now());
                                 }
                                 ?>

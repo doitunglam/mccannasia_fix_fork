@@ -53,7 +53,7 @@ class CampainRepository
     {
         return $this->useModel->where('campains.id', $id)
         ->leftJoin('campain_missions', 'campain_missions.id', '=', 'campains.mission_id')
-        ->select('campains.*', 'campain_missions.id as mission_id', 'campain_missions.name as mission_name', 'campain_missions.daily_profit', 'campain_missions.binding_fee', 'campain_missions.content')
+        ->select('campains.*', 'campain_missions.id as mission_id', 'campain_missions.name as mission_name', 'campain_missions.daily_profit', 'campain_missions.binding_fee', 'campain_missions.content', 'campain_missions.contract_term as contract_term')
         ->first();
     }
     public function getSon($items, $level)
@@ -100,12 +100,11 @@ class CampainRepository
         $day = date('d/m/Y');
         $model = $this->useModel;
         if ($request->s_name != '') {
-            $model = $model->where('name', 'like', '%' . $request->s_name . '%');
+            $model = $model->where('campains.name', 'like', '%' . $request->s_name . '%');
         }
-        return $model->where(function ($query) use ($day) {
-            $query->where('date_public', $day)
-                ->orWhere('date_public', null);
-        })
+        return $model
+        ->leftJoin('campain_missions', 'campain_missions.id', '=', 'campains.mission_id')
+        ->select('campains.*', 'campain_missions.id as mission_id', 'campain_missions.contract_term as contract_term')
         ->orderBy('id', 'DESC')
             ->get();
     }
@@ -178,7 +177,11 @@ class CampainRepository
     public function getPaginateWithRelation($limit = 20, $request = [])
     {
         if (count($request) == 0) {
-            return $this->useModel->orderBy('updated_at', 'DESC')->paginate($limit);
+            return $this->useModel
+            ->orderBy('updated_at', 'DESC')
+            ->leftJoin('campain_missions', 'campain_missions.id', '=', 'campains.mission_id')
+            ->select('campains.*', 'campain_missions.id as mission_id', 'campain_missions.contract_term as contract_term')
+            ->paginate($limit);
         }
     }
 
@@ -384,7 +387,6 @@ class CampainRepository
 	    $this->useModel->is_beginner = !empty($request->is_beginner);
 	    $this->useModel->category = $request->category;
 	    $this->useModel->mission_id = $request->mission_id;
-        $this->useModel->date_end = $request->date_end;
         $this->useModel->save();
     }
 

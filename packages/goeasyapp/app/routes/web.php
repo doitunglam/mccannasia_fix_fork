@@ -112,6 +112,7 @@ Route::prefix('admin')->group(function () {
 
     Route::middleware(['auth:sanctum', 'verified'])->get('resuft/management', [ResuftManagementController::class, 'list'])->name('resuft.management');
     Route::middleware(['auth:sanctum', 'verified'])->post('resuft/management/{id}', [ResuftManagementController::class, 'handleAction'])->name('resuft.handle.action');
+    Route::middleware(['auth:sanctum', 'verified'])->post('resuft/management', [ResuftManagementController::class, 'handleAcceptAll'])->name('resuft.accept_all_resuft');
 
     Route::middleware(['auth:sanctum', 'verified'])->get('campain/download', [CampainController::class, 'download'])->name('campain.download');
 
