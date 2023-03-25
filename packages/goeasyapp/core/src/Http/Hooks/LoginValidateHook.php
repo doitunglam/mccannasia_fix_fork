@@ -29,6 +29,7 @@ class LoginValidateHook
         ], [
                 'email.required' => 'Số điện thoại không được để trống',
                 'password.required' => 'Mật khẩu không được để trống',
+                'g-recaptcha-response.required' => 'Captcha không được để trống'
             ]);
         $validator = Validator::make([], []);
 
@@ -41,13 +42,21 @@ class LoginValidateHook
             return ['resuft' => false, 'validator' => $validator];
         }
         if ($user) {
-            $ip = $_SERVER['REMOTE_ADDR'];
-            $now = date('Y-m-d H:i:s');
-            $user->last_login_time = $now;
-            $user->last_login_ip = $ip;
-            $user->save();
-            Auth::login($user);
-            return ['resuft' => true];
+            if (Auth::attempt(['phone' => $request->email, 'password' => $request->password])) {
+                $ip = $_SERVER['REMOTE_ADDR'];
+                $now = date('Y-m-d H:i:s');
+                $user->last_login_time = $now;
+                $user->last_login_ip = $ip;
+                $user->save();
+                Auth::login($user);
+                return ['resuft' => true];
+            } else {
+                $validator->errors()->add(
+                    'message',
+                    __trans($language, 'password_incorrect', 'Mật khẩu không đúng!')
+                );
+                return ['resuft' => false, 'validator' => $validator];
+            }
         }
         $validator->errors()->add(
             'message',

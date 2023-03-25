@@ -108,7 +108,7 @@
                                         <div class="col-sm-12">
                                             <div class="mb-3">
                                                 <label for="repassword">Nhập lại mật khẩu</label>
-                                                <input id="repassword" name="password" type="password"
+                                                <input id="repassword" name="repassword" type="password"
                                                     class="form-control mb-2" value="" autocomplete="off">
                                                 <span id="repassword-err" class="text-danger d-none">Đây là trường bắt
                                                     buộc</span>
@@ -118,10 +118,10 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="mb-3">
-                                                <label for="address">Họ và Tên</label>
-                                                <input id="address" name="address" type="text"
+                                                <label for="name">Họ và Tên</label>
+                                                <input id="name" name="name" type="text"
                                                     class="form-control mb-2" value="" autocomplete="off">
-                                                <span id="address-err" class="text-danger d-none">Đây là trường bắt
+                                                <span id="name-err" class="text-danger d-none">Đây là trường bắt
                                                     buộc</span>
                                             </div>
                                         </div>

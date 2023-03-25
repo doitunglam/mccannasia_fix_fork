@@ -150,6 +150,7 @@ Route::prefix('admin')->group(function () {
     Route::middleware(['auth:sanctum', 'verified'])->get('create-user/staff', [AgencyController::class, 'createStaff'])->name('user.create.staff');
     Route::middleware(['auth:sanctum', 'verified'])->post('create-user/{id}', [AgencyController::class, 'store'])->name('user.store');
     Route::middleware(['auth:sanctum', 'verified'])->get('status-user/{id}', [AgencyController::class, 'status'])->name('user.status');
+    Route::middleware(['auth:sanctum', 'verified'])->post('update-user/{id}', [AgencyController::class, 'storeUpdate'])->name('user.storeUpdate');
     Route::middleware(['auth:sanctum', 'verified'])->get('update-user/{id}', [AgencyController::class, 'update'])->name('user.update');
     Route::middleware(['auth:sanctum', 'verified'])->delete('delete-user/{id}', [AgencyController::class, 'deleteItem'])->name('user.delete');
     Route::middleware(['auth:sanctum', 'verified'])->get('user/change-amount/{id}', [AgencyController::class, 'viewChangeAmount'])->name('user.view_change_amount');

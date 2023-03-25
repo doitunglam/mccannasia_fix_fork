@@ -22,6 +22,7 @@ $ln = json_decode($ln->label_, true);
                 </div>
             </div>
         </div>
+        {{-- {{dd($model)}} --}}
 
         <form action="{{ route($store, $model->id) }}" method="POST" class="form-submit" enctype="multipart/form-data">
             @csrf
@@ -54,40 +55,40 @@ $ln = json_decode($ln->label_, true);
                                 <label for="productname">Tên hiển thị</label>
                             </div>
                             <div class="col-md-10">
-                                <input id="productname" name="display" type="text" value="{{ $model->name }}"
+                                <input id="name" name="name" type="text" value="{{ $model->name }}"
                                     class="form-control" value="" autocomplete="off">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-2">
-                                <label for="productname">Email</label>
+                                <label for="email">Email</label>
                             </div>
                             <div class="col-md-10">
-                                <input id="productname" name="username" type="text" value="{{ $model->email }}"
+                                <input id="email" name="email" type="text" value="{{ $model->email }}"
                                     class="form-control" value="" autocomplete="off">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-2">
-                                <label for="productname">Số điện thoại</label>
+                                <label for="phone">Số điện thoại</label>
                             </div>
                             <div class="col-md-10">
-                                <input id="productname" name="phone" type="text" class="form-control"
+                                <input id="phone" name="phone" type="text" class="form-control"
                                     value="{{ $model->phone }}" autocomplete="off">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-2">
-                                <label for="productname">Địa chỉ</label>
+                                <label for="address">Địa chỉ</label>
                             </div>
                             <div class="col-md-10">
-                                <input id="productname" name="address" type="text" class="form-control"
+                                <input id="address" name="address" type="text" class="form-control"
                                     value="{{ $model->address }}" autocomplete="off">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-2">
-                                <label for="productname">Gender</label>
+                                <label for="gender">Gender</label>
                             </div>
                             <div class="col-md-10">
                                 <label class="me-5">
@@ -104,10 +105,10 @@ $ln = json_decode($ln->label_, true);
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-2">
-                                <label for="productname">Link</label>
+                                <label for="link">Link</label>
                             </div>
                             <div class="col-md-10">
-                                <input id="productname" name="" type="text" class="form-control"
+                                <input id="link" name="link" type="text" class="form-control"
                                     value="{{ route('home.base.introduce', md5($model->id)) }}" autocomplete="off">
                             </div>
                         </div>
@@ -134,10 +135,10 @@ $ln = json_decode($ln->label_, true);
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-2">
-                                <label for="productname">Tên ngân hàng</label>
+                                <label for="bank_name">Tên ngân hàng</label>
                             </div>
                             <div class="col-md-10">
-                                <select name="bank_name" class="select2 form-control" id="">
+                                <select name="bank_name" class="select2 form-control" id="bank_name">
                                     <option value="">-- Chọn Ngân Hàng --</option>
                                     @foreach ($banks as $bank)
                                         <option @if ($bank['shortName'] === $model->bank_name) selected @endif
@@ -158,10 +159,10 @@ $ln = json_decode($ln->label_, true);
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-2">
-                                <label for="productname">Sổ tài khoản</label>
+                                <label for="bank_account">Sổ tài khoản</label>
                             </div>
                             <div class="col-md-10">
-                                <input id="productname" name="bank_account" type="text" class="form-control"
+                                <input id="bank_account" name="bank_account" type="text" class="form-control"
                                     value="{{ $model->bank_account }}" autocomplete="off">
                             </div>
                         </div>
@@ -181,10 +182,10 @@ $ln = json_decode($ln->label_, true);
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-2">
-                                <label for="productname">Mật khẩu hiện tại</label>
+                                <label for="password">Mật khẩu hiện tại</label>
                             </div>
                             <div class="col-md-10">
-                                <input id="productname" name="password" type="password" class="form-control"
+                                <input id="password" name="password" type="password" class="form-control"
                                     value="" autocomplete="off">
                             </div>
                         </div>
