@@ -9,7 +9,6 @@ use Goeasyapp\App\Http\Controllers\CampainController;
 use Goeasyapp\App\Http\Controllers\AgencyController;
 use Goeasyapp\App\Http\Controllers\BannerController;
 use Goeasyapp\App\Http\Controllers\ConfigController;
-use Goeasyapp\App\Http\Controllers\SettingController;
 use Goeasyapp\App\Http\Controllers\ResuftManagementController;
 
 use Goeasyapp\App\Http\Controllers\ShortLinkController;
@@ -159,7 +158,7 @@ Route::prefix('admin')->group(function () {
     Route::middleware(['auth:sanctum', 'verified'])->post('user/change-all-amount', [AgencyController::class, 'changeAllAmount'])->name('user.change_all_amount');
     Route::middleware(['auth:sanctum', 'verified'])->post('user/change-password/{id}', [AgencyController::class, 'changePassword'])->name('user.change_password');
 
-    Route::middleware(['auth:sanctum', 'verified'])->get('setting', [SettingController::class, 'index'])->name('setting.index');
-    Route::middleware(['auth:sanctum', 'verified'])->get('setting/edit', [SettingController::class, 'viewSetting'])->name('setting.edit');
-    Route::middleware(['auth:sanctum', 'verified'])->post('setting', [SettingController::class, 'store'])->name('setting.store');
+    // Route::middleware(['auth:sanctum', 'verified'])->get('setting', [SettingController::class, 'index'])->name('setting.index');
+    // Route::middleware(['auth:sanctum', 'verified'])->get('setting/edit', [SettingController::class, 'viewSetting'])->name('setting.edit');
+    // Route::middleware(['auth:sanctum', 'verified'])->post('setting', [SettingController::class, 'store'])->name('setting.store');
 });

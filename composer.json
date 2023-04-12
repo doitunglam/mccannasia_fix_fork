@@ -27,6 +27,7 @@
         "laravel/ui": "^4.2",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
+        "php-open-source-saver/jwt-auth": "^2.1",
         "phpoffice/phpspreadsheet": "^1.28",
         "phpunit/phpunit": "^9.5.10",
         "spatie/laravel-ignition": "^1.0"
