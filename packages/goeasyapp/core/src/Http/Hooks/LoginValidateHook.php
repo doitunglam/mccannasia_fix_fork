@@ -29,7 +29,7 @@ class LoginValidateHook
         ], [
                 'email.required' => 'Số điện thoại không được để trống',
                 'password.required' => 'Mật khẩu không được để trống',
-                'g-recaptcha-response.required' => 'Captcha không được để trống'
+                // 'g-recaptcha-response.required' => 'Captcha không được để trống'
             ]);
         $validator = Validator::make([], []);
 

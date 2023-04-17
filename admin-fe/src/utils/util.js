@@ -32,4 +32,8 @@ export function enquireScreen(call) {
   enquireJs.register('only screen and (max-width: 767.99px)', handler)
 }
 
+export function formatCurrencyVND(value) {
+  return value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
+
 const _toString = Object.prototype.toString

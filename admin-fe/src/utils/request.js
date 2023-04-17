@@ -1,51 +1,42 @@
 import axios from 'axios'
 import Cookie from 'js-cookie'
 
-// 跨域认证信息 header 名
 const xsrfHeaderName = 'Authorization'
 
 axios.defaults.timeout = 5000
-axios.defaults.withCredentials= true
-axios.defaults.xsrfHeaderName= xsrfHeaderName
-axios.defaults.xsrfCookieName= xsrfHeaderName
+// axios.defaults.withCredentials= true
+axios.defaults.headers.common['Authorization'] = Cookie.get(xsrfHeaderName)
+// axios.defaults.xsrfCookieName= xsrfHeaderName
+axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
 
-// 认证类型
 const AUTH_TYPE = {
   BEARER: 'Bearer',
   BASIC: 'basic',
   AUTH1: 'auth1',
   AUTH2: 'auth2',
 }
-
 // http method
 const METHOD = {
   GET: 'get',
-  POST: 'post'
+  POST: 'post',
+  PUT: 'put',
+  DELETE: 'delete',
 }
-
-/**
- * axios请求
- * @param url 请求地址
- * @param method {METHOD} http method
- * @param params 请求参数
- * @returns {Promise<AxiosResponse<T>>}
- */
 async function request(url, method, params, config) {
   switch (method) {
     case METHOD.GET:
       return axios.get(url, {params, ...config})
     case METHOD.POST:
       return axios.post(url, params, config)
+    case METHOD.PUT:
+      return axios.put(url, params, config)
+    case METHOD.DELETE:
+      return axios.delete(url, {params, ...config})
     default:
       return axios.get(url, {params, ...config})
   }
 }
 
-/**
- * 设置认证信息
- * @param auth {Object}
- * @param authType {AUTH_TYPE} 认证类型，默认：{AUTH_TYPE.BEARER}
- */
 function setAuthorization(auth, authType = AUTH_TYPE.BEARER) {
   switch (authType) {
     case AUTH_TYPE.BEARER:
@@ -59,10 +50,6 @@ function setAuthorization(auth, authType = AUTH_TYPE.BEARER) {
   }
 }
 
-/**
- * 移出认证信息
- * @param authType {AUTH_TYPE} 认证类型
- */
 function removeAuthorization(authType = AUTH_TYPE.BEARER) {
   switch (authType) {
     case AUTH_TYPE.BEARER:
@@ -76,11 +63,7 @@ function removeAuthorization(authType = AUTH_TYPE.BEARER) {
   }
 }
 
-/**
- * 检查认证信息
- * @param authType
- * @returns {boolean}
- */
+
 function checkAuthorization(authType = AUTH_TYPE.BEARER) {
   switch (authType) {
     case AUTH_TYPE.BEARER:
@@ -97,14 +80,9 @@ function checkAuthorization(authType = AUTH_TYPE.BEARER) {
   return false
 }
 
-/**
- * 加载 axios 拦截器
- * @param interceptors
- * @param options
- */
+
 function loadInterceptors(interceptors, options) {
   const {request, response} = interceptors
-  // 加载请求拦截器
   request.forEach(item => {
     let {onFulfilled, onRejected} = item
     if (!onFulfilled || typeof onFulfilled !== 'function') {
@@ -118,7 +96,6 @@ function loadInterceptors(interceptors, options) {
       error => onRejected(error, options)
     )
   })
-  // 加载响应拦截器
   response.forEach(item => {
     let {onFulfilled, onRejected} = item
     if (!onFulfilled || typeof onFulfilled !== 'function') {
@@ -134,11 +111,6 @@ function loadInterceptors(interceptors, options) {
   })
 }
 
-/**
- * 解析 url 中的参数
- * @param url
- * @returns {Object}
- */
 function parseUrlParams(url) {
   const params = {}
   if (!url || url === '' || typeof url !== 'string') {

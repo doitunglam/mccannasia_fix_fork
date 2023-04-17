@@ -14,6 +14,77 @@ module.exports = {
 
 
   messages: {
+    VN: {
+      home: { name: 'Trang chủ' },
+      dashboard: {
+        name: 'Dashboard',
+      },
+      exception: {
+        name: 'Lỗi',
+        404: { name: '404' },
+        403: { name: '403' },
+        500: { name: '500' }
+      },
+      systemConfig: {
+        name: 'Cấu hình hệ thống',
+        list: { name: 'Danh sách' },
+        adminGroup: { name: 'Nhóm quản trị' },
+        adminList: { name: 'Danh sách quản trị' }
+
+      },
+      components: {
+        name: 'components',
+        taskCard: { name: 'taskCard' },
+        palette: { name: 'palette' }
+      },
+      bank: {
+        name: 'Bank',
+        ...common_list_VN
+      },
+      language: {
+        name: 'Ngôn ngữ',
+        ...common_list_VN
+      },
+      pictures: {
+        name: 'Ảnh',
+
+        popupList: { name: 'Danh sách popup' },
+        ...common_list_VN
+      },
+      categories: {
+        name: 'Danh mục',
+        ...common_list_VN
+      },
+      articles: {
+        name: 'Bài viết',
+        ...common_list_VN
+      },
+      campaigns: {
+        name: 'Chiến dịch',
+        result: { name: 'Kết quả' },
+        ...common_list_VN
+      },
+      campaignMission: {
+        name: 'Nhiệm vụ chiến dịch',
+        ...common_list_VN
+      },
+      partners: {
+        name: 'Đối tác',
+        exchange: { name: 'Đổi số dư' },
+        ...common_list_VN
+      },
+      manageResult: {
+        name: 'Quản lý kết quả',
+        list: { name: 'Danh sách' },
+
+      },
+      payment: {
+        name: 'Thanh toán',
+        listIn: { name: 'Danh sách nạp tiền' },
+        listOut: { name: 'Danh sách rút tiền' },
+      }
+
+    },
     CN: {
       home: {name: '首页'},
       bank: {
@@ -118,77 +189,7 @@ module.exports = {
       }
 
     },
-    VN: {
-      home: { name: 'Trang chủ' },
-      dashboard: {
-        name: 'Dashboard',
-      },
-      exception: {
-        name: 'Lỗi',
-        404: { name: '404' },
-        403: { name: '403' },
-        500: { name: '500' }
-      },
-      systemConfig: {
-        name: 'Cấu hình hệ thống',
-        list: { name: 'Danh sách' },
-        adminGroup: { name: 'Nhóm quản trị' },
-        adminList: { name: 'Danh sách quản trị' }
 
-      },
-      components: {
-        name: 'components',
-        taskCard: { name: 'taskCard' },
-        palette: { name: 'palette' }
-      },
-      bank: {
-        name: 'Bank',
-        ...common_list_VN
-      },
-      language: {
-        name: 'Ngôn ngữ',
-        ...common_list_VN
-      },
-      pictures: {
-        name: 'Ảnh',
-
-        popupList: { name: 'Danh sách popup' },
-        ...common_list_VN
-      },
-      categories: {
-        name: 'Danh mục',
-        ...common_list_VN
-      },
-      articles: {
-        name: 'Bài viết',
-        ...common_list_VN
-      },
-      campaigns: {
-        name: 'Chiến dịch',
-        result: { name: 'Kết quả' },
-        ...common_list_VN
-      },
-      campaignMission: {
-        name: 'Nhiệm vụ chiến dịch',
-        ...common_list_VN
-      },
-      partners: {
-        name: 'Đối tác',
-        exchange: { name: 'Đổi số dư' },
-        ...common_list_VN
-      },
-      manageResult: {
-        name: 'Quản lý kết quả',
-        list: { name: 'Danh sách' },
-
-      },
-      payment: {
-        name: 'Thanh toán',
-        listIn: { name: 'Danh sách nạp tiền' },
-        listOut: { name: 'Danh sách rút tiền' },
-      }
-
-    },
     HK: {
       home: {name: '首頁'},
       dashboard: {

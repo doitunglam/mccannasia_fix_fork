@@ -33,13 +33,13 @@
                 <h5>{{ __trans($language, 'All.resuft', 'Kết quả') }}</h5>
                 @foreach ($resuft as $r)
                     <h6>{{ $r->date }}
-
                         @if ($r->status == 1)
                             <span
                                 class="badge rounded-pill badge-soft-success">{{ __trans($language, 'All.appect', 'Chấp nhận') }}</span>
                         @elseif($r->status == 2)
                             <span
                                 class="badge rounded-pill badge-soft-danger">{{ __trans($language, 'All.not_appect', 'Từ chối') }}</span>
+                            <p>Lý do: {{ $r->reason }}</p>
                         @else
                             <span
                                 class="badge rounded-pill badge-soft-primary">{{ __trans($language, 'All.waiting', 'Đang chờ') }}</span>

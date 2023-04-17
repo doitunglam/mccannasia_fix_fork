@@ -190,11 +190,11 @@ class AgencyController extends Controller
             'address' => ['nullable', 'string', $uniqueIgnoreSelf],
             'gender' => ['required', 'string', 'in:' . implode(',', $genderArray)],
             'link' => ['nullable', 'url'],
-            'bank_name' => ['nullable', 'required_with:bank_name_account', 'in:' . implode(',', $bankNameArray)],
-            'bank_name_account' => ['nullable', 'required_with:bank_account', 'string'],
+            // 'bank_name' => ['nullable', 'required_with:bank_name_account', 'in:' . implode(',', $bankNameArray)],
+            // 'bank_name_account' => ['nullable', 'required_with:bank_account', 'string'],
             'bank_account' => ['nullable', 'required_with:bank_name', 'numeric'],
             'password' => ['nullable', 'string'],
-            'referral_code' => ['nullable', 'regex:/\b[a-zA-z0-9]{8}\b/']
+            // 'referral_code' => ['nullable', 'regex:/\b[a-zA-z0-9]{8}\b/']
         ]);
         $model = User::find($id);
         $model->name = $request->name;

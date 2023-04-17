@@ -37,8 +37,10 @@ class ResuftManagementRepository
     public function handleActionResuft($request, $id) {
         $resuft = $this->useModel->find($id);
         $status = $request->status;
+        $reason = $request->reason;
         if ($resuft) {
             $resuft->status = $status;
+            $resuft->reason = $reason;
             if($status == 1) {
                 $user = User::find($resuft->user);
                 $amount = $user->amount;

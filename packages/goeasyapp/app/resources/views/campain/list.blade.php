@@ -43,6 +43,7 @@
                                         @endforeach
                                         <th>{{ __trans($language, 'All.date_end', 'Ngày kết thúc') }}</th>
                                         <th>{{ __trans($language, 'All.status', 'Trạng thái') }}</th>
+                                        <th>{{ __trans($language, 'All.campain_type', 'Loại') }}</th>
                                         <th colspan="2">{{ __trans($language, 'All.edit', 'Sửa') }}</th>
                                     </tr>
                                 </thead>
@@ -60,7 +61,7 @@
                                                 }
                                                 ?>
                                                 @if (isset($i['type']) && $i['type'] == 'image')
-                                                    <td style=""><img style="height: 150px; width: auto"
+                                                    <td style=""><img style="max-height: 150px; max-width: 300px"
                                                             src="{!! env('APP_URL') . __transItem($item->$key) !!}" /></td>
                                                 @else
                                                     <td class="text-truncate" style="max-width: 200px;">
@@ -81,6 +82,16 @@
                                                             class="badge rounded-pill badge-soft-danger">{{ __trans($language, 'All.not', 'Not') }}</span></a>
                                                 </td>
                                             @endif
+                                            <td data-field="name" style="width: 50px;">
+                                                @if ($item->is_hot == 1)
+                                                    <a href="{{ route($status, $item->id) }}"><span
+                                                            class="badge rounded-pill badge-soft-success">{{ __trans($language, 'All.hot', 'Hot') }}</span></a>
+                                                @endif
+                                                @if ($item->is_beginner == 1)
+                                                    <a href="{{ route($status, $item->id) }}"><span
+                                                            class="badge rounded-pill badge-soft-success">{{ __trans($language, 'All.beginner', 'Mới bắt đầu') }}</span></a>
+                                                @endif
+                                            </td>
                                             <td style="width: 30px">
                                                 <a class="btn btn-outline-secondary btn-sm edit"
                                                     href="{{ route($update, $item->id) }}" title="Edit">

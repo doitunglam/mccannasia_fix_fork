@@ -14,7 +14,7 @@ module.exports = {
             codeInput: "Please enter the code",
             nameInput: "Please enter the name",
 
-            pageDesc: "Edit language",
+            pageDesc: "Edit ",
             languageAll:"Name page: Language",
             pageAll:"Name page: all"
         },
@@ -22,7 +22,7 @@ module.exports = {
             name: "Tên",
             codeInput: "Vui lòng nhập mã",
             nameInput: "Vui lòng nhập tên",
-            pageDesc: "Chỉnh sửa thông tin ngôn ngữ",
+            pageDesc: "Chỉnh sửa thông tin ",
             languageAll:"Tên trang: Ngôn ngữ",
             pageAll:"Tên trang: all"
 

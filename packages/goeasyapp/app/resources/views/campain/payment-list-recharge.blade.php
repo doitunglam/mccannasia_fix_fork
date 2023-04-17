@@ -147,6 +147,7 @@
                                         <th>{{ __trans($language, 'All.status', 'Trạng thái') }}</th>
                                         <th>{{ __trans($language, 'All.created_at', 'Thời gian tạo') }}</th>
                                         <th>{{ __trans($language, 'All.review_date', 'Thời gian xem xét') }}</th>
+                                        <th>{{ __trans($language, 'All.reason', 'Lý do từ chối') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -199,6 +200,7 @@
                                             @endif
                                             <td style="">{{ $item->created_at }}</td>
                                             <td style="">{{ $item->updated_at }}</td>
+                                            <td style="">{{ $item->reason }}</td>
                                             {{--                                    <td style="width: 30px"> --}}
                                             {{--                                        <a class="btn btn-outline-secondary btn-sm edit" href="{{ route($route, $item->id)}}" title="Edit"> --}}
                                             {{--                                            <i class="fas fa-pencil-alt"></i> --}}

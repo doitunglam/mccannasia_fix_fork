@@ -32,9 +32,17 @@ class CampainHook
             'task' => 'required',
             'mission_id' => 'required',
         ], [
-                'name.required' => __trans($language, 'required', 'Required'),
-                'name.unique' => __trans($language, 'unique', 'Unique'),
-                'name.max' => __trans($language, 'max_225', 'Max 225 character'),
+                'name.required' => __trans($language, 'name', 'Name')." ".__trans($language, 'required', 'yêu cầu nhập'),
+                'name.unique' => __trans($language, 'name', 'Name')." ".__trans($language, 'unique', 'phải là duy nhất'),
+                'name.max' => __trans($language, 'name', 'Name')." ".__trans($language, 'max_225', 'tối đa 255 ký tự'),
+                'description.required' => __trans($language, 'description', 'Description')." ".__trans($language, 'required', 'yêu cầu nhập'),
+                'image.required' => __trans($language, 'image', 'Image')." ".__trans($language, 'required', 'yêu cầu nhập'),
+                'short_content.required' => __trans($language, 'short_content', 'Short Content')." ".__trans($language, 'required', 'yêu cầu nhập'),
+                'link_.required' => __trans($language, 'link', 'Link')." ".__trans($language, 'required', 'yêu cầu nhập'),
+                'date_public.required' => __trans($language, 'date_public', 'Date Public')." ".__trans($language, 'required', 'yêu cầu nhập'),
+                'price.required' => __trans($language, 'price', 'Price')." ".__trans($language, 'required', 'yêu cầu nhập'),
+                'task.required' => __trans($language, 'task', 'Công việc')." ".__trans($language, 'required', 'yêu cầu nhập'),
+                'mission_id.required' => __trans($language, 'mission', 'Nhiệm vụ')." ".__trans($language, 'required', 'yêu cầu nhập'),
             ]);
 
     }

@@ -46,10 +46,11 @@ export default {
   data() {
     return {
       langList: [
+          {key: 'VN', name: "Tiếng Việt", alias: 'Tiếng Việt'},
         {key: 'CN', name: '简体中文', alias: '简体'},
-        {key: 'HK', name: '繁體中文', alias: '繁體'},
+
         {key: 'US', name: 'English', alias: 'English'},
-        {key: 'VN', name: "Tiếng Việt", alias: 'Tiếng Việt'}
+
       ],
       searchActive: false
     }

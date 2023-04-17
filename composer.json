@@ -12,6 +12,8 @@
     ],
     "require": {
         "php": "^8.0.2",
+        "botman/botman": "^2.8",
+        "botman/driver-web": "^1.5",
         "fakerphp/faker": "^1.9.1",
         "goeasyapp/app": "@dev",
         "goeasyapp/auth": "@dev",

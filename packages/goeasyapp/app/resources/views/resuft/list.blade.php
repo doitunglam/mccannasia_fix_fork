@@ -51,6 +51,7 @@ $ln = json_decode($ln->label_, true);
                                 </th>
                                 <th style="text-align:center">{{ isset($ln['image']) ? $ln['image'] : 'Hình ảnh' }}
                                 </th>
+                                <th>{{ __trans($language, 'All.reason', 'Lý do từ chối') }}</th>
                                 <th style="text-align:center">{{ isset($ln['action']) ? $ln['action'] : 'Thao tác' }}
                                 </th>
                             </tr>
@@ -82,11 +83,14 @@ $ln = json_decode($ln->label_, true);
                                             style="width: 100px; height: 100px; pointer: cursor;"
                                             onclick="window.open(this.src)" />
                                     </td>
+                                    <td style="">{{ $item->reason }}</td>
                                     <td style="text-align:center">
                                         <form action="{{ route($route) . '/' . $item->id }}" method="POST"
                                             class="form-submit{{ $item->id }}" enctype="multipart/form-data">
                                             @csrf
                                             <input type="hidden" name="status" class="check-status{{ $item->id }}" />
+                                            <input type="hidden" name="reason"
+                                            class="check-reason{{ $item->id }}" />
                                             @if ($item->status == 0)
                                                 <div class="d-flex flex-wrap gap-2">
                                                     <button
@@ -95,8 +99,7 @@ $ln = json_decode($ln->label_, true);
                                                         onclick="return confirm('{{ __trans($language, 'All.confirm_payment_recharge', 'Bạn chắc chắn thực hiện điều này?') }}')">{{ __trans($language, 'all.appect', 'Chấp nhận') }}</button>
                                                     <button
                                                         class="btn btn-danger waves-effect waves-light not_appect{{ $item->id }}"
-                                                        type="button"
-                                                        onclick="return confirm('{{ __trans($language, 'All.confirm_payment_recharge', 'Bạn chắc chắn thực hiện điều này?') }}')">{{ __trans($language, 'all.not_appect', 'Từ chối') }}</button>
+                                                        type="button">{{ __trans($language, 'all.not_appect', 'Từ chối') }}</button>
                                                 </div>
                                             @endif
                                         </form>
@@ -121,6 +124,12 @@ $ln = json_decode($ln->label_, true);
                     $('.form-submit{{ $item->id }}').submit();
                 })
                 $('.not_appect{{ $item->id }}').click(function() {
+                    var reasonDeny = prompt("Bạn chắc chắn thực hiện điều này? Hãy nhập lý do từ chối");
+                    if (reasonDeny == null || reasonDeny == "") {
+                        alert("Bạn chưa nhập lý do từ chối");
+                        return false;
+                    }
+                    $('.check-reason{{ $item->id }}').val(reasonDeny);
                     $('.check-status{{ $item->id }}').val(2);
                     $('.form-submit{{ $item->id }}').submit();
                 })

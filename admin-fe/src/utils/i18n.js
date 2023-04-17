@@ -63,8 +63,9 @@ function mergeI18nFromRoutes(i18n, routes) {
   formatFullPath(routes)
   const CN = generateI18n(new Object(), routes, 'name')
   const US = generateI18n(new Object(), routes, 'path')
-  i18n.mergeLocaleMessage('CN', CN)
   i18n.mergeLocaleMessage('US', US)
+  i18n.mergeLocaleMessage('CN', CN)
+
   const messages = routesI18n.messages
   Object.keys(messages).forEach(lang => {
     i18n.mergeLocaleMessage(lang, messages[lang])
