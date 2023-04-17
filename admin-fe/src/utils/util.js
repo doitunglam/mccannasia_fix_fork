@@ -33,7 +33,7 @@ export function enquireScreen(call) {
 }
 
 export function formatCurrencyVND(value) {
-  return value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  return value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') + ' đ'
 }
 
 const _toString = Object.prototype.toString

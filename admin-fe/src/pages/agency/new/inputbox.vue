@@ -9,7 +9,8 @@
                             <a-form-item :label="$t('name')">
                                 <a-input
                                     :value="data.name"
-                                    :placeholder="$ta('input|name')" @change="onChanged"
+                                    name="name"
+                                    :placeholder="$ta('name')" @change="onChanged"
                                 />
                             </a-form-item>
                         </a-col>
@@ -17,7 +18,8 @@
                             <a-form-item :label="$t('email')">
                                 <a-input
                                     :value="data.email"
-                                    :placeholder="$ta('input|email')" @change="onChanged"
+                                    name="email"
+                                    :placeholder="$ta('email')" @change="onChanged"
                                 />
                             </a-form-item>
                         </a-col>
@@ -25,7 +27,8 @@
                             <a-form-item :label="$t('phone')">
                                 <a-input
                                     :value="data.phone"
-                                    :placeholder="$ta('input|phone')" @change="onChanged"
+                                    name="phone"
+                                    :placeholder="$ta('phone')" @change="onChanged"
                                 />
                             </a-form-item>
                         </a-col>
@@ -33,13 +36,14 @@
                             <a-form-item :label="$t('password')">
                                 <a-input
                                     :value="data.password"
-                                    :placeholder="$ta('input|password')" @change="onChanged"
+                                    name="password"
+                                    :placeholder="$ta('password')" @change="onChanged"
                                 />
                             </a-form-item>
                         </a-col>
                         <a-col :lg="24" :md="24" :sm="24">
-                            <a-form-item :label="$t('password')">
-                                <a-select  @change="changeGender"   :value="data.gender" style="width: 120px" ref="select">
+                            <a-form-item :label="$t('gender')">
+                                <a-select  @change="changeGender" name="gender"  :value="data.gender" style="width: 120px" ref="select">
                                     <a-select-option value="female">Female</a-select-option>
                                     <a-select-option value="male">Male</a-select-option>
 
@@ -50,7 +54,8 @@
                             <a-form-item :label="$t('bank_name_account')">
                                 <a-input
                                     :value="data.bank_name_account"
-                                    :placeholder="$ta('input|bank_name_account')" @change="onChanged"
+                                    name="bank_name_account"
+                                    :placeholder="$ta('bank_name_account')" @change="onChanged"
                                 />
                             </a-form-item>
                         </a-col>
@@ -58,7 +63,26 @@
                             <a-form-item :label="$t('bank_name')">
                                 <a-input
                                     :value="data.bank_name"
-                                    :placeholder="$ta('input|bank_name')" @change="onChanged"
+                                    name="bank_name"
+                                    :placeholder="$ta('bank_name')" @change="onChanged"
+                                />
+                            </a-form-item>
+                        </a-col>
+                        <a-col :lg="24" :md="24" :sm="24">
+                            <a-form-item :label="$t('bank_account')">
+                                <a-input
+                                    :value="data.bank_account"
+                                    name="bank_account"
+                                    :placeholder="$ta('bank_account')" @change="onChanged"
+                                />
+                            </a-form-item>
+                        </a-col>
+                        <a-col :lg="24" :md="24" :sm="24">
+                            <a-form-item :label="$t('referral_code')">
+                                <a-input
+                                    :value="data.referral_code"
+                                    name="referral_code"
+                                    :placeholder="$ta('referral_code')" @change="onChanged"
                                 />
                             </a-form-item>
                         </a-col>
@@ -78,9 +102,11 @@
 </template>
 
 <script>
+import { METHOD, request } from '../../../utils/request';
+
 export default {
     name: 'inputBox',
-    props: ['showSubmit', "langData", "type"],
+    props: ['showSubmit', "langData", "type", "agencyId"],
     i18n: require('./i18n-inputBox.js'),
     data() {
         const data ={... this.langData};
@@ -113,6 +139,14 @@ export default {
             form: this.$form.createForm(this)
         }
     },
+    watch: {
+        langData: {
+            handler: function (val) {
+                this.data = val;
+            },
+            deep: true
+        }
+    },
     methods: {
         changeGender(value) {
             this.data.gender = value;
@@ -136,9 +170,19 @@ export default {
             })
         },
         send() {
-
-            console.log(this.value);
-            console.log(this.data);
+            const data = {
+                ...this.data,
+            }
+            if(this.agencyId) {
+                data.id = this.agencyId
+            }
+            request(
+                process.env.VUE_APP_API_BASE_URL + '/agency',
+                METHOD.POST,
+                data).then(() => {
+                    this.data = {}
+                    this.$message.success(`Update successfully`);
+                })
         },
 
         setNestedProperty(event) {

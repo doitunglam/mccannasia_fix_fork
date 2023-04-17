@@ -77,6 +77,10 @@ Route::group([
     Route::controller(ApiAgencyController::class)->group(function() {
         Route::middleware('jwt.auth')->get('', 'list');
         Route::middleware('jwt.auth')->post('', 'store');
+        Route::middleware('jwt.auth')->get('/{id}', 'getModelById');
+        Route::middleware('jwt.auth')->put('/change-amount/{id}', 'changeAmount');
+        Route::middleware('jwt.auth')->put('/block/{id}', 'block');
+        Route::middleware('jwt.auth')->put('/reset-password/{id}', 'resetPassword');
     });
 });
 Route::group([
@@ -85,7 +89,8 @@ Route::group([
 ], function ($router) {
     Route::controller(ApiResuftController::class)->group(function() {
         Route::middleware('jwt.auth')->get('', 'list');
-        Route::middleware('jwt.auth')->post('', 'store');
+        Route::middleware('jwt.auth')->put('/{id}', 'handleAction');
+        Route::middleware('jwt.auth')->put('', 'handleAcceptAll');
     });
 });
 Route::group([
@@ -94,7 +99,7 @@ Route::group([
 ], function ($router) {
     Route::controller(ApiWithDrawController::class)->group(function() {
         Route::middleware('jwt.auth')->get('', 'list');
-        Route::middleware('jwt.auth')->post('', 'store');
+        Route::middleware('jwt.auth')->put('/{id}', 'store');
     });
 });
 Route::group([
@@ -103,6 +108,6 @@ Route::group([
 ], function ($router) {
     Route::controller(ApiRechargeController::class)->group(function() {
         Route::middleware('jwt.auth')->get('', 'list');
-        Route::middleware('jwt.auth')->post('', 'store');
+        Route::middleware('jwt.auth')->put('/{id}', 'store');
     });
 });

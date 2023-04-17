@@ -9,87 +9,85 @@
         <a-card>
             <div>
                 <a-space class="operator">
-                        <!-- <a-button @click="addNew" type="primary">Add new</a-button> -->
-                        <!-- <a-dropdown>
+                    <!-- <a-button @click="addNew" type="primary">Add new</a-button> -->
+                <!-- <a-dropdown>
                           <a-menu @click="handleMenuClick" slot="overlay">
                             <a-menu-item key="delete">删除</a-menu-item>
                             <a-menu-item key="audit">审批</a-menu-item>
                           </a-menu>
                           <a-button> 更多操作 <a-icon type="down" /> </a-button>
-                        </a-dropdown> -->
-                      </a-space>
-                <standard-table
-                        :columns="columns"
-                        :dataSource="dataSource"
-
-
-
-                >
+                                                </a-dropdown> -->
+                </a-space>
+                <standard-table :columns="columns" :dataSource="dataSource">
                     <template slot="image-column" slot-scope="image">
-                        <img :src="image.text"/>
+                        <img :src="image.text" />
                     </template>
                     <template slot="status-column" slot-scope="status">
-          <span
-                  v-if="status.text != 1"
-                  style="
-              background-color: green;
-              color: white;
-              padding: 4px 8px;
-              border-radius: 4px;
-              display: inline-block;
-            "
-          >
-            active
-          </span>
-                        <span
-                                v-if="status.text == 1"
-                                style="
-              background-color: red;
-              color: white;
-              padding: 4px 8px;
-              border-radius: 4px;
-              display: inline-block;
-            "
-                        >
-            inactive
-          </span>
+                        <span v-if="status.text != 1" style="
+                                      background-color: green;
+                                      color: white;
+                                      padding: 4px 8px;
+                                      border-radius: 4px;
+                                      display: inline-block;
+                                    ">
+                            active
+                        </span>
+                        <span v-if="status.text == 1" style="
+                                      background-color: red;
+                                      color: white;
+                                      padding: 4px 8px;
+                                      border-radius: 4px;
+                                      display: inline-block;
+                                    ">
+                            inactive
+                        </span>
                     </template>
 
                     <div slot="description" slot-scope="{ text }">
                         {{ text }}
                     </div>
-                    <div slot="action" slot-scope="{  record }">
+                    <div slot="status" slot-scope="{ text }">
+                        {{ text == 1 ? 'Blocked' : 'Unblock' }}
+                    </div>
+                    <div style="display: flex; flex-direction: column;" slot="action" slot-scope="{  record }">
                         <a style="margin-right: 8px">
-                            <a-icon type="edit"/>
-                            <router-link :to="`/language/edit/edit/${record.id}`"
-                            >edit
-                            </router-link
-                            >
+                            <a-icon type="edit" />
+                            <router-link :to="`/partners/new?id=${record.id}`"> Edit
+                            </router-link>
                         </a>
-                        <a @click="deleteRecord(record.id)">
-                            <a-icon type="delete"/>
-                            delete
+                        <a @click="blockRecord(record.id)">
+                            <a-icon type="stop" />
+                            Block
                         </a>
-                        <!-- <a @click="deleteRecord(record.key)" v-auth="`delete`">
+                        <a @click="changeAmountRecord(record.id)">
+                            <a-icon type="money-collect" />
+                            Amount
+                        </a>
+                        <a @click="resetPassword(record.id)">
+                            <a-icon type="redo" />
+                            Reset Pw
+                        </a>
+                    <!-- <a @click="deleteRecord(record.key)" v-auth="`delete`">
                                     <a-icon type="delete" />删除2
-                                  </a> -->
+                                                          </a> -->
                     </div>
                     <template slot="statusTitle">
-                        <a-icon @click.native="onStatusTitleClick" type="info-circle"/>
+                        <a-icon @click.native="onStatusTitleClick" type="info-circle" />
                     </template>
                 </standard-table>
             </div>
         </a-card>
     </div>
-
 </template>
 
 <script>
 
 
 import StandardTable from "@/components/table/StandardTable";
-import {request} from "@/utils/request";
+import { request } from "@/utils/request";
 import moment from "moment";
+import { formatCurrencyVND } from "@/utils/util";
+import { METHOD } from "../../../utils/request";
 
 const columns = [
     {
@@ -110,41 +108,35 @@ const columns = [
         dataIndex: "amount",
     },
     {
+        title: "Recharge",
+        dataIndex: "sum_recharge",
+    },
+    {
+        title: "Withdraw",
+        dataIndex: "sum_withdraw",
+    },
+    {
         title: "Phone",
         dataIndex: "phone",
     },
-
-    {
-        title: "Mission",
-        dataIndex: "content",
-        key: "date_public",
-        render: ({content}) => {
-            return (
-                <div v-html={content}/>
-            );
-        },
-    },
     {
         title: "Last login",
-        dataIndex: "last_login_time",
-        render: (record) => {
-            return (
-                <div>
-                    <p>{moment(record.last_login_time).format("DD-MM-YYYY")}</p>
-                    <p>{record.last_login_ip}</p>
-                </div>
-            );
-        },
+        dataIndex: "last_login_info",
     },
-    // {
-    //     title: "Action",
-    //     scopedSlots: {customRender: "action"},
-    // },
+    {
+        title: "Status",
+        dataIndex: "status",
+        scopedSlots: { customRender: "status" },
+    },
+    {
+        title: "Action",
+        scopedSlots: { customRender: "action" },
+    },
 ];
 
 export default {
     name: "QueryList",
-    components: {StandardTable},
+    components: { StandardTable },
     data() {
         return {
             advanced: true,
@@ -177,17 +169,44 @@ export default {
             }).then((res) => {
                 const data = res?.data?.items ?? {};
                 console.log(data);
-                
-                this.dataSource = data
 
-                // this.pagination.current = page;
-                // this.pagination.pageSize = pageSize;
-                // this.pagination.total = total;
+                this.dataSource = data.map((_data) => {
+                    return {
+                        ..._data,
+                        last_login_info: (_data.last_login_time && _data.last_login_ip) ? moment(_data.last_login_time).format("YYYY-MM-DD HH:mm:ss") + ` (${_data.last_login_ip})` : "",
+                        amount: _data.amount ? formatCurrencyVND(_data.amount) : 0,
+                        sum_recharge: _data.sum_recharge ? formatCurrencyVND(_data.sum_recharge) : 0,
+                        sum_withdraw: _data.sum_withdraw ? formatCurrencyVND(_data.sum_withdraw) : 0,
+                    }
+                })
             });
+        },
+        blockRecord(id) {
+            request(process.env.VUE_APP_API_BASE_URL + "/agency/block/" + id, METHOD.PUT).then(() => {
+                this.getData();
+                this.$message.success("Block/Unblock success");
+            })
         },
         deleteRecord(id) {
             this.dataSource = this.dataSource.filter((item) => item.id !== id);
             this.selectedRows = this.selectedRows.filter((item) => item.id !== id);
+        },
+        changeAmountRecord(id) {
+            const amount = prompt("Please enter amount to increase", "0");
+            if (amount) {
+                request(process.env.VUE_APP_API_BASE_URL + "/agency/change-amount/" + id, METHOD.PUT, {
+                    plus_amount: amount
+                }).then(() => {
+                    this.getData();
+                    this.$message.success("Change amount success");
+                });
+            }
+        },
+        resetPassword(id) {
+            request(process.env.VUE_APP_API_BASE_URL + "/agency/reset-password/" + id, METHOD.PUT).then(() => {
+                this.getData();
+                this.$message.success("Reset password success");
+            });
         },
         toggleAdvanced() {
             this.advanced = !this.advanced;
@@ -220,21 +239,21 @@ export default {
 
 <style lang="less" scoped>
 .search {
-  margin-bottom: 54px;
+    margin-bottom: 54px;
 }
 
 .fold {
-  width: calc(100% - 216px);
-  display: inline-block;
+    width: calc(100% - 216px);
+    display: inline-block;
 }
 
 .operator {
-  margin-bottom: 18px;
+    margin-bottom: 18px;
 }
 
 @media screen and (max-width: 900px) {
-  .fold {
-    width: 100%;
-  }
+    .fold {
+        width: 100%;
+    }
 }
 </style>

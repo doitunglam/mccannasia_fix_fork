@@ -23,6 +23,21 @@ class ApiResuftController extends Controller
                 'items' => $items,
             ]);
     }
-
+    public function handleAction(Request $request) {
+        $id=$request->id;
+        $this->useRepository->handleActionResuft($request, $id);
+        return response()->json([
+                'status' => 'success',
+                'message' => 'Cập nhật thành công',
+            ]);
+    }
+    public function handleAcceptAll(Request $request)
+    {
+        $this->useRepository->handleAcceptAll($request);
+        return response()->json([
+                'status' => 'success',
+                'message' => 'Cập nhật thành công',
+            ]);
+        }
 
 }

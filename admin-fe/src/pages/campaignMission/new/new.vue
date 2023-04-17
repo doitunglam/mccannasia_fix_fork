@@ -2,7 +2,7 @@
 <template>
     <div>
         <a-card>
-            <input-box ref="inputBox" :langData="data" :showSubmit="true" :type="'VN'"/>
+            <input-box ref="inputBox" :langData="data" :showSubmit="true" :campainMissionId="id" :type="'VN'"/>
         </a-card>
     </div>
 </template>

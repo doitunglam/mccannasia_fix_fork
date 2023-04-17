@@ -22,6 +22,13 @@ class ApiWithDrawController extends Controller
                 'items' => $items,
             ]);
     }
-
+    public function store(Request $request)
+    {
+        $this->useRepository->updateModelPayment($request);
+        return response()->json([
+                'status' => 'success',
+                'message' => 'Cập nhật thành công',
+            ]);
+    }
 
 }

@@ -69,4 +69,17 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
     RUN composer install --no-interaction --no-scripts --no-dev --prefer-dist --ignore-platform-req=ext-gd
     php artisan key:generate
+    php artisan jwt:secret
+    php artisan migrate
+```
+For New UI
+ 
+ 
+Setup at Node 16.17
+```
+cd admin-fe
+npm i -g yarn
+yarn install
+cp .env.development .env
+yarn serve
 ```

@@ -90,67 +90,67 @@ const options = {
 
         //   ]
         // },
-        {
-          path: 'pictures',
-          name: 'Pictures',
-          meta: {
-            icon: 'picture',
-            page: {
-              cacheAble: false
-            }
-          },
-          component: PageView,
-          children: [
-            {
-              path: 'list',
-              name: 'List',
-              component: () => import('@/pages/systemConfig/list'),
-            },
-            {
-              path: 'new',
-              name: 'New',
-              component: () => import('@/pages/systemConfig/adminGroup'),
-            },
-            {
-              path: 'popupList',
-              name: 'popupList',
-              component: () => import('@/pages/systemConfig/list'),
-            },
+        // {
+        //   path: 'pictures',
+        //   name: 'Pictures',
+        //   meta: {
+        //     icon: 'picture',
+        //     page: {
+        //       cacheAble: false
+        //     }
+        //   },
+        //   component: PageView,
+        //   children: [
+        //     {
+        //       path: 'list',
+        //       name: 'List',
+        //       component: () => import('@/pages/systemConfig/list'),
+        //     },
+        //     {
+        //       path: 'new',
+        //       name: 'New',
+        //       component: () => import('@/pages/systemConfig/adminGroup'),
+        //     },
+        //     {
+        //       path: 'popupList',
+        //       name: 'popupList',
+        //       component: () => import('@/pages/systemConfig/list'),
+        //     },
 
-          ]
-        },
-        {
-          path: 'categories',
-          name: 'Categories',
-          meta: {
-            icon: 'bars',
-            page: {
-              cacheAble: false
-            }
-          },
-          component: PageView,
-          children: [
-            {
-              path: 'list',
-              name: 'List',
-              component: () => import('@/pages/categories/list/list'),
-            },
-            {
-              path: 'new',
-              name: 'New',
-              component: () => import('@/pages/categories/new/new'),
-            },
-            {
-              path: 'edit',
-              name: 'edit',
-              meta: {
-                invisible: true
-              },
-              component: () => import('@/pages/categories/edit/edit'),
-            },
+        //   ]
+        // },
+        // {
+        //   path: 'categories',
+        //   name: 'Categories',
+        //   meta: {
+        //     icon: 'bars',
+        //     page: {
+        //       cacheAble: false
+        //     }
+        //   },
+        //   component: PageView,
+        //   children: [
+        //     {
+        //       path: 'list',
+        //       name: 'List',
+        //       component: () => import('@/pages/categories/list/list'),
+        //     },
+        //     {
+        //       path: 'new',
+        //       name: 'New',
+        //       component: () => import('@/pages/categories/new/new'),
+        //     },
+        //     {
+        //       path: 'edit',
+        //       name: 'edit',
+        //       meta: {
+        //         invisible: true
+        //       },
+        //       component: () => import('@/pages/categories/edit/edit'),
+        //     },
 
-          ]
-        },
+        //   ]
+        // },
         // {
         //   path: 'articles', //bài báo
         //   name: 'articles',
@@ -340,12 +340,12 @@ const options = {
             {
               path: 'listIn',
               name: 'listIn',
-              component: () => import('@/pages/payment/list/withdraw'),
+              component: () => import('@/pages/payment/list/recharge'),
             },
             {
               path: 'listOut',
               name: 'listOut',
-              component: () => import('@/pages/payment/list/recharge'),
+              component: () => import('@/pages/payment/list/withdraw'),
             },
           ]
         },
@@ -378,34 +378,34 @@ const options = {
         //   ]
         // },
 
-        {
-          path: 'systemConfig',
-          name: '表单页',
-          meta: {
-            icon: 'form',
-            page: {
-              cacheAble: false
-            }
-          },
-          component: PageView,
-          children: [
-            {
-              path: 'list',
-              name: '基础表单',
-              component: () => import('@/pages/systemConfig/list'),
-            },
-            {
-              path: 'adminGroup',
-              name: '分步表单',
-              component: () => import('@/pages/systemConfig/adminGroup'),
-            },
-            {
-              path: 'adminList',
-              name: '高级表单',
-              component: () => import('@/pages/systemConfig/adminList'),
-            }
-          ]
-        },
+        // {
+        //   path: 'systemConfig',
+        //   name: '表单页',
+        //   meta: {
+        //     icon: 'form',
+        //     page: {
+        //       cacheAble: false
+        //     }
+        //   },
+        //   component: PageView,
+        //   children: [
+        //     {
+        //       path: 'list',
+        //       name: '基础表单',
+        //       component: () => import('@/pages/systemConfig/list'),
+        //     },
+        //     {
+        //       path: 'adminGroup',
+        //       name: '分步表单',
+        //       component: () => import('@/pages/systemConfig/adminGroup'),
+        //     },
+        //     {
+        //       path: 'adminList',
+        //       name: '高级表单',
+        //       component: () => import('@/pages/systemConfig/adminList'),
+        //     }
+        //   ]
+        // },
         // {
         //   path: 'list',
         //   name: '列表页',
