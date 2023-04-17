@@ -197,6 +197,13 @@
         </div>
 
     </div>
+    <script src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js'></script>
+    <script>
+        var botmanWidget = {
+            aboutText: 'Botman',
+            introMessage: "Hello! How may we help you?"
+        };
+    </script>
     <script src="{{ asset('assets/libs/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/libs/metismenu/metisMenu.min.js') }}"></script>

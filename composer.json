@@ -12,6 +12,8 @@
     ],
     "require": {
         "php": "^8.0.2",
+        "botman/botman": "^2.8",
+        "botman/driver-web": "^1.5",
         "fakerphp/faker": "^1.9.1",
         "goeasyapp/app": "@dev",
         "goeasyapp/auth": "@dev",
@@ -27,6 +29,7 @@
         "laravel/ui": "^4.2",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
+        "php-open-source-saver/jwt-auth": "^2.1",
         "phpoffice/phpspreadsheet": "^1.28",
         "phpunit/phpunit": "^9.5.10",
         "spatie/laravel-ignition": "^1.0"

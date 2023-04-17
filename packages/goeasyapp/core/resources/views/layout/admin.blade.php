@@ -68,14 +68,9 @@ $cas = json_decode(file_get_contents(public_path() . '/campain_category.json') ?
                                                 <ul class="dropdown-menu dropdown-menu-start"
                                                     aria-labelledby="bell-notification-list">
                                                     <li>
-                                                        <a href="{{ route('payment.listRecharge') }}"
+                                                        <a href="{{ route('payment.all') }}"
                                                             class="dropdown-item"
-                                                            key="t-default">{!! __trans($language, 'All.list_recharge', 'Nạp tiền') !!}</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="{{ route('payment.listWithdraw') }}"
-                                                            class="dropdown-item"
-                                                            key="t-default">{!! __trans($language, 'All.list_withdraw', 'Rút tiền') !!}</a>
+                                                            key="t-default">Quản lý nạp rút</a>
                                                     </li>
                                                 </ul>
                                             </div>

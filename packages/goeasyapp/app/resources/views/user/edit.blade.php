@@ -22,8 +22,6 @@ $ln = json_decode($ln->label_, true);
                 </div>
             </div>
         </div>
-        {{-- {{dd($model)}} --}}
-
         <form action="{{ route($store, $model->id) }}" method="POST" class="form-submit" enctype="multipart/form-data">
             @csrf
             <div class="card">

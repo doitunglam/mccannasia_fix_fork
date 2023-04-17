@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Goeasyapp\Auth\Http\Controllers\FacebookSocialiteController;
 use Goeasyapp\Auth\Http\Controllers\GoogleController;
 use Goeasyapp\Auth\Http\Controllers\ProfileController;
+use Goeasyapp\Auth\Http\Controllers\BotManChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/signout', [AuthController::class, 'customSignout'])->name('auth.signout');
     Route::get('/signout', [AuthController::class, 'customSignout'])->name('auth.signout');
 });
+Route::match(['get', 'post'], '/botman', [BotManChatController::class, 'invoke'])->name('botman-chat');
 Route::get('auth/facebook', [FacebookSocialiteController::class, 'redirectToFB'])->name('auth.facebook');
 Route::get('callback/facebook', [FacebookSocialiteController::class, 'handleCallback']);
 

@@ -213,7 +213,25 @@ class CampainController extends Controller
             'type' => 'all'
         ]);
     }
-
+    public function paymentAll(Request $request)
+    {
+        $date= $request->date;
+        $lang = (session('locale') ? session('locale') : 'en');
+        $language = Language::orderBy('updated_at', 'DESC')->where('code', $lang)->first();
+        $language = ($language && $language->value != '') ? json_decode($language->value, true) : [];
+        $user = Auth::user();
+        $config = Config::where('status', 1)->first();
+        $items = $this->useRepository->getPaymentByCurrentUser($request, $user, $date);
+        return view('app::' . $this->useRepository->getConfig()['aciton'] . '.list-payment', [
+            'title' => 'Payment',
+            'route' => 'payment.request',
+            'items' => $items,
+            'type' => 'all',
+            'config' => $config,
+            'user' => $user,
+            'date' => $date
+        ]);
+    }
     public function paymentAdminListRecharge(Request $request)
     {
         $lang = (session('locale') ? session('locale') : 'en');
@@ -518,6 +536,7 @@ class CampainController extends Controller
             ['title' => __trans($language, 'All.name', 'Tên'), 'value' => 'name'],
             ['title' => __trans($language, 'All.image', 'Ảnh'), 'value' => 'image', 'type' => 'image'],
             ['title' => __trans($language, 'All.date_public', 'Ngày công khai'), 'value' => 'date_public'],
+            ['title' => __trans($language, 'All.mission_name', 'Tên nhiệm vụ'), 'value' => 'campain_missions_name'],
         ];
         $items = $this->useRepository->getPaginateWithRelation();
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.list', [

@@ -10,6 +10,8 @@ use App\Models\Language;
 use App\Models\CampainItem;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use Carbon\Carbon;
+
 
 class CampainRepository
 {
@@ -180,7 +182,7 @@ class CampainRepository
             return $this->useModel
             ->orderBy('updated_at', 'DESC')
             ->leftJoin('campain_missions', 'campain_missions.id', '=', 'campains.mission_id')
-            ->select('campains.*', 'campain_missions.id as mission_id', 'campain_missions.contract_term as contract_term')
+            ->select('campains.*', 'campain_missions.id as mission_id', 'campain_missions.contract_term as contract_term', 'campain_missions.name as campain_missions_name')
             ->paginate($limit);
         }
     }
@@ -252,6 +254,30 @@ class CampainRepository
         return Payment::orderBy('created_at')->paginate(20);
     }
 
+    public function getPaymentByCurrentUser($request, $user, $date)
+    {
+        $query = Payment::orderBy('created_at', 'DESC')->where('user', $user->id);
+
+        switch ($date) {
+            case 'today':
+                $query->whereDate('created_at', Carbon::today());
+                break;
+            case 'yesterday':
+                $query->whereDate('created_at', Carbon::yesterday());
+                break;
+            case 'week':
+                $query->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
+                break;
+            case 'month':
+                $query->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]);
+                break;
+            default:
+                $query->whereDate('created_at', '=', $date);
+        }
+
+        return $query->paginate(20);
+    }
+
     public function getAdminPaymentRecharge_Withdraw($request, $type)
     {
         $user = [];
@@ -302,6 +328,7 @@ class CampainRepository
             $user->save();
         }
         $model->status = $request->status;
+        $model->reason = $request->reason;
         $model->save();
     }
     public function getFee($campain, $item, $price)
