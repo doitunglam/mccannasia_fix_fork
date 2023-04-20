@@ -25,10 +25,60 @@ class ApiAgencyController extends Controller
         ->select('users.*', DB::raw('SUM(CASE WHEN payments.type = 1 THEN payments.amount ELSE 0 END) as sum_recharge'), DB::raw('SUM(CASE WHEN payments.type IS NULL THEN payments.amount ELSE 0 END) as sum_withdraw'))
         ->groupBy('users.id')
         ->get();
+        $allUser = User::where('close_account', '=', null)->whereNotNull('referral_code')->select('id', 'name', 'email', 'phone', 'referral_code')->get();
         return response()->json([
                 'status' => 'success',
                 'items' => $items,
+                'allUser' => $allUser,
             ]);
+    }
+    public function getInfoAgency(Request $request) {
+        $id = $request->id;
+        $from = $request->from;
+        $to = $request->to;
+        $user = User::find($id);
+        if($from !== null || $to !== null) {
+            $totalAgencyOfCurrentUser = User::whereNotNull('parent_referral_code')->where('parent_referral_code', $user->referral_code)->where('created_at', '>=', $from)->where('created_at', '<=', $to)->count();
+            $summary = User::leftJoin('payments', 'payments.user', '=', 'users.id')
+                ->where('users.parent_referral_code', $user->referral_code)
+                ->whereNotNull('users.parent_referral_code')
+                ->whereBetween('payments.created_at', [$from, $to])
+                ->where('payments.status', 1)
+                ->select(
+                    DB::raw('SUM(CASE WHEN payments.type = 1 THEN payments.amount ELSE 0 END) as totalRechargeAmount'),
+                    DB::raw('SUM(CASE WHEN payments.type IS NULL THEN payments.amount ELSE 0 END) as totalWithdrawAmount')
+                )
+                ->get();
+            return response()->json([
+                    'status' => 'success',
+                    'user' => $user,
+                    'data' => [
+                        'Total Agency' => $totalAgencyOfCurrentUser,
+                        'Total Recharge' => $summary[0]->totalRechargeAmount,
+                        'Total Withdraw' => $summary[0]->totalWithdrawAmount,
+                    ]
+                ]);
+        } else {
+            $totalAgencyOfCurrentUser = User::whereNotNull('parent_referral_code')->where('parent_referral_code', $user->referral_code)->count();
+            $summary = User::leftJoin('payments', 'payments.user', '=', 'users.id')
+                ->where('users.parent_referral_code', $user->referral_code)
+                ->whereNotNull('users.parent_referral_code')
+                ->where('payments.status', 1)
+                ->select(
+                    DB::raw('SUM(CASE WHEN payments.type = 1 THEN payments.amount ELSE 0 END) as totalRechargeAmount'),
+                    DB::raw('SUM(CASE WHEN payments.type IS NULL THEN payments.amount ELSE 0 END) as totalWithdrawAmount')
+                )
+                ->get();
+            return response()->json([
+                    'status' => 'success',
+                    'user' => $user,
+                    'data' => [
+                        'Total Agency' => $totalAgencyOfCurrentUser,
+                        'Total Recharge' => $summary[0]->totalRechargeAmount,
+                        'Total Withdraw' => $summary[0]->totalWithdrawAmount,
+                    ]
+                ]);
+        }
     }
     public function store(Request $request){
         $id=$request->id;

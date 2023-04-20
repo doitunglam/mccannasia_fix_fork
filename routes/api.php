@@ -129,6 +129,7 @@ Route::group([
 ], function ($router) {
     Route::controller(ApiAgencyController::class)->group(function() {
         Route::middleware('jwt.auth')->get('', 'list');
+        Route::middleware('jwt.auth')->get('/info/{id}', 'getInfoAgency');
         Route::middleware('jwt.auth')->post('', 'store');
         Route::middleware('jwt.auth')->get('/{id}', 'getModelById');
         Route::middleware('jwt.auth')->put('/change-amount/{id}', 'changeAmount');

@@ -7,6 +7,7 @@ module.exports = {
             amount: "金额",
             modalTitle: "编辑",
             cancel: "取消",
+            close: "关闭",
         },
         US: {
             type: "Type",
@@ -15,6 +16,7 @@ module.exports = {
             amount: "Amount",
             modalTitle: "Edit",
             cancel: "Cancel",
+            close: "Close",
         },
         VN: {
             type: "Loại",
@@ -23,6 +25,7 @@ module.exports = {
             amount: "Số tiền",
             modalTitle: "Chỉnh sửa",
             cancel: "Hủy",
+            close: "Đóng",
         }
     }
 }

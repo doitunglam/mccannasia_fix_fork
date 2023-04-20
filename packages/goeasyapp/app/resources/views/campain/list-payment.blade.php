@@ -9,23 +9,25 @@
             </div>
         </div>
         <div class="d-flex" style="justify-content: space-between">
-            <div class="card search_page d-flex" style="width: 20%">
+            <div class="card search_page d-flex" style="width: 20%; background: rgba(90, 55, 55, 0.2)">
                 <div class="d-flex" style="flex-direction: row">
                     <div class="card-body">
-                        <a class="btn btn-success waves-effect waves-light mt-3 d-grid" id="btn-view-0"
-                            style="width: 110px; height: 110px; align-items: center">{{ __trans($language, 'All.recharge', 'Nạp tiền') }}</a>
+                        <a class="btn btn-info waves-effect waves-light mt-3 d-grid" id="btn-view-0"
+                            style="width: 90px; height: 90px; align-items: center"><i
+                                class="fa fa-plus"></i>{{ __trans($language, 'All.recharge', 'Nạp tiền') }}</a>
                     </div>
                     <div class="card-body">
-                        <a class="btn btn-danger waves-effect waves-light mt-3 d-grid" id="btn-view-1"
-                            style="width: 110px; height: 110px; align-items: center">{{ __trans($language, 'All.withdraw', 'Rút tiền') }}</a>
+                        <a class="btn btn-info waves-effect waves-light mt-3 d-grid" id="btn-view-1"
+                            style="width: 90px; height: 90px; align-items: center"><i
+                                class="fa fa-minus"></i>{{ __trans($language, 'All.withdraw', 'Rút tiền') }}</a>
                     </div>
                 </div>
                 <div class="card-body d-flex" style="flex-direction: column">
-                    <a class="btn btn-danger waves-effect waves-light mt-3 d-grid" id="btn-view-2"
+                    <a class="btn btn-info waves-effect waves-light mt-3 d-grid" id="btn-view-2"
                         style="width: 100%; height: 50px; align-items: center">{{ __trans($language, 'All.withdraw', 'Chi tiết giao dịch') }}</a>
                 </div>
             </div>
-            <div class="card" style="width: 78%">
+            <div class="card" style="width: 78%; background: rgba(90, 55, 55, 0.2)">
                 <div class="card-body">
                     <div class="col-12">
                         <div class="row">
@@ -34,41 +36,127 @@
                                     <form method="POST" action="{{ route('payment.withdraw') }}"
                                         enctype="multipart/form-data" style="position: relative;z-index: 1;">
                                         @csrf
-                                        <div class="mb-3">
+                                        <div class="mb-5">
                                             <h5 class="modal-title" id="transaction-detailModalLabel">
                                                 {{ __trans($language, 'All.tranfer_info', 'Thông tin ngân hàng') }}</h5>
-                                            <p class="mb-2" style="margin-top: 10px;font-weight: bold">
-                                                {{ 'Tên tài khoản' }}:
+                                            <table class="custom-table">
+                                                <tr class="custom-table">
+                                                    <td class="custom-table"> {{ 'Tên tài khoản' }} </td>
+                                                    <td class="custom-table"> {!! $user->bank_name_account ?? 'Unknown' !!} </td>
+                                                </tr>
+                                                <tr class="custom-table">
+                                                    <td class="custom-table">
+                                                        {{ __trans($language, 'All.bank_name', 'Tên ngân hàng') }} </td>
+                                                    <td class="custom-table"> {!! $user->bank_name ?? 'Unknown' !!} </td>
+                                                </tr>
+                                                <tr class="custom-table">
+                                                    <td class="custom-table">
+                                                        {{ __trans($language, 'All.bank_account', 'Số tài khoản') }} </td>
+                                                    <td class="custom-table"> {!! $user->bank_account ?? 'Unknown' !!}</td>
+                                                </tr>
+                                            </table>
+                                            <style>
+                                                table.custom-table {
+                                                    width: 50%;
+                                                    border-collapse: collapse;
+                                                }
+
+                                                td.custom-table {
+                                                    border-bottom: 1px solid black;
+                                                    padding: 10px;
+                                                }
+
+                                                tr.custom-table {
+                                                    display: flex;
+                                                    justify-content: space-between;
+                                                }
+
+                                                td.custom-table:first-child {
+                                                    width: 100%;
+                                                }
+                                            </style>
+                                            {{-- <p style="width: 70%;">
+                                                <p class="mb-3" style="margin-top: 10px;font-weight: bold">
+                                                    {{ 'Tên tài khoản' }}:
+                                                </p>
                                                 <span class="text-primary">{!! $user->bank_name_account ?? 'Unknown' !!}</span>
                                             </p>
-                                            <p class="mb-2" style="margin-top: 10px;font-weight: bold">
+
+                                            <p class="mb-3" style="margin-top: 10px;font-weight: bold">
                                                 {{ __trans($language, 'All.bank_name', 'Tên ngân hàng') }}:
                                                 <span class="text-primary">{!! $user->bank_name ?? 'Unknown' !!}</span>
                                             </p>
                                             <p class="mb-4" style="margin-bottom: 9px !important;font-weight: bold">
                                                 {{ __trans($language, 'All.bank_account', 'Số tài khoản') }}:
                                                 <span class="text-primary">{!! $user->bank_account ?? 'Unknown' !!}</span>
-                                            </p>
+                                            </p> --}}
                                         </div>
-                                        <div class="mb-2">
+                                        <div class="mb-3">
                                             <h6 class="modal-title" id="transaction-detailModalLabel">
                                                 {{ __trans($language, 'All.tranfer_detail', 'Phương thức') }}</h6>
-                                            <input type="radio" checked>
-                                            <span class="" style="font-size: 13px">{!! $user->bank_name ?? 'Unknown' !!}</span>
+                                            <div class="radio">
+                                                <input type="radio" checked label={!! $user->bank_name ?? 'Unknown' !!} />
+                                            </div>
+                                            {{-- <span class="" style="font-size: 13px">{!! $user->bank_name ?? 'Unknown' !!}</span> --}}
                                         </div>
-                                        <div class="mb-2">
+                                        <style>
+                                            .radio {
+                                                background: #454857;
+                                                padding: 4px;
+                                                border-radius: 3px;
+                                                box-shadow: inset 0 0 0 3px rgba(35, 33, 45, 0.3),
+                                                    0 0 0 3px rgba(185, 185, 185, 0.3);
+                                                position: relative;
+                                                width: 5%;
+                                            }
+
+                                            .radio input {
+                                                width: auto;
+                                                height: 100%;
+                                                -webkit-appearance: none;
+                                                -moz-appearance: none;
+                                                appearance: none;
+                                                outline: none;
+                                                cursor: pointer;
+                                                border-radius: 2px;
+                                                padding: 4px 8px;
+                                                background: #454857;
+                                                color: #bdbdbdbd;
+                                                font-size: 14px;
+                                                font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                                                    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+                                                    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+                                                transition: all 100ms linear;
+                                            }
+
+                                            .radio input:checked {
+                                                background-image: linear-gradient(180deg, #95d891, #74bbad);
+                                                color: #fff;
+                                                box-shadow: 0 1px 1px #0000002e;
+                                                text-shadow: 0 1px 0px #79485f7a;
+                                            }
+
+                                            .radio input:before {
+                                                content: attr(label);
+                                                display: inline-block;
+                                                text-align: center;
+                                                width: 100%;
+                                            }
+                                        </style>
+                                        <div class="mb-3">
                                             <h6 class="modal-title" id="transaction-detailModalLabel">
                                                 {{ __trans($language, 'All.tranfer_limit', 'Giới hạn rút tiền') }}</h6>
-                                            <span class="" style="font-size: 13px">200k ~ ∞</span>
+                                            <span class="" style="font-size: 20px">200k ~ <i
+                                                    class="fa fa-infinity"></i></span>
                                         </div>
-                                        <div class="mb-2">
+                                        <div class="mb-3">
                                             <h6 class="modal-title" id="transaction-detailModalLabel">
                                                 {{ __trans($language, 'All.tranfer_input', 'Rút tiền qua ngân hàng') }}
                                             </h6>
                                             <input type="number" class="form-control" placeholder="Nhập số tiền rút"
                                                 style="width: 30%" name="payment">
                                         </div>
-                                        <div class="mb-2">
+                                        <div class="mb-3">
                                             <button class="btn btn-danger waves-effect waves-light mt-3 d-grid"
                                                 style="width: 30%; height: 40px; align-items: center"
                                                 onclick="return confirm('{{ __trans($language, 'All.confirm_payment_recharge', 'Bạn chắc chắn thực hiện điều này?') }}')">{{ __trans($language, 'All.withdraw', 'Rút tiền') }}</a>
@@ -79,7 +167,7 @@
                                     <form method="POST" action="{{ route('payment.recharge') }}"
                                         enctype="multipart/form-data" style="position: relative;z-index: 1;">
                                         @csrf
-                                        <div class="mb-3">
+                                        <div class="mb-5">
                                             <h5 class="modal-title" id="transaction-detailModalLabel">
                                                 {{ __trans($language, 'All.tranfer_info', 'Thông tin chuyển khoản') }}
                                             </h5>
@@ -88,32 +176,32 @@
                                                 $info = json($n->name);
                                                 ?>
                                             @endforeach
+                                            <table class="custom-table">
+                                                <tr class="custom-table">
+                                                    <td class="custom-table"> {{ 'Tên tài khoản' }} </td>
+                                                    <td class="custom-table"> {!! $info['name'] !!} </td>
+                                                </tr>
+                                                <tr class="custom-table">
+                                                    <td class="custom-table">
+                                                        {{ __trans($language, 'All.bank_name', 'Tên ngân hàng') }} </td>
+                                                    <td class="custom-table"> {!! $info['bank'] !!}</td>
+                                                </tr>
+                                                <tr class="custom-table">
+                                                    <td class="custom-table">
+                                                        {{ __trans($language, 'All.bank_account', 'Số tài khoản') }} </td>
+                                                    <td class="custom-table"> {!! __transItem($n->value) !!}</td>
+                                                </tr>
+                                            </table>
 
-                                            <p class="mb-2" style="margin-top: 10px;font-weight: bold">
-                                                {{ 'Tên tài khoản' }}:
-                                                <span class="text-primary">{!! $info['name'] !!}</span>
-                                            </p>
-                                            <p class="mb-2" style="margin-top: 10px;font-weight: bold">
-                                                {{ __trans($language, 'All.bank_name', 'Tên ngân hàng') }}:
-                                                <span class="text-primary">{!! $info['bank'] !!}</span>
-                                            </p>
-                                            <p class="mb-4" style="margin-bottom: 9px !important;font-weight: bold">
-                                                {{ __trans($language, 'All.bank_account', 'Số tài khoản') }}:
-                                                <span class="text-primary">{!! __transItem($n->value) !!}</span>
-                                            </p>
-                                            <p class="mb-4" style="margin-bottom: 9px !important;font-weight: bold">
-                                                {{ 'Nội dung chuyển khoản' }}:
-                                                <span class="text-primary">{!! $user ? $user->username : '' !!}</span>
-                                            </p>
                                             <i class="text-danger">* Nội dung chuyển khoản không được thay đổi</i>
                                         </div>
-                                        <div class="mb-2">
+                                        <div class="mb-3">
                                             <h6 class="modal-title" id="transaction-detailModalLabel">
                                                 {{ __trans($language, 'All.tranfer_input', 'Nạp tiền') }}</h6>
                                             <input type="number" class="form-control" name="payment"
                                                 placeholder="Nhập số tiền nạp" style="width: 30%">
                                         </div>
-                                        <div class="mb-2">
+                                        <div class="mb-3">
                                             <button class="btn btn-danger waves-effect waves-light mt-3 d-grid"
                                                 style="width: 30%; height: 40px; align-items: center"
                                                 onclick="return confirm('{{ __trans($language, 'All.confirm_payment_recharge', 'Bạn chắc chắn thực hiện điều này?') }}')">{{ __trans($language, 'All.recharge', 'Nạp tiền') }}</a>
@@ -125,17 +213,26 @@
                                         <div class="col-12">
                                             <div class="d-flex align-items-center">
                                                 <a class="btn btn-info waves-effect waves-light mr-2 d-grid"
-                                                    href="{{ route('payment.all') }}?date=today"
-                                                    id="btn-view-0" style="align-items: center; margin-right:10px">Hôm nay</a>
+                                                    href="{{ route('payment.all') }}?date=today" id="btn-view-0"
+                                                    style="align-items: center; margin-right:10px">Hôm nay</a>
                                                 <a class="btn btn-info waves-effect waves-light mr-2 d-grid"
-                                                    href="{{ route('payment.all') }}?date=yesterday"
-                                                    id="btn-view-0" style="align-items: center; margin-right:10px">Hôm qua</a>
+                                                    href="{{ route('payment.all') }}?date=yesterday" id="btn-view-0"
+                                                    style="align-items: center; margin-right:10px">Hôm qua</a>
                                                 <a class="btn btn-info waves-effect waves-light mr-2 d-grid"
-                                                    href="{{ route('payment.all') }}?date=week"
-                                                    id="btn-view-0" style="align-items: center; margin-right:10px">Trong vòng 7 ngày</a>
+                                                    href="{{ route('payment.all') }}?date=week" id="btn-view-0"
+                                                    style="align-items: center; margin-right:10px">Trong vòng 7 ngày</a>
                                                 <a class="btn btn-info waves-effect waves-light mr-2 d-grid"
-                                                    href="{{ route('payment.all') }}?date=month"
-                                                    id="btn-view-0" style="align-items: center; margin-right:10px">Trong vòng 30 ngày</a>
+                                                    href="{{ route('payment.all') }}?date=month" id="btn-view-0"
+                                                    style="align-items: center; margin-right:10px">Trong vòng 30 ngày</a>
+                                                <div id="dropdown-wrapper" class="dropdown-wrapper" tabindex="1">
+                                                    <span class="dropdown-value">---Chọn bộ lọc---</span>
+
+                                                    <ul class="dropdown-list">
+                                                        <li><a href="#">Nạp</a></li>
+                                                        <li><a href="#">Rút</a></li>
+                                                        <li><a href="#">Giao dịch bị tự chối</a></li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -152,7 +249,8 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($items as $item)
-                                                <tr data-id="1" style="cursor: pointer;" class="item-{{ $item->type }}">
+                                                <tr data-id="1" style="cursor: pointer;"
+                                                    class="item-{{ $item->type }}">
                                                     @if ($item->type == '')
                                                         <td data-field="name" style="width: 50px;"><span
                                                                 class="badge rounded-pill badge-soft-success">{{ __trans($language, 'All.withdraw_money', 'Rút tiền') }}</span>
@@ -237,5 +335,103 @@
             $(".shadow-sm").addClass('d-none');
             $(".flex-1").addClass('mb-3');
         })
+        const dd = document.querySelector('#dropdown-wrapper');
+        const links = document.querySelectorAll('.dropdown-list a');
+        const span = document.querySelector('span.dropdown-value');
+
+        dd.addEventListener('click', function() {
+            this.classList.toggle('is-active');
+        });
+
+        links.forEach((element) => {
+            element.addEventListener('click', function(evt) {
+                span.innerHTML = evt.currentTarget.textContent;
+            })
+        })
     </script>
+    <style>
+        .dropdown-wrapper {
+            position: relative;
+            width: 240px;
+            margin: 10px;
+            padding: 12px 15px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease-out;
+        }
+
+        .dropdown-wrapper:after {
+            content: "";
+            width: 0;
+            height: 0;
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            margin-top: -3px;
+            border-width: 6px 6px 0 6px;
+            border-style: solid;
+            border-color: #f05b55 transparent;
+        }
+
+        .dropdown-wrapper.is-active {
+            border-radius: 5px 5px 0 0;
+            background: #f05b55;
+            box-shadow: none;
+            border-bottom: none;
+            color: white;
+        }
+
+        .dropdown-wrapper.is-active:after {
+            border-color: #ffffff transparent;
+            transform: rotate(180deg);
+        }
+
+        .dropdown-wrapper.is-active .dropdown-list {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+            max-height: 400px;
+        }
+
+        .dropdown-list {
+            /* Size & position */
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            /* Styles */
+            background: #fff;
+            border-radius: 0 0 5px 5px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-top: none;
+            border-bottom: none;
+            list-style: none;
+            transition: all 0.3s ease-out;
+            /* Hiding */
+            max-height: 0;
+            overflow: hidden;
+        }
+
+        .dropdown-list li {
+            padding: 0 10px;
+        }
+
+        .dropdown-list li:hover a {
+            color: #f05b55;
+        }
+
+        .dropdown-list li:last-of-type a {
+            border: none;
+        }
+
+        .dropdown-list a {
+            display: block;
+            text-decoration: none;
+            color: #333;
+            padding: 10px 0;
+            transition: all 0.3s ease-out;
+            border-bottom: 1px solid #e6e8ea;
+        }
+    </style>
 @endsection()

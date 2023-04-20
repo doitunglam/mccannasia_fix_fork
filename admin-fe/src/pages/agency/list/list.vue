@@ -9,36 +9,29 @@
         <a-card>
             <div>
                 <a-space class="operator">
-                    <!-- <a-button @click="addNew" type="primary">Add new</a-button> -->
-                <!-- <a-dropdown>
-                          <a-menu @click="handleMenuClick" slot="overlay">
-                            <a-menu-item key="delete">删除</a-menu-item>
-                            <a-menu-item key="audit">审批</a-menu-item>
-                          </a-menu>
-                          <a-button> 更多操作 <a-icon type="down" /> </a-button>
-                                                                                                                        </a-dropdown> -->
+                    <a-input v-model="searchText" placeholder="Name, Email, Phone" />
                 </a-space>
-                <standard-table :columns="columns" :dataSource="dataSource">
+                <standard-table :columns="columns" :dataSource="filteredData">
                     <template slot="image-column" slot-scope="image">
                         <img :src="image.text" />
                     </template>
                     <template slot="status-column" slot-scope="status">
                         <span v-if="status.text != 1" style="
-                                        background-color: green;
-                                        color: white;
-                                        padding: 4px 8px;
-                                        border-radius: 4px;
-                                        display: inline-block;
-                                    ">
+                                                        background-color: green;
+                                                        color: white;
+                                                        padding: 4px 8px;
+                                                        border-radius: 4px;
+                                                        display: inline-block;
+                                                    ">
                             active
                         </span>
                         <span v-if="status.text == 1" style="
-                                        background-color: red;
-                                        color: white;
-                                        padding: 4px 8px;
-                                        border-radius: 4px;
-                                        display: inline-block;
-                                    ">
+                                                        background-color: red;
+                                                        color: white;
+                                                        padding: 4px 8px;
+                                                        border-radius: 4px;
+                                                        display: inline-block;
+                                                    ">
                             inactive
                         </span>
                     </template>
@@ -50,6 +43,10 @@
                         {{ text == 1 ? 'Blocked' : 'Unblock' }}
                     </div>
                     <div style="display: flex; flex-direction: column;" slot="action" slot-scope="{  record }">
+                        <a @click="watchRecord(record.id)">
+                            <a-icon type="eye" />
+                            Watch
+                        </a>
                         <a style="margin-right: 8px">
                             <a-icon type="edit" />
                             <router-link :to="`/partners/new?id=${record.id}`"> Edit
@@ -79,6 +76,9 @@
                 getData();
             }
         }"></modal>
+        <modal-info  :idSelected2="idSelected2" :showModal="showModalInfo" @update:showModal="(event) => {
+            showModalInfo = event
+        }"></modal-info>
     </div>
 </template>
 
@@ -91,6 +91,7 @@ import moment from "moment";
 import { formatCurrencyVND } from "@/utils/util";
 import { METHOD } from "../../../utils/request";
 import Modal from './modal.vue'
+import ModalInfo from './modal-info.vue'
 
 const columns = [
     {
@@ -123,6 +124,10 @@ const columns = [
         dataIndex: "phone",
     },
     {
+        title: "Agency of",
+        dataIndex: "agencyOf",
+    },
+    {
         title: "Last login",
         dataIndex: "last_login_info",
     },
@@ -139,7 +144,7 @@ const columns = [
 
 export default {
     name: "QueryList",
-    components: { StandardTable, Modal },
+    components: { StandardTable, Modal, ModalInfo },
     data() {
         return {
             advanced: true,
@@ -147,12 +152,10 @@ export default {
             dataSource: [],
             selectedRows: [],
             idSelected: "",
+            idSelected2: "",
             showModal: false,
-            // pagination: {
-            //     current: 1,
-            //     pageSize: 10,
-            //     total: 0,
-            // },
+            showModalInfo: false,
+            searchText: ""
         };
     },
     // authorize: {
@@ -161,13 +164,24 @@ export default {
     mounted() {
         this.getData();
     },
+    computed: {
+        filteredData() {
+            return this.dataSource.filter(item => {
+                const searchText = this.searchText.toLowerCase()
+                return item.name.toLowerCase().includes(searchText) || item.email.toLowerCase().includes(searchText) || item.phone.toLowerCase().includes(searchText)
+            })
+        },
+    },
     methods: {
         getData() {
             request(process.env.VUE_APP_API_BASE_URL + "/agency", "get", {
 
             }).then((res) => {
                 const data = res?.data?.items ?? {};
-                console.log(data);
+                const allUser = res?.data?.allUser.reduce((acc, cur) => {
+                    acc[cur.referral_code] = cur;
+                    return acc;
+                }, {})
 
                 this.dataSource = data.map((_data) => {
                     return {
@@ -176,9 +190,14 @@ export default {
                         amount: _data.amount ? formatCurrencyVND(_data.amount) : 0,
                         sum_recharge: _data.sum_recharge ? formatCurrencyVND(_data.sum_recharge) : 0,
                         sum_withdraw: _data.sum_withdraw ? formatCurrencyVND(_data.sum_withdraw) : 0,
+                        agencyOf: allUser[_data.parent_referral_code] ? allUser[_data.parent_referral_code].name : ""
                     }
                 })
             });
+        },
+        watchRecord(id) {
+            this.idSelected2 = id;
+            this.showModalInfo = true;
         },
         blockRecord(id) {
             request(process.env.VUE_APP_API_BASE_URL + "/agency/block/" + id, METHOD.PUT).then(() => {
