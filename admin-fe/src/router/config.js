@@ -82,35 +82,52 @@ const options = {
 
         //   ]
         // },
-        // {
-        //   path: 'pictures',
-        //   name: 'Pictures',
-        //   meta: {
-        //     icon: 'picture',
-        //     page: {
-        //       cacheAble: false
-        //     }
-        //   },
-        //   component: PageView,
-        //   children: [
-        //     {
-        //       path: 'list',
-        //       name: 'List',
-        //       component: () => import('@/pages/systemConfig/list'),
-        //     },
-        //     {
-        //       path: 'new',
-        //       name: 'New',
-        //       component: () => import('@/pages/systemConfig/adminGroup'),
-        //     },
-        //     {
-        //       path: 'popupList',
-        //       name: 'popupList',
-        //       component: () => import('@/pages/systemConfig/list'),
-        //     },
-
-        //   ]
-        // },
+        {
+          path: 'banner',
+          name: 'Banner',
+          meta: {
+            icon: 'picture',
+            page: {
+              cacheAble: false
+            }
+          },
+          component: PageView,
+          children: [
+            {
+              path: 'list',
+              name: 'List',
+              component: () => import('@/pages/image/list/listBanner'),
+            },
+            {
+              path: 'new',
+              name: 'New',
+              component: () => import('@/pages/image/new/newBanner'),
+            },
+          ]
+        },
+        {
+          path: 'popup',
+          name: 'Popup',
+          meta: {
+            icon: 'picture',
+            page: {
+              cacheAble: false
+            }
+          },
+          component: PageView,
+          children: [
+            {
+              path: 'list',
+              name: 'List',
+              component: () => import('@/pages/image/list/listPopup'),
+            },
+            {
+              path: 'new',
+              name: 'New',
+              component: () => import('@/pages/image/new/newPopup'),
+            },
+          ]
+        },
         // {
         //   path: 'categories',
         //   name: 'Categories',

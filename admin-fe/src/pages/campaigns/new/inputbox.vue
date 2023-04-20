@@ -40,8 +40,16 @@
                         </a-col>
                         <a-col :lg="24" :md="24" :sm="24">
                             <a-form-item :label="$t('imageLink')">
-                                <a-input name="image" :value="data.imageLink" :placeholder="$ta('imageLink')"
-                                    @change="onChanged" />
+                                <a-upload name="avatar" list-type="picture-card" class="avatar-uploader"
+                                    :show-upload-list="false" :before-upload="beforeUpload" :custom-request="dummyRequest">
+                                    <img v-if="data.imageLink" :src="data.imageLink" alt="avatar" />
+                                    <div v-else>
+                                        <a-icon :type="loading ? 'loading' : 'plus'" />
+                                        <div class="ant-upload-text">
+                                            Upload
+                                        </div>
+                                    </div>
+                                </a-upload>
                             </a-form-item>
                         </a-col>
                         <a-col :lg="24" :md="24" :sm="24">
@@ -114,6 +122,7 @@ export default {
         });
         return {
             data,
+            apiImgUpload: process.env.VUE_APP_API_BASE_URL + "/image",
             form: this.$form.createForm(this)
         }
     },
@@ -140,6 +149,29 @@ export default {
         onChangeMission(value) {
             this.data.mission = value
         },
+        dummyRequest({ file, onSuccess }) {
+            const formData = new FormData();
+            formData.append('image', file);
+            request(this.apiImgUpload, METHOD.POST, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then((res) => {
+                this.data.imageLink = process.env.VUE_APP_API_BASE_URL.replace('/api', "/upload/images/files/") + res.data.image_path;
+                onSuccess("ok");
+            });
+        },
+        beforeUpload(file) {
+            const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+            if (!isJpgOrPng) {
+                this.$message.error('You can only upload JPG file!');
+            }
+            const isLt2M = file.size / 1024 / 1024 < 100;
+            if (!isLt2M) {
+                this.$message.error('Image must smaller than 2MB!');
+            }
+            return isJpgOrPng && isLt2M;
+        },
         isJson(item) {
             let value = typeof item !== "string" ? JSON.stringify(item) : item;
             try {
@@ -165,7 +197,7 @@ export default {
                 is_beginner: this.data.is_beginner,
                 is_hot: this.data.is_hot,
                 mission_id: this.data.mission,
-                image: this.data.image,
+                image: "/upload" + this.data.imageLink.split("/upload")[1],
                 task: this.data.task,
                 date_public: this.data.date_public,
             }

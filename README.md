@@ -72,6 +72,9 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
     php artisan jwt:secret
     php artisan migrate
 ```
+
+Locate the php.ini file and change upload_max_filesize = 100M 
+
 For New UI
  
  

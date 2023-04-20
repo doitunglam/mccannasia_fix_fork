@@ -1,23 +1,8 @@
 <template>
     <a-card :body-style="{ padding: '24px 32px' }" :bordered="false">
         <a-form>
-            <a-form-item :label="$t('name')" :labelCol="{ span: 7 }" :wrapperCol="{ span: 10 }">
-                <a-input :placeholder="$t('nameInput')" name="name" :value="data.name" @change="setNestedProperty" />
-            </a-form-item>
-
-            <a-form-item :label="$t('bankName')" :labelCol="{ span: 7 }" :wrapperCol="{ span: 10 }">
-                <a-select :placeholder="$t('bankName')" dropdownClassName="name.bank" v-model="data.bank"
-                    @change="setNestedPropertySelect" v-decorator="[
-                        'repository.manager',
-                        { rules: [{ required: true, message: $t('bankNameSelect') }] },
-                    ]">
-                    <a-select-option dropdownClassName="name.bank" v-for="(item, index) in bankNameList" :value="item"
-                        :key="index">{{ item }}</a-select-option>
-                </a-select>
-            </a-form-item>
-
-            <a-form-item :label="$t('bankAccount')" :labelCol="{ span: 7 }" :wrapperCol="{ span: 10 }">
-                <a-input :placeholder="$t('bankAccountInput')" :value="data.value" @change="onChanged" :name="'value'" />
+            <a-form-item :label="$t('link')" :labelCol="{ span: 7 }" :wrapperCol="{ span: 10 }">
+                <a-input :value="data.link_" @change="onChanged" name="link_" />
             </a-form-item>
 
             <a-form-item :label="$t('image')" :labelCol="{ span: 7 }" :wrapperCol="{ span: 10 }">
@@ -55,56 +40,21 @@ export default {
         return {
             data,
             id: this.$router.history.current.query.id || null,
-            headers: {
-                authorization: 'authorization-text',
-            },
             apiImgUpload: process.env.VUE_APP_API_BASE_URL + "/image",
         };
-    },
-    created() {
-        this.bankNameList = [
-            "Agribank",
-            "BIDV - Bank for Investment and Development of Vietnam",
-            "VietinBank - Vietnam Joint Stock Commercial Bank for Industry and Trade",
-            "Vietcombank - Joint Stock Commercial Bank for Foreign Trade of Vietnam",
-            "Sacombank - Saigon Thuong Tin Commercial Joint Stock Bank",
-            "Techcombank - Vietnam Technological and Commercial Joint Stock Bank",
-            "MBBank - Military Commercial Joint Stock Bank",
-            "ACB - Asia Commercial Joint Stock Bank",
-            "Viet Capital Bank",
-            "VPBank - Vietnam Prosperity Joint Stock Commercial Bank",
-            "TPBank - Tien Phong Commercial Joint Stock Bank",
-            "Eximbank - Vietnam Export Import Commercial Joint Stock Bank",
-            "SeABank - Southeast Asia Commercial Joint Stock Bank",
-            "Vietbank - Vietnam Thuong Tin Commercial Joint Stock Bank",
-            "OceanBank - Ocean Commercial Joint Stock Bank",
-            "HDBank - Ho Chi Minh City Development Joint Stock Commercial Bank",
-            "LienVietPostBank - Lien Viet Post Joint Stock Commercial Bank",
-            "Bac A Bank - Bank for Foreign Trade of Vietnam",
-            "GPBank - Global Petro Commercial Joint Stock Bank",
-            "VietABank - Vietnam Asia Commercial Joint Stock Bank",
-            "Orient Commercial Joint Stock Bank (OCB)",
-            "PVcomBank - PetroVietnam Construction Joint Stock Commercial Bank",
-            "Nam A Bank - Nam A Commercial Joint Stock Bank",
-            "Saigonbank - Saigon Bank for Industry and Trade",
-            "Viet Capital Commercial Joint Stock Bank",
-        ];
     },
     methods: {
         send() {
             const data = {
-                ...this.data,
-                name: {
-                    bank: this.data.bank,
-                    name: this.data.name,
-                },
+                name: this.data.link_,
                 image: "/upload" + this.data.image.split("/upload")[1],
+                is_popup: 1
             }
             if (this.id) {
                 data.id = this.id
             }
             request(
-                process.env.VUE_APP_API_BASE_URL + '/bank',
+                process.env.VUE_APP_API_BASE_URL + '/popup',
                 METHOD.POST,
                 data).then(() => {
                     this.data = {}
@@ -149,13 +99,11 @@ export default {
         },
         getData() {
             if (this.id) {
-                request(process.env.VUE_APP_API_BASE_URL + "/bank/" + this.id, "get").then((res) => {
+                request(process.env.VUE_APP_API_BASE_URL + "/popup/" + this.id, "get").then((res) => {
                     const data = res?.data?.item ?? {};
-                    const info = JSON.parse(data.name);
                     this.data = {
                         ...data,
-                        bank: info.bank,
-                        name: info.name,
+                        _link: data.name,
                         image: process.env.VUE_APP_API_BASE_URL.replace('/api', "") + data.image,
                     }
                 });

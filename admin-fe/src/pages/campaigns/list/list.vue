@@ -16,30 +16,30 @@
                             <a-menu-item key="audit">审批</a-menu-item>
                           </a-menu>
                           <a-button> 更多操作 <a-icon type="down" /> </a-button>
-                                            </a-dropdown> -->
+                                                        </a-dropdown> -->
                 </a-space>
                 <standard-table :columns="columns" :dataSource="dataSource"
                     :pagination="{ ...pagination, onChange: onPageChange }">
                     <template slot="image-column" slot-scope="image">
-                        <img :src="image.text" />
+                        <img :src="image.text" style="max-width: 200px;" />
                     </template>
                     <template slot="status-column" slot-scope="status">
                         <span v-if="status.text != 1" style="
-                                  background-color: green;
-                                  color: white;
-                                  padding: 4px 8px;
-                                  border-radius: 4px;
-                                  display: inline-block;
-                                ">
+                                              background-color: green;
+                                              color: white;
+                                              padding: 4px 8px;
+                                              border-radius: 4px;
+                                              display: inline-block;
+                                            ">
                             active
                         </span>
                         <span v-if="status.text == 1" style="
-                                  background-color: red;
-                                  color: white;
-                                  padding: 4px 8px;
-                                  border-radius: 4px;
-                                  display: inline-block;
-                                ">
+                                              background-color: red;
+                                              color: white;
+                                              padding: 4px 8px;
+                                              border-radius: 4px;
+                                              display: inline-block;
+                                            ">
                             inactive
                         </span>
                     </template>
@@ -72,7 +72,7 @@
                         </a>
                     <!-- <a @click="deleteRecord(record.key)" v-auth="`delete`">
                                     <a-icon type="delete" />删除2
-                                                      </a> -->
+                                                                  </a> -->
                     </div>
                     <template slot="statusTitle">
                         <a-icon @click.native="onStatusTitleClick" type="info-circle" />
@@ -200,7 +200,8 @@ export default {
                     return {
                         ..._data,
                         date_end: (_data.date_public && _data.contract_term) ? moment(_data.date_public).add(_data.contract_term, 'days').format("DD-MM-YYYY") : "No date",
-                        type
+                        type,
+                        image: process.env.VUE_APP_API_BASE_URL.replace("/api", "") + JSON.parse(_data.image),
                     };
                 })
 

@@ -11,6 +11,9 @@ use App\Http\Controllers\ApiWithDrawController;
 use App\Http\Controllers\ApiRechargeController;
 use App\Http\Controllers\ApiAnalysisController;
 use App\Http\Controllers\ApiConfigController;
+use App\Http\Controllers\ApiImageController;
+use App\Http\Controllers\ApiBannerController;
+use App\Http\Controllers\ApiPopupController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -58,6 +61,42 @@ Route::group([
 ], function ($router) {
     Route::controller(ApiAnalysisController::class)->group(function() {
         Route::middleware('jwt.auth')->get('', 'list');
+    });
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'image'
+], function ($router) {
+    Route::controller(ApiImageController::class)->group(function() {
+        Route::middleware('jwt.auth')->post('', 'store');
+    });
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'banner'
+], function ($router) {
+    Route::controller(ApiBannerController::class)->group(function() {
+        Route::middleware('jwt.auth')->get('', 'list');
+        Route::middleware('jwt.auth')->get('/{id}', 'getModelById');
+        Route::middleware('jwt.auth')->delete('/{id}', 'deleteItem');
+        Route::middleware('jwt.auth')->put('/status/{id}', 'status');
+        Route::middleware('jwt.auth')->post('', 'store');
+    });
+});
+
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'popup'
+], function ($router) {
+    Route::controller(ApiPopupController::class)->group(function() {
+        Route::middleware('jwt.auth')->get('', 'list');
+        Route::middleware('jwt.auth')->get('/{id}', 'getModelById');
+        Route::middleware('jwt.auth')->delete('/{id}', 'deleteItem');
+        Route::middleware('jwt.auth')->put('/status/{id}', 'status');
+        Route::middleware('jwt.auth')->post('', 'store');
     });
 });
 
