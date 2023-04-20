@@ -6,6 +6,7 @@ use Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Goeasyapp\Core\Http\Repositories\CampainRepository;
+use App\Models\Payment;
 
 class ApiRechargeController extends Controller
 {
@@ -22,6 +23,13 @@ class ApiRechargeController extends Controller
                 'items' => $items,
             ]);
     }
-
+    public function store(Request $request)
+    {
+        $this->useRepository->updateModelPayment($request);
+        return response()->json([
+                'status' => 'success',
+                'message' => 'Cập nhật thành công',
+            ]);
+    }
 
 }

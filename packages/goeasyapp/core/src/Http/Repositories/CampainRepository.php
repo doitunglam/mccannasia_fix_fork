@@ -116,15 +116,38 @@ class CampainRepository
         ->where('status', 1)
         ->sum('amount');
     }
+    public function getTotalRechargeAmountByDateRange($request) {
+        $from = $request->from;
+        $to = $request->to;
+        return Payment::where('type', 1)->where('created_at', '>=', $from)
+        ->where('created_at', '<=', $to)
+        ->where('status', 1)
+        ->sum('amount');
+    }
     public function getTotalWithdrawAmountToday() {
         $day = date('Y-m-d');
         return Payment::whereNull('type')->where('created_at', 'like', '%' . $day . '%')
         ->where('status', 1)
         ->sum('amount');
     }
+    public function getTotalWithdrawAmountByDateRange($request) {
+        $from = $request->from;
+        $to = $request->to;
+        return Payment::whereNull('type')->where('created_at', '>=', $from)
+        ->where('created_at', '<=', $to)
+        ->where('status', 1)
+        ->sum('amount');
+    }
     public function getTotalUserRegisterToday() {
         $day = date('Y-m-d');
         return User::where('created_at', 'like', '%' . $day . '%')->count();
+    }
+    public function getTotalUserRegisterByDateRange($request) {
+        $from = $request->from;
+        $to = $request->to;
+        return User::where('created_at', '>=', $from)
+        ->where('created_at', '<=', $to)
+        ->count();
     }
     public function getTop5UserMostReferralCode() {
         $groupByReferralCode = User::select('parent_referral_code', 'id', DB::raw('count(*) as user_count'))
@@ -160,6 +183,96 @@ class CampainRepository
             'topByWithdrawAmount' => $topByWithdrawAmount
         ];
 
+    }
+    public function getTop5UserMostReferralCodeByDateRange($request){
+        $from = $request->from;
+        $to = $request->to;
+        $groupByReferralCode = User::select('parent_referral_code', 'id', DB::raw('count(*) as user_count'))
+            ->groupBy('parent_referral_code', 'id')
+            ->whereNotNull('parent_referral_code')
+            ->where('created_at', '>=', $from)
+            ->where('created_at', '<=', $to)
+            ->orderByDesc('user_count')
+            ->get();
+        $summary = User::whereIn('users.id', $groupByReferralCode->pluck('id'))
+            ->leftJoin('payments', 'payments.user', '=', 'users.id')
+            ->where('payments.status', 1)
+            ->where('payments.created_at', '>=', $from)
+            ->where('payments.created_at', '<=', $to)
+            ->select('users.parent_referral_code',
+                    DB::raw('SUM(CASE WHEN payments.type = 1 THEN payments.amount ELSE 0 END) as totalRechargeAmount'),
+                    DB::raw('SUM(CASE WHEN payments.type IS NULL THEN payments.amount ELSE 0 END) as totalWithdrawAmount'))
+            ->groupBy('users.parent_referral_code')
+            ->get();
+        $topAgency = User::whereIn('referral_code', $groupByReferralCode->pluck('parent_referral_code')->toArray())
+            ->get()
+            ->map(function ($user) use ($groupByReferralCode) {
+                $user->user_count = $groupByReferralCode->where('parent_referral_code', $user->referral_code)->first()->user_count;
+                return $user;
+            })
+            ->map(function ($user) use ($summary) {
+                $user->total_recharge_amount = $summary->where('parent_referral_code', $user->referral_code)->first()->totalRechargeAmount;
+                $user->total_withdraw_amount = $summary->where('parent_referral_code', $user->referral_code)->first()->totalWithdrawAmount;
+                return $user;
+            });
+        $topByReferralCode = $topAgency->sortByDesc('user_count')->take(20);
+        $topByRechargeAmount = $topAgency->sortByDesc('total_recharge_amount')->where('total_recharge_amount', '>', 0)->take(20);
+        $topByWithdrawAmount = $topAgency->sortByDesc('total_withdraw_amount')->where('total_withdraw_amount', '>', 0)->take(20);
+        return [
+            'topByReferralCode' => $topByReferralCode,
+            'topByRechargeAmount' => $topByRechargeAmount,
+            'topByWithdrawAmount' => $topByWithdrawAmount
+        ];
+    }
+    public function getTopRechargePendingToday() {
+        $topRechargePendingToday = User::leftJoin('payments', 'payments.user', '=', 'users.id')
+            ->whereNull('payments.status')
+            ->where('payments.type', 1)
+            ->where('payments.created_at', '>=', Carbon::today())
+            ->select('users.id', 'users.name', 'users.email', 'users.phone', 'users.referral_code', 'users.parent_referral_code', 'users.created_at', 'payments.amount', 'payments.created_at as payment_created_at')
+            ->orderByDesc('payments.amount')
+            ->get()
+            ->take(20);
+        return $topRechargePendingToday;
+    }
+    public function getTopRechargePendingByDateRange($request) {
+        $from = $request->from;
+        $to = $request->to;
+        $topRechargePendingByDateRange = User::leftJoin('payments', 'payments.user', '=', 'users.id')
+            ->whereNull('payments.status')
+            ->where('payments.type', 1)
+            ->where('payments.created_at', '>=', $from)
+            ->where('payments.created_at', '<=', $to)
+            ->select('users.id', 'users.name', 'users.email', 'users.phone', 'users.referral_code', 'users.parent_referral_code', 'users.created_at', 'payments.amount', 'payments.created_at as payment_created_at')
+            ->orderByDesc('payments.amount')
+            ->get()
+            ->take(20);
+        return $topRechargePendingByDateRange;
+    }
+    public function getTopWithdrawPendingToday() {
+        $topWithdrawPendingToday = User::leftJoin('payments', 'payments.user', '=', 'users.id')
+            ->whereNull('payments.status')
+            ->whereNull('payments.type')
+            ->where('payments.created_at', '>=', Carbon::today())
+            ->select('users.id', 'users.name', 'users.email', 'users.phone', 'users.referral_code', 'users.parent_referral_code', 'users.created_at', 'payments.amount', 'payments.created_at as payment_created_at')
+            ->orderByDesc('payments.amount')
+            ->get()
+            ->take(20);
+        return $topWithdrawPendingToday;
+    }
+    public function getTopWithdrawPendingByDateRange($request){
+        $from = $request->from;
+        $to = $request->to;
+        $topWithdrawPendingByDateRange = User::leftJoin('payments', 'payments.user', '=', 'users.id')
+            ->whereNull('payments.status')
+            ->whereNull('payments.type')
+            ->where('payments.created_at', '>=', $from)
+            ->where('payments.created_at', '<=', $to)
+            ->select('users.id', 'users.name', 'users.email', 'users.phone', 'users.referral_code', 'users.parent_referral_code', 'users.created_at', 'payments.amount', 'payments.created_at as payment_created_at')
+            ->orderByDesc('payments.amount')
+            ->get()
+            ->take(20);
+        return $topWithdrawPendingByDateRange;
     }
     public function getTopAgencyHaveMostRechargeAmount() {
         $groupByAgency = User::select('parent_referral_code', DB::raw('count(*) as user_count'))

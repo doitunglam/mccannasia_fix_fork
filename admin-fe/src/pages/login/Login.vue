@@ -36,6 +36,7 @@
           <a-button :loading="logging" style="width: 100%;margin-top: 24px" size="large" htmlType="submit"
             type="primary">Login</a-button>
         </a-form-item>
+
         <!-- <div>
           其他登录方式
           <a-icon class="icon" type="alipay-circle" />

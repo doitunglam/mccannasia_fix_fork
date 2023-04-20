@@ -15,6 +15,9 @@ module.exports = {
       password: "密码",
       bank_name_account: "银行账户名",
       bank_name: "银行名称",
+      gender: "性别",
+      bank_account: "银行账号",
+      referral_code: "推荐码",
     },
     US: {
       input: 'Please enter',
@@ -34,6 +37,9 @@ module.exports = {
       password: "Password",
       bank_name_account: "Bank name account",
       bank_name: "Bank name",
+      bank_account: "Bank account",
+      gender: "Gender",
+      referral_code: "Referral code",
 
     },
     VN: {
@@ -44,6 +50,7 @@ module.exports = {
       password: "Mật khẩu",
       bank_name_account: "Tên người thụ hưởng",
       bank_name: "Tên ngân hàng",
+      bank_account: "Số tài khoản",
       name: 'Tên',
       content: "Nội dung",
       domain: 'Tên miền kho',
@@ -54,6 +61,8 @@ module.exports = {
       key: "Key",
       languageAll:"Tên trang: Ngôn ngữ",
       description: "Mô tả",
+      gender: "Giới tính",
+      referral_code: "Mã giới thiệu",
     }
   }
 }

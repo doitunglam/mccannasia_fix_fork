@@ -32,6 +32,12 @@ class AuthController extends Controller
         }
 
         $user = auth()->guard('api')->user();
+        if($user->type !== "super-admin") {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized',
+            ], 401);
+        }
         return response()->json([
                 'status' => 'success',
                 'user' => $user,

@@ -4,8 +4,8 @@
             <a-form-item :label="$t('name')" :labelCol="{ span: 7 }" :wrapperCol="{ span: 10 }">
                 <a-input
                         :placeholder="$t('nameInput')"
-                        name="name.name"
-                        :value="data.name.name"
+                        name="name"
+                        :value="data.name"
                         @change="setNestedProperty"
                 />
             </a-form-item>
@@ -15,24 +15,12 @@
                     :labelCol="{ span: 7 }"
                     :wrapperCol="{ span: 10 }"
             >
-                <a-select
-                        :placeholder="$t('bankNameSelect')"
-                        dropdownClassName="name.bank"
-                        :value="data.name.bank"
-                        @change="setNestedPropertySelect"
-                        v-decorator="[
-            'repository.manager',
-            { rules: [{ required: true, message: $t('bankNameSelect') }] },
-          ]"
-                >
-                    <a-select-option
-                            dropdownClassName="name.bank"
-                            v-for="(item, index) in bankNameList"
-                            :value="item"
-                            :key="index"
-                    >{{ item }}</a-select-option
-                    >
-                </a-select>
+            <a-input
+                        :placeholder="$t('bankName')"
+                        name="bank"
+                        :value="data.bank"
+                        @change="setNestedProperty"
+                />
             </a-form-item>
 
             <a-form-item
@@ -53,6 +41,12 @@
                     :labelCol="{ span: 7 }"
                     :wrapperCol="{ span: 10 }"
             >
+                <a-input
+                        :placeholder="$t('image')"
+                        :value="data.image"
+                        @change="onChanged"
+                        :name="'value'"
+                />
             </a-form-item>
 
             <a-form-item style="margin-top: 24px" :wrapperCol="{ span: 10, offset: 7 }">
@@ -63,56 +57,50 @@
 </template>
 
 <script>
+import { request, METHOD } from "@/utils/request";
+
 export default {
     name: "BasicForm",
     i18n: require("./i18n"),
     data() {
-        const data = {
-            id: 1,
-            name: {
-                name: "",
-                bank: "",
-            },
-            value: "",
-            image: "https://picsum.photos/200/300",
-            status: 1,
-        };
+        const data = {};
         return {
             data,
+            id: this.$router.history.current.query.id || null
         };
-    },
-    created() {
-        this.bankNameList = [
-            "Agribank",
-            "BIDV - Bank for Investment and Development of Vietnam",
-            "VietinBank - Vietnam Joint Stock Commercial Bank for Industry and Trade",
-            "Vietcombank - Joint Stock Commercial Bank for Foreign Trade of Vietnam",
-            "Sacombank - Saigon Thuong Tin Commercial Joint Stock Bank",
-            "Techcombank - Vietnam Technological and Commercial Joint Stock Bank",
-            "MBBank - Military Commercial Joint Stock Bank",
-            "ACB - Asia Commercial Joint Stock Bank",
-            "Viet Capital Bank",
-            "VPBank - Vietnam Prosperity Joint Stock Commercial Bank",
-            "TPBank - Tien Phong Commercial Joint Stock Bank",
-            "Eximbank - Vietnam Export Import Commercial Joint Stock Bank",
-            "SeABank - Southeast Asia Commercial Joint Stock Bank",
-            "Vietbank - Vietnam Thuong Tin Commercial Joint Stock Bank",
-            "OceanBank - Ocean Commercial Joint Stock Bank",
-            "HDBank - Ho Chi Minh City Development Joint Stock Commercial Bank",
-            "LienVietPostBank - Lien Viet Post Joint Stock Commercial Bank",
-            "Bac A Bank - Bank for Foreign Trade of Vietnam",
-            "GPBank - Global Petro Commercial Joint Stock Bank",
-            "VietABank - Vietnam Asia Commercial Joint Stock Bank",
-            "Orient Commercial Joint Stock Bank (OCB)",
-            "PVcomBank - PetroVietnam Construction Joint Stock Commercial Bank",
-            "Nam A Bank - Nam A Commercial Joint Stock Bank",
-            "Saigonbank - Saigon Bank for Industry and Trade",
-            "Viet Capital Commercial Joint Stock Bank",
-        ];
     },
     methods: {
         send() {
-            console.log(this.data);
+            const data = {
+                ...this.data,
+                name: {
+                    bank: this.data.bank,
+                    name: this.data.name,
+                }
+            }
+            if(this.id) {
+                data.id = this.id
+            }
+            request(
+                process.env.VUE_APP_API_BASE_URL + '/bank',
+                METHOD.POST,
+                data).then(() => {
+                    this.data = {}
+                    this.$message.success(`Update successfully`);
+                })
+        },
+        getData() {
+            if (this.id) {
+                request(process.env.VUE_APP_API_BASE_URL + "/bank/" + this.id, "get").then((res) => {
+                    const data = res?.data?.item ?? {};
+                    const info = JSON.parse(data.name);
+                    this.data = {
+                        ...data,
+                        bank: info.bank,
+                        name: info.name,
+                    }
+                });
+            }
         },
         setNestedProperty(event) {
             // Split the property path by dots to get an array of property names
@@ -162,6 +150,9 @@ export default {
         desc() {
             return this.$t("pageDesc");
         },
+    },
+    mounted() {
+        this.getData();
     },
 };
 </script>

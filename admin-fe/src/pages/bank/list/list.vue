@@ -90,56 +90,49 @@
           <a-button> 更多操作 <a-icon type="down" /> </a-button>
         </a-dropdown>
       </a-space> -->
-      <standard-table
-        :columns="columns"
-        :dataSource="dataSource"
-        @clear="onClear"
-        @change="onChange"
-        :pagination="{ ...pagination, onChange: onPageChange }"
-        @selectedRowChange="onSelectChange"
-      >
+      <standard-table :columns="columns" :dataSource="dataSource" @clear="onClear" @change="onChange"
+        :pagination="{ ...pagination, onChange: onPageChange }" @selectedRowChange="onSelectChange">
         <template slot="image-column" slot-scope="image">
-          <img :src="image.text" />
+          <img :src="image.text" style="max-width: 200px;" />
         </template>
         <template slot="status-column" slot-scope="status">
-          <span
-            v-if="status.text == null"
-            style="
-              background-color: green;
-              color: white;
-              padding: 4px 8px;
-              border-radius: 4px;
-              display: inline-block;
-            "
-          >
+          <span v-if="status.text == null" style="
+                    background-color: green;
+                    color: white;
+                    padding: 4px 8px;
+                    border-radius: 4px;
+                    display: inline-block;
+                  ">
             active
           </span>
-          <span
-            v-if="status.text == 1"
-            style="
-              background-color: red;
-              color: white;
-              padding: 4px 8px;
-              border-radius: 4px;
-              display: inline-block;
-            "
-          >
-           inactive
+          <span v-if="status.text == 1" style="
+                    background-color: red;
+                    color: white;
+                    padding: 4px 8px;
+                    border-radius: 4px;
+                    display: inline-block;
+                  ">
+            inactive
           </span>
         </template>
 
         <div slot="description" slot-scope="{ text }">
           {{ text }}
         </div>
-        <div slot="action" slot-scope="{ text, record }">
+        <div slot="action" slot-scope="{ text, record }" style="display: flex; flex-direction: column;">
           <a style="margin-right: 8px">
             <a-icon type="edit" />
-            <router-link :to="`/bank/edit/edit/${record.id}`">edit</router-link>
+            <router-link :to="`/bank/new?id=${record.id}`">Edit
+            </router-link>
           </a>
-          <a @click="deleteRecord(record.id)"> <a-icon type="delete" />delete </a>
-          <!-- <a @click="deleteRecord(record.key)" v-auth="`delete`">
-            <a-icon type="delete" />删除2
-          </a> -->
+          <a @click="deleteRecord(record.id)">
+            <a-icon type="delete" />
+            Delete
+          </a>
+          <a @click="changeStatus(record.id)">
+            <a-icon type="info-circle" />
+            Status
+          </a>
         </div>
         <template slot="statusTitle">
           <a-icon @click.native="onStatusTitleClick" type="info-circle" />
@@ -151,7 +144,7 @@
 
 <script>
 import StandardTable from "@/components/table/StandardTable";
-import { request } from "@/utils/request";
+import { request, METHOD } from "@/utils/request";
 const columns = [
   {
     title: "ID",
@@ -177,20 +170,19 @@ const columns = [
   },
   {
     title: "Name",
-    dataIndex: "name.name",
+    dataIndex: "name",
+    key: "name",
   },
 
   {
     title: "Bank",
-    dataIndex: "name.bank",
-    needTotal: true,
+    dataIndex: "bank",
+    key: "bank",
   },
   {
     title: "Status",
     dataIndex: "status",
     key: "status",
-    scopedSlots: { customRender: "status-column" },
-    sorter: (a, b) => a.status.localeCompare(b.status),
   },
   {
     title: "Action",
@@ -227,143 +219,40 @@ export default {
       this.getData();
     },
     getData() {
-      request(process.env.VUE_APP_API_BASE_URL + "/list", "get", {
+      request(process.env.VUE_APP_API_BASE_URL + "/bank", "get", {
         page: this.pagination.current,
         pageSize: this.pagination.pageSize,
       }).then((res) => {
-        const { list, page, pageSize, total } = res?.data?.data ?? {};
-        console.log(list);
+        const { data, page, pageSize, total } = res?.data?.items ?? {};
 
-        this.dataSource = [
-          {
-            id: 1,
-            name: {
-              name: "John Doe",
-              bank: "Bank of America",
-            },
-            value: "ABC123DEF4",
-            image: "https://picsum.photos/200/300",
-            status: 1,
-          },
-          {
-            id: 2,
-            name: {
-              name: "Jane Smith",
-              bank: "Wells Fargo",
-            },
-            value: "XYZ456GHI7",
-            image: "https://picsum.photos/200/300",
-            status: null,
-          },
-          {
-            id: 3,
-            name: {
-              name: "Robert Johnson",
-              bank: "Chase",
-            },
-            value: "LMN789OPQ1",
-            image: "https://picsum.photos/200/300",
-            status: 1,
-          },
-          {
-            id: 4,
-            name: {
-              name: "Emily Nguyen",
-              bank: "Citibank",
-            },
-            value: "RST234UVW5",
-            image: "https://picsum.photos/200/300",
-            status: null,
-          },
-          {
-            id: 5,
-            name: {
-              name: "David Lee",
-              bank: "Bank of America",
-            },
-            value: "DEF567GHI8",
-            image: "https://picsum.photos/200/300",
-            status: 1,
-          },
-          {
-            id: 6,
-            name: {
-              name: "Samantha Kim",
-              bank: "Wells Fargo",
-            },
-            value: "JKL901MNO2",
-            image: "https://picsum.photos/200/300",
-            status: null,
-          },
-          {
-            id: 7,
-            name: {
-              name: "Michael Johnson",
-              bank: "Chase",
-            },
-            value: "PQR345STU9",
-            image: "https://picsum.photos/200/300",
-            status: 1,
-          },
-          {
-            id: 8,
-            name: {
-              name: "Jennifer Smith",
-              bank: "Citibank",
-            },
-            value: "VWX678YZA3",
-            image: "https://picsum.photos/200/300",
-            status: null,
-          },
-          {
-            id: 9,
-            name: {
-              name: "Kevin Lee",
-              bank: "Bank of America",
-            },
-            value: "BCD123EFG4",
-            image: "https://picsum.photos/200/300",
-            status: 1,
-          },
-          {
-            id: 10,
-            name: {
-              name: "Jessica Park",
-              bank: "Wells Fargo",
-            },
-            value: "GHI456JKL7",
-            image: "https://picsum.photos/200/300",
-            status: null,
-          },
-          {
-            id: 11,
-            name: {
-              name: "William Johnson",
-              bank: "Chase",
-            },
-            value: "MNO789PQR1",
-            image: "https://picsum.photos/200/300",
-            status: 1,
-          },
-          {
-            id: 12,
-            name: {
-              name: "Linda Smith",
-              bank: "Citibank",
-            },
-            value: "STU234VWX5",
-            image: "https://picsum.photos/200/300",
-            status: null,
-          },
-        ];
+        this.dataSource = data.map(_data => {
+          const info = JSON.parse(_data.name)
+          return {
+            ..._data,
+            status: _data.status !== 1 ? "Inactive" : "Active",
+            image: _data.image ? process.env.VUE_APP_API_BASE_URL.replace("/api", "") + _data.image : null,
+            name: info.name,
+            bank: info.bank,
+          }
+        });
         this.pagination.current = page;
         this.pagination.pageSize = pageSize;
         this.pagination.total = total;
       });
     },
+    changeStatus(id) {
+      request(process.env.VUE_APP_API_BASE_URL + "/bank/status/" + id, METHOD.PUT).then(() => {
+        this.getData();
+        this.$message.success("Change status success");
+      })
+    },
     deleteRecord(id) {
-      this.dataSource = this.dataSource.filter((item) => item.id !== id);
-      this.selectedRows = this.selectedRows.filter((item) => item.id !== id);
+      const confirm = window.confirm("Are you sure to delete this record?");
+      if (!confirm) return;
+      request(process.env.VUE_APP_API_BASE_URL + "/bank/" + id, METHOD.DELETE).then(() => {
+        this.getData();
+        this.$message.success("Delete success");
+      })
     },
     toggleAdvanced() {
       this.advanced = !this.advanced;
@@ -409,13 +298,16 @@ export default {
 .search {
   margin-bottom: 54px;
 }
+
 .fold {
   width: calc(100% - 216px);
   display: inline-block;
 }
+
 .operator {
   margin-bottom: 18px;
 }
+
 @media screen and (max-width: 900px) {
   .fold {
     width: 100%;

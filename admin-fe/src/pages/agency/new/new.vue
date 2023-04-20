@@ -52,30 +52,25 @@
 
         <!--        </a-card>-->
         <a-card>
-            <input-box ref="inputBox" :langData="data" :showSubmit="true" :type="'VI'"/>
+            <input-box ref="inputBox" :langData="data" :showSubmit="true" :agencyId="id" :type="'VI'" />
         </a-card>
 
 
 
 
     </div>
-
-
-
 </template>
 
 <script>
 
 
 import inputBox from "@/pages/agency/new/inputbox.vue";
-
+import {request} from "@/utils/request";
 export default {
     name: "BasicForm",
     components: {inputBox},
     i18n: require("./i18n"),
-
     data() {
-
         const tabList = [
             {
                 key: '1',
@@ -93,53 +88,30 @@ export default {
         const activeTabKey = '1';
         const noTitleKey = 'app';
 
-        console.log(activeTabKey)
 
-        const data =
-            {
-                "id" : 1,
-                "name" : "Supper Admin",
-                "email" : "admin@gmail.com",
-                "email_verified_at" : null,
-                "password" : "$2y$10$HI0cA/3UHAlQOBy/CYUIiOxr4OLoUGrykgxZhYMLEZNlIwOt7Ng/S",
-                "remember_token" : null,
-                "status" : null,
-                "type" : "super-admin",
-                "amount" : 34700000,
-                "image" : "upload/user/1/1678354562.jpg",
-                "campains" : "[\"1\",\"96\"]",
-                "created_at" : "2023-02-08 06:57:08",
-                "updated_at" : "2023-04-12 21:26:44",
-                "phone" : "0985895640",
-                "address" : "123321",
-                "close_account" : null,
-                "url" : null,
-                "bank_account" : "221",
-                "bank_name" : "Agribank, VBARD",
-                "bank_name_account" : "123",
-                "gender" : "Female",
-                "is_beginner" : 1,
-                "referral_code" : null,
-                "parent_referral_code" : null,
-                "last_login_time" : "2023-04-12 21:26:44",
-                "last_login_ip" : "127.0.0.1"
-            }
-
-
+        const data = {        }
         return {
             tabList,
-
-
             activeTabKey,
             noTitleKey,
-
             data,
+            id: this.$router.history.current.query.id || null
         };
     },
 
     methods: {
+        getData() {
+            console.log(this.id)
+            if (this.id) {
+                request(process.env.VUE_APP_API_BASE_URL + "/agency/" + this.id, "get").then((res) => {
+                    const data = res?.data?.item ?? {};
+                    this.data = {
+                        ...data,
+                    }
+                });
+            }
+        },
         onTabChange(value, type) {
-            console.log(value, type);
             if (type === 'key') {
                 this.activeTabKey.value = value;
             } else if (type === 'noTitleKey') {
@@ -198,11 +170,14 @@ export default {
             return this.$t("pageDesc");
         },
     },
+    mounted() {
+        this.getData();
+    },
 };
 </script>
 
 <style lang="less" scoped>
-.card{
+.card {
     margin-bottom: 24px;
 }
 </style>

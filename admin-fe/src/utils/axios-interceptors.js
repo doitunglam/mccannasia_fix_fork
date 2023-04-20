@@ -1,4 +1,4 @@
-import Cookie from 'js-cookie'
+// import Cookie from 'js-cookie'
 // 401拦截
 const resp401 = {
   /**
@@ -55,12 +55,12 @@ const reqCommon = {
    * @param options 应用配置 包含: {router, i18n, store, message}
    * @returns {*}
    */
-  onFulfilled(config, options) {
-    const {message} = options
-    const {url, xsrfCookieName} = config
-    if (url.indexOf('login') === -1 && xsrfCookieName && !Cookie.get(xsrfCookieName)) {
-      message.warning('Please login first')
-    }
+  onFulfilled(config, ) {
+    // const {message} = options
+    // const {url, xsrfCookieName} = config
+    // if (url.indexOf('login') === -1 && xsrfCookieName && !Cookie.get(xsrfCookieName)) {
+    //   message.warning('Please login first')
+    // }
     return config
   },
   /**

@@ -111,8 +111,9 @@ export default {
             request(
                 process.env.VUE_APP_API_BASE_URL + '/campain-mission',
                 METHOD.POST,
-                data).then(res => {
-                    console.log(res)
+                data).then(() => {
+                    this.data = {}
+                    this.$message.success(`Update successfully`);
                 })
         },
         setNestedProperty(event) {

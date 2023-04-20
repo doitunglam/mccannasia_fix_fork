@@ -22,6 +22,11 @@ module.exports = {
       all: '全渠道',
       online: '线上',
       stores: '门店',
+      recharge: '充值',
+      withdraw: '提现',
+      mostAgency: '最多代理',
+      withdrawPending: '提现待处理',
+      rechargePending: '充值待处理',
     },
     HK: {
       introduce: '指標說明',
@@ -68,6 +73,11 @@ module.exports = {
       all: 'All',
       online: 'Online',
       stores: 'Stores',
+      recharge: 'Recharge',
+      withdraw: 'Withdraw',
+      mostAgency: 'Most Agency',
+      withdrawPending:  'Withdraw Pending',
+      rechargePending: 'Rechare Pending',
     },
     VN: {
       introduce: 'Giới thiệu ',
@@ -91,7 +101,11 @@ module.exports = {
       all: 'Tất cả',
       online: 'Trực tuyến',
       stores: 'Cửa hàng',
-
+      recharge: "Nạp tiền",
+      withdraw: "Rút tiền",
+      mostAgency: "Số lượng đại lý",
+      withdrawPending: "Rút tiền chờ xử lý",
+      rechargePending: "Nạp tiền chờ xử lý",
     }
   }
 }

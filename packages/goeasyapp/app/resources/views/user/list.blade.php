@@ -34,7 +34,6 @@ $ln = json_decode($ln->label_, true);
                             <a class="btn btn-danger waves-effect waves-light delete-all">Khôi phục</a>
                         @endif
                     </div>
-
                 </div>
             </div>
         </div>
