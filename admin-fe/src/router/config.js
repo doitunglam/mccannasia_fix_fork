@@ -26,38 +26,30 @@ const options = {
       component: TabsView,
       redirect: '/login',
       children: [
-        // {
-        //   path: 'bank',
-        //   name: 'Bank',
-        //   meta: {
-        //     icon: 'bank',
-        //     page: {
-        //       cacheAble: false
-        //     }
-        //   },
-        //   component: PageView,
-        //   children: [
-        //     {
-        //       path: 'list',
-        //       name: 'List',
-        //       component: () => import('@/pages/bank/list/list'),
-        //     },
-        //     {
-        //       path: 'new',
-        //       name: 'New',
-        //       component: () => import('@/pages/bank/new/new'),
-        //     },
-        //     {
-        //       path: 'edit',
-        //       name: 'edit',
-        //       meta: {
-        //         invisible: true
-        //       },
-        //       component: () => import('@/pages/bank/edit/edit'),
-        //     },
+        {
+          path: 'bank',
+          name: 'Bank',
+          meta: {
+            icon: 'bank',
+            page: {
+              cacheAble: false
+            }
+          },
+          component: PageView,
+          children: [
+            {
+              path: 'list',
+              name: 'List',
+              component: () => import('@/pages/bank/list/list'),
+            },
+            {
+              path: 'new',
+              name: 'New',
+              component: () => import('@/pages/bank/new/new'),
+            },
 
-        //   ]
-        // },
+          ]
+        },
         // {
         //   path: 'language',
         //   name: 'Language',

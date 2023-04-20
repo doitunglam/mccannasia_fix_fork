@@ -25,11 +25,11 @@ class LoginValidateHook
         $request->validate([
             'email' => 'required',
             'password' => 'required',
-            // 'g-recaptcha-response' => ['required', new \App\Rules\ValidRecaptcha]
+            'g-recaptcha-response' => ['required', new \App\Rules\ValidRecaptcha]
         ], [
                 'email.required' => 'Số điện thoại không được để trống',
                 'password.required' => 'Mật khẩu không được để trống',
-                // 'g-recaptcha-response.required' => 'Captcha không được để trống'
+                'g-recaptcha-response.required' => 'Captcha không được để trống'
             ]);
         $validator = Validator::make([], []);
 

@@ -104,7 +104,8 @@ class AgencyController extends Controller
     public function reset(Request $request, $id)
     {
         $item = User::find($id);
-        $item->password = bcrypt('mccannasia@123');
+        $password = env('PASSWORD_RESET', 'mccannasia@123');
+        $item->password = bcrypt($password);
         $item->save();
         return redirect()->back()
             ->with('success', 'Password reset successful!');

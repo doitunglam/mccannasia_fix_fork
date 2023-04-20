@@ -16,7 +16,7 @@
                             <a-menu-item key="audit">审批</a-menu-item>
                           </a-menu>
                           <a-button> 更多操作 <a-icon type="down" /> </a-button>
-                                                </a-dropdown> -->
+                                                                                                                        </a-dropdown> -->
                 </a-space>
                 <standard-table :columns="columns" :dataSource="dataSource">
                     <template slot="image-column" slot-scope="image">
@@ -24,20 +24,20 @@
                     </template>
                     <template slot="status-column" slot-scope="status">
                         <span v-if="status.text != 1" style="
-                                      background-color: green;
-                                      color: white;
-                                      padding: 4px 8px;
-                                      border-radius: 4px;
-                                      display: inline-block;
+                                        background-color: green;
+                                        color: white;
+                                        padding: 4px 8px;
+                                        border-radius: 4px;
+                                        display: inline-block;
                                     ">
                             active
                         </span>
                         <span v-if="status.text == 1" style="
-                                      background-color: red;
-                                      color: white;
-                                      padding: 4px 8px;
-                                      border-radius: 4px;
-                                      display: inline-block;
+                                        background-color: red;
+                                        color: white;
+                                        padding: 4px 8px;
+                                        border-radius: 4px;
+                                        display: inline-block;
                                     ">
                             inactive
                         </span>
@@ -67,9 +67,6 @@
                             <a-icon type="redo" />
                             Reset Pw
                         </a>
-                    <!-- <a @click="deleteRecord(record.key)" v-auth="`delete`">
-                                    <a-icon type="delete" />删除2
-                                                          </a> -->
                     </div>
                     <template slot="statusTitle">
                         <a-icon @click.native="onStatusTitleClick" type="info-circle" />
@@ -77,6 +74,11 @@
                 </standard-table>
             </div>
         </a-card>
+        <modal :id="idSelected" :showModal="showModal" @update:showModal="(event) => {
+            showModal = event; if (!event) {
+                getData();
+            }
+        }"></modal>
     </div>
 </template>
 
@@ -88,6 +90,7 @@ import { request } from "@/utils/request";
 import moment from "moment";
 import { formatCurrencyVND } from "@/utils/util";
 import { METHOD } from "../../../utils/request";
+import Modal from './modal.vue'
 
 const columns = [
     {
@@ -136,13 +139,15 @@ const columns = [
 
 export default {
     name: "QueryList",
-    components: { StandardTable },
+    components: { StandardTable, Modal },
     data() {
         return {
             advanced: true,
             columns: columns,
             dataSource: [],
             selectedRows: [],
+            idSelected: "",
+            showModal: false,
             // pagination: {
             //     current: 1,
             //     pageSize: 10,
@@ -157,15 +162,9 @@ export default {
         this.getData();
     },
     methods: {
-        // onPageChange(page, pageSize) {
-        //     this.pagination.current = page;
-        //     this.pagination.pageSize = pageSize;
-        //     this.getData();
-        // },
         getData() {
             request(process.env.VUE_APP_API_BASE_URL + "/agency", "get", {
-                // page: this.pagination.current,
-                // pageSize: this.pagination.pageSize,
+
             }).then((res) => {
                 const data = res?.data?.items ?? {};
                 console.log(data);
@@ -192,15 +191,8 @@ export default {
             this.selectedRows = this.selectedRows.filter((item) => item.id !== id);
         },
         changeAmountRecord(id) {
-            const amount = prompt("Please enter amount to increase", "0");
-            if (amount) {
-                request(process.env.VUE_APP_API_BASE_URL + "/agency/change-amount/" + id, METHOD.PUT, {
-                    plus_amount: amount
-                }).then(() => {
-                    this.getData();
-                    this.$message.success("Change amount success");
-                });
-            }
+            this.idSelected = id;
+            this.showModal = true;
         },
         resetPassword(id) {
             request(process.env.VUE_APP_API_BASE_URL + "/agency/reset-password/" + id, METHOD.PUT).then(() => {

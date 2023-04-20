@@ -37,8 +37,8 @@ class AuthController extends Controller
             'gender' => ['required', 'in:' . implode(',', $genderArray)],
             'password' => 'required',
             'repassword' => 'required|same:password',
-            // 'parent_referral_code' => 'required',
-            // 'g-recaptcha-response' => ['required', new \App\Rules\ValidRecaptcha],
+            'parent_referral_code' => 'required',
+            'g-recaptcha-response' => ['required', new \App\Rules\ValidRecaptcha],
         ], [
                 'username.required' => 'Tên hiển thị không được để trống',
                 'username.unique' => 'Tên đã tồn tại trên hệ thống',
@@ -51,8 +51,8 @@ class AuthController extends Controller
                 'password.required' => 'Mật khẩu không được để trống',
                 'repassword.required' => 'Nhập lại mật khẩu không được để trống',
                 'repassword.same' => 'Nhập lại mật khẩu không khớp với mật khẩu',
-                // 'g-recaptcha-response' => 'Captcha không được để trống',
-                // 'parent_referral_code.required' => 'Mã giới thiệu là bắt buộc. Vui lòng liên hệ hỗ trợ online',
+                'g-recaptcha-response' => 'Captcha không được để trống',
+                'parent_referral_code.required' => 'Mã giới thiệu là bắt buộc. Vui lòng liên hệ hỗ trợ online',
             ]);
         if ($request->type_ == 'nhanvien') {
             $r = 'staff';

@@ -2,104 +2,77 @@
   <div class="analysis">
     <a-row style="margin-top: 0" :gutter="[24, 24]">
       <a-col :sm="24" :md="12" :xl="6">
-        <chart-card :loading="loading" :title="$t('totalSales')" total="0">
+        <chart-card :loading="loading" :title="$t('totalSales')" :total="totalRecharge">
           <a-tooltip :title="$t('introduce')" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
-          <!-- <div>
-            <trend style="margin-right: 16px" :term="$t('wow')" :percent="12" :is-increase="true" :scale="0" />
-            <trend :term="$t('dod')" :target="100" :value="89" :scale="0" />
-          </div>
-          <div slot="footer">{{$ta('daily|sales', 'p')}}<span> ￥234.56</span></div> -->
         </chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6">
-        <chart-card :loading="loading" :title="$t('visits')" total="0">
+        <chart-card :loading="loading" :title="$t('visits')" :total="totalWithdraw">
           <a-tooltip :title="$t('introduce')" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
-          <!-- <div>
-            <mini-area />
-          </div>
-          <div slot="footer">{{$ta('daily|visits', 'p')}}<span> 123,4</span></div> -->
         </chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6">
-        <chart-card :loading="loading" :title="$t('payments')" total="0">
+        <chart-card :loading="loading" :title="$t('payments')" :total="analysisData.totalUserRegisterToday">
           <a-tooltip :title="$t('introduce')" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
-          <!-- <div>
-            <mini-bar />
-          </div>
-          <div slot="footer">{{$t('conversion')}} <span>60%</span></div> -->
         </chart-card>
       </a-col>
-      <!-- <a-col :sm="24" :md="12" :xl="6">
-        <chart-card :loading="loading" :title="$t('operating')" total="73%">
-          <a-tooltip :title="$t('introduce')" slot="action">
-            <a-icon type="info-circle-o" />
-          </a-tooltip>
-          <div>
-            <mini-progress target="90" percent="78" color="#13C2C2" height="8px"/>
-          </div>
-          <div slot="footer" style="white-space: nowrap;overflow: hidden">
-            <trend style="margin-right: 16px" :term="$t('wow')" :percent="12" :is-increase="true" :scale="0" />
-            <trend :term="$t('dod')" :target="100" :value="89" :scale="0" />
-          </div>
-        </chart-card>
-      </a-col> -->
     </a-row>
     <a-card :loading="loading" style="margin-top: 24px" :bordered="false" :body-style="{ padding: '24px' }">
       <div class="salesCard">
         <a-tabs default-active-key="1" size="large" :tab-bar-style="{ marginBottom: '24px', paddingLeft: '16px' }">
           <div class="extra-wrap" slot="tabBarExtraContent">
             <div class="extra-item">
-              <a>{{ $t('day') }}</a>
-              <a>{{ $t('week') }}</a>
-              <a>{{ $t('month') }}</a>
-              <a>{{ $t('year') }}</a>
+              <a @click="setTime('day')">{{ $t('day') }}</a>
+              <a @click="setTime('week')">{{ $t('week') }}</a>
+              <a @click="setTime('month')">{{ $t('month') }}</a>
+              <a @click="setTime('year')">{{ $t('year') }}</a>
             </div>
-            <a-range-picker :style="{ width: '256px' }"></a-range-picker>
+            <a-range-picker :style="{ width: '256px' }" v-model="myCustomDate"></a-range-picker>
           </div>
-          <a-tab-pane loading="true" :tab="$t('sales')" key="1">
+          <a-tab-pane loading="true" :tab="$t('mostAgency')" key="1">
             <a-row>
-              <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-                <bar :title="$ta('stores|sales|trend', 'p')" />
-              </a-col>
-              <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
-                <ranking-list :title="$ta('stores|sales|ranking', 'p')" :list="rankList" />
+              <a-col>
+                <ranking-list :list="mostAgency" />
               </a-col>
             </a-row>
           </a-tab-pane>
-          <a-tab-pane :tab="$t('visits')" key="2"><a-row>
-              <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-                <bar :title="$ta('visits|trend', 'p')" />
+          <a-tab-pane loading="true" :tab="$t('recharge')" key="2">
+            <a-row>
+              <a-col>
+                <ranking-list :list="recharge" />
               </a-col>
-              <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
-                <ranking-list :title="$ta('stores|visits|ranking', 'p')" :list="rankList" />
+            </a-row>
+          </a-tab-pane>
+          <a-tab-pane loading="true" :tab="$t('withdraw')" key="3">
+            <a-row>
+              <a-col>
+                <ranking-list :list="withdraw" />
               </a-col>
-            </a-row></a-tab-pane>
+            </a-row>
+          </a-tab-pane>
+          <a-tab-pane loading="true" :tab="$t('rechargePending')" key="4">
+            <a-row>
+              <a-col>
+                <ranking-list :list="rechargePending" />
+              </a-col>
+            </a-row>
+          </a-tab-pane>
+          <a-tab-pane loading="true" :tab="$t('withdrawPending')" key="5">
+            <a-row>
+              <a-col>
+                <ranking-list :list="withdrawPending" />
+              </a-col>
+            </a-row>
+          </a-tab-pane>
         </a-tabs>
       </div>
     </a-card>
-    <!-- <a-row style="margin: 0 -12px">
-      <a-col style="padding: 0 12px" :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
-        <a-card :loading="loading" :bordered="false" style="margin-top: 24px" :title="$t('search')">
-          <hot-search />
-        </a-card>
-      </a-col>
-      <a-col style="padding: 0 12px" :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
-        <a-card :loading="loading" :bordered="false" style="margin-top: 24px;" :title="$t('proportion')">
-          <sales-data />
-          <a-radio-group slot="extra" style="margin: -12px 0">
-            <a-radio-button value="a">{{ $t('all') }}</a-radio-button>
-            <a-radio-button value="b">{{ $t('online') }}</a-radio-button>
-            <a-radio-button value="c">{{ $t('stores') }}</a-radio-button>
-          </a-radio-group>
-        </a-card>
-      </a-col>
-    </a-row> -->
   </div>
 </template>
 
@@ -116,6 +89,7 @@ import SalesData from './SalesData'
 import { request } from "@/utils/request";
 import Trend from '../../../components/chart/Trend'
 import { formatCurrencyVND } from '../../../utils/util'
+import moment from 'moment';
 
 const rankList = []
 
@@ -133,27 +107,99 @@ export default {
     return {
       analysisData: {},
       rankList,
-      loading: true
+      mostAgency: [],
+      recharge: [],
+      withdraw: [],
+      rechargePending: [],
+      withdrawPending: [],
+      totalRecharge: "",
+      totalWithdraw: "",
+      totalRegister: "",
+      loading: true,
+      from: null,
+      to: null,
+      myCustomDate: [null, null]
     }
   },
   mounted() {
     this.getData();
   },
+  watch: {
+    myCustomDate: function (val) {
+      if (val[0] && val[1]) {
+        this.from = val[0].toISOString()
+        this.to = val[1].toISOString()
+        this.getData()
+      }
+    }
+  },
   methods: {
     formatCurrencyVND(value) {
       return formatCurrencyVND(value)
     },
+    setTime(time) {
+      switch (time) {
+        case 'day':
+          this.from = moment().startOf('day').toISOString()
+          this.to = moment().endOf('day').toISOString()
+          break;
+        case 'week':
+          this.from = moment().subtract(7, 'days').toISOString()
+          this.to = moment().toISOString()
+          break;
+        case 'month':
+          this.from = moment().subtract(1, 'months').toISOString()
+          this.to = moment().toISOString()
+          break;
+        case 'year':
+          this.from = moment().subtract(1, 'years').toISOString()
+          this.to = moment().toISOString()
+          break;
+      }
+      this.getData()
+    },
     getData() {
-      request(process.env.VUE_APP_API_BASE_URL + "/analysis", "get", {
+      let uri = process.env.VUE_APP_API_BASE_URL + "/analysis"
+      if(this.from && this.to) {
+        uri += `?from=${this.from}&to=${this.to}`
+      }
+      console.log(uri)
+      request(uri, "get", {
       }).then((res) => {
-        const {data} = res?.data ?? {};
-        console.log(data);
-
+        const { data } = res?.data ?? {};
         this.analysisData = data
-
-        // this.pagination.current = page;
-        // this.pagination.pageSize = pageSize;
-        // this.pagination.total = total;
+        this.totalRecharge = formatCurrencyVND(data?.totalRechargeAmountToday)
+        this.totalWithdraw = formatCurrencyVND(data?.totalWithdrawAmountToday)
+        this.mostAgency = data?.topByReferralCode.map((item) => {
+          return {
+            name: item.name,
+            total: item.user_count
+          }
+        })
+        this.recharge = data?.topByRechargeAmount.map((item) => {
+          return {
+            name: item.name,
+            total: formatCurrencyVND(item.total_recharge_amount)
+          }
+        })
+        this.withdraw = data?.topByWithdrawAmount.map((item) => {
+          return {
+            name: item.name,
+            total: formatCurrencyVND(item.total_withdraw_amount)
+          }
+        })
+        this.rechargePending = data?.topRechargePending.map((item) => {
+          return {
+            name: item.name,
+            total: formatCurrencyVND(item.amount)
+          }
+        })
+        this.withdrawPending = data?.topWithdrawPending.map((item) => {
+          return {
+            name: item.name,
+            total: formatCurrencyVND(item.amount)
+          }
+        })
       });
     },
   },

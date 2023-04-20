@@ -58,10 +58,20 @@ class ApiAgencyController extends Controller
         $model->bank_name = $request->bank_name;
         $model->bank_name_account = $request->bank_name_account;
         $model->bank_account = $request->bank_account;
-        $model->referral_code = $request->referral_code;
+        if($request->referral_code) {
+            $model->referral_code = $request->referral_code;
+        } else {
+            $model->referral_code = $this->genReferralCode($request->email, $request->phone, $request->name);
+        }
         if (! empty($request->password))
             $model->password = bcrypt($request->password);
         $model->save();
+    }
+    public function genReferralCode($email, $phone, $name) {
+        $pre = substr($email, 0, 3) . substr($phone, 0, 3) . substr($name, 0, 3);
+        // convert to uppercase and remove special characters and spaces and UTF-8 characters
+        $referral_code = strtoupper(preg_replace('/[^A-Za-z0-9\-]/', '', $pre));
+        return $referral_code;
     }
     public function getModelById(Request $request) {
         $item = User::find($request->id);
@@ -79,7 +89,8 @@ class ApiAgencyController extends Controller
     {
         $id=$request->id;
         $item = User::find($id);
-        $item->password = bcrypt('mccannasia@123');
+        $password = env('PASSWORD_RESET', 'mccannasia@123');
+        $item->password = bcrypt($password);
         $item->save();
         return response()->json([
                 'status' => 'success',
@@ -105,7 +116,17 @@ class ApiAgencyController extends Controller
     public function changeAmount(Request $request) {
         $id=$request->id;
         $item = User::find($id);
-        $amount = $item->amount + $request->plus_amount;
+        $amount = 0;
+        switch ($request->type) {
+            case 'increase':
+                $amount = $item->amount + $request->amount;
+                break;
+            case 'decrease':
+                $amount = $item->amount - $request->amount;
+                break;
+            default:
+                break;
+        }
         $item->amount = $amount;
         $item->save();
         return response()->json([

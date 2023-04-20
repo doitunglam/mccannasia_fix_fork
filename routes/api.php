@@ -10,6 +10,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ApiWithDrawController;
 use App\Http\Controllers\ApiRechargeController;
 use App\Http\Controllers\ApiAnalysisController;
+use App\Http\Controllers\ApiConfigController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -35,6 +36,19 @@ Route::group([
         Route::post('logout', 'logout');
         Route::post('refresh', 'refresh');
         Route::middleware('jwt.auth')->post('me', 'me')->name('api.me');
+    });
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'bank'
+], function ($router) {
+    Route::controller(ApiConfigController::class)->group(function() {
+        Route::middleware('jwt.auth')->get('', 'list');
+        Route::middleware('jwt.auth')->get('/{id}', 'getModelById');
+        Route::middleware('jwt.auth')->delete('/{id}', 'deleteItem');
+        Route::middleware('jwt.auth')->put('/status/{id}', 'status');
+        Route::middleware('jwt.auth')->post('', 'store');
     });
 });
 

@@ -1,6 +1,9 @@
 <template>
   <div class="rank">
-    <h4 class="title">{{title}}</h4>
+    <div style="display: flex; justify-content: space-between;">
+      <h4 class="title">Name</h4>
+      <h4 class="title">Total</h4>
+    </div>
     <ul class="list">
       <li :key="index" v-for="(item, index) in list">
         <span :class="index < 3 ? 'active' : null">{{index + 1}}</span>
