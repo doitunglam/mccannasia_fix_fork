@@ -367,27 +367,50 @@ class CampainRepository
         return Payment::orderBy('created_at')->paginate(20);
     }
 
-    public function getPaymentByCurrentUser($request, $user, $date)
+    public function getPaymentByCurrentUser($request, $user, $date, $type, $from, $to)
     {
         $query = Payment::orderBy('created_at', 'DESC')->where('user', $user->id);
-
-        switch ($date) {
-            case 'today':
-                $query->whereDate('created_at', Carbon::today());
-                break;
-            case 'yesterday':
-                $query->whereDate('created_at', Carbon::yesterday());
-                break;
-            case 'week':
-                $query->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
-                break;
-            case 'month':
-                $query->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]);
-                break;
-            default:
-                $query->whereDate('created_at', '=', $date);
+        if($type != 0) {
+            switch($type) {
+                case '1':
+                    $query->where('type', 1);
+                    break;
+                case '2':
+                    $query->whereNull('type');
+                    break;
+                case '3':
+                    $query->where('status', 2);
+                    break;
+                default:
+                    $query->where('type', 1);
+                    break;
+            }
+        } else {
+            switch ($date) {
+                case 'today':
+                    $query->whereDate('created_at', Carbon::today());
+                    break;
+                case 'yesterday':
+                    $query->whereDate('created_at', Carbon::yesterday());
+                    break;
+                case 'week':
+                    $query->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
+                    break;
+                case 'month':
+                    $query->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]);
+                    break;
+                default:
+                    if($from != null && $to != null) {
+                        $query->whereBetween('created_at', [$from, $to]);
+                    } else {
+                        $query->whereDate('created_at', '=', $date);
+                    }
+                    break;
+            }
         }
-
+        if($from != null && $to != null) {
+            $query->whereBetween('created_at', [$from, $to]);
+        }
         return $query->paginate(20);
     }
 

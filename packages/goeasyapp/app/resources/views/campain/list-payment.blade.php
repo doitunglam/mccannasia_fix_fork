@@ -9,29 +9,29 @@
             </div>
         </div>
         <div class="d-flex" style="justify-content: space-between">
-            <div class="card search_page d-flex" style="width: 20%; background: rgba(90, 55, 55, 0.2)">
+            <div class="card search_page d-flex" style="width: 300px; background: rgba(90, 55, 55, 0.2)">
                 <div class="d-flex" style="flex-direction: row">
                     <div class="card-body">
                         <a class="btn btn-info waves-effect waves-light mt-3 d-grid" id="btn-view-0"
-                            style="width: 90px; height: 90px; align-items: center"><i
+                            style=" height: 90px; align-items: center"><i
                                 class="fa fa-plus"></i>{{ __trans($language, 'All.recharge', 'Nạp tiền') }}</a>
                     </div>
                     <div class="card-body">
                         <a class="btn btn-info waves-effect waves-light mt-3 d-grid" id="btn-view-1"
-                            style="width: 90px; height: 90px; align-items: center"><i
+                            style=" height: 90px; align-items: center"><i
                                 class="fa fa-minus"></i>{{ __trans($language, 'All.withdraw', 'Rút tiền') }}</a>
                     </div>
                 </div>
                 <div class="card-body d-flex" style="flex-direction: column">
-                    <a class="btn btn-info waves-effect waves-light mt-3 d-grid" id="btn-view-2"
+                    <a class="btn btn-info waves-effect waves-light mt-2 d-grid" id="btn-view-2"
                         style="width: 100%; height: 50px; align-items: center">{{ __trans($language, 'All.withdraw', 'Chi tiết giao dịch') }}</a>
                 </div>
             </div>
-            <div class="card" style="width: 78%; background: rgba(90, 55, 55, 0.2)">
+            <div class="card" style="width: 78%; background: rgba(90, 55, 55, 0.2); min-height: 300px">
                 <div class="card-body">
                     <div class="col-12">
                         <div class="row">
-                            <div class="table-responsive">
+                            <div class="table-responsive" style="min-height: 300px">
                                 <div id="view-1">
                                     <form method="POST" action="{{ route('payment.withdraw') }}"
                                         enctype="multipart/form-data" style="position: relative;z-index: 1;">
@@ -107,7 +107,7 @@
                                                 box-shadow: inset 0 0 0 3px rgba(35, 33, 45, 0.3),
                                                     0 0 0 3px rgba(185, 185, 185, 0.3);
                                                 position: relative;
-                                                width: 5%;
+                                                width: 4.2%;
                                             }
 
                                             .radio input {
@@ -226,13 +226,17 @@
                                                     style="align-items: center; margin-right:10px">Trong vòng 30 ngày</a>
                                                 <div id="dropdown-wrapper" class="dropdown-wrapper" tabindex="1">
                                                     <span class="dropdown-value">---Chọn bộ lọc---</span>
-
                                                     <ul class="dropdown-list">
                                                         <li><a href="#">Nạp</a></li>
                                                         <li><a href="#">Rút</a></li>
-                                                        <li><a href="#">Giao dịch bị tự chối</a></li>
+                                                        <li><a href="#">Giao dịch bị từ chối</a></li>
                                                     </ul>
                                                 </div>
+                                                <input type="text" name="datetimes" />
+                                                <a class="btn btn-info waves-effect waves-light ml-2 d-grid"
+                                                    onclick="handleFilter()" id="btn-view-0"
+                                                    style="align-items: center; margin-left:10px">
+                                                    Lọc</a>
                                             </div>
                                         </div>
                                     </div>
@@ -293,6 +297,10 @@
     </div>
 @endsection()
 @section('script')
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" defer>
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <script>
         $('.get-download').click(function() {
             var url = "{{ route('campain.download', ['s_name' => request()->s_name]) }}";
@@ -301,7 +309,36 @@
     </script>
     @stack('c-script')
     <script>
+        let startDate = '';
+        let endDate = '';
+        const typeMap = {
+            "Nạp": 1,
+            "Rút": 2,
+            "Giao dịch bị từ chối": 3
+        }
+        const handleFilter = () => {
+            let url = "<?php echo route('payment.all'); ?>";
+            const type = $('.dropdown-value').text();
+            const hasType = ["Giao dịch bị từ chối", "Nạp", "Rút"].includes(type);
+            if (hasType) {
+                url += `?type=${typeMap[type]}`;
+            }
+            if (startDate && endDate) {
+                if (!hasType) {
+                    url += `?type=0`;
+                }
+                url +=
+                    `&from=${moment(startDate).startOf('day').toISOString()}&to=${moment(endDate).endOf('day').toISOString()}`;
+            }
+            window.location.href = url;
+        }
         $(document).ready(function() {
+            $("input[name='datetimes']").daterangepicker({},
+                function(start, end, label) {
+                    startDate = start.format("YYYY-MM-DD").toString();
+                    endDate = end.format("YYYY-MM-DD").toString();
+                }
+            );
             @foreach ($items as $item)
                 $('.appect{{ $item->id }}').click(function() {
                     $('.check-status{{ $item->id }}').val(1);
@@ -312,11 +349,13 @@
                     $('.form-submit{{ $item->id }}').submit();
                 })
             @endforeach
-            @if (request()->date)
+            const type = "<?php echo request()->type; ?>";
+            const date = "<?php echo request()->date; ?>"
+            if (date || type) {
                 $("#view-0").addClass('d-none');
                 $("#view-1").addClass('d-none');
                 $("#view-2").removeClass('d-none');
-            @endif
+            }
             $("#btn-view-0").click(function() {
                 $("#view-0").removeClass('d-none');
                 $("#view-1").addClass('d-none');

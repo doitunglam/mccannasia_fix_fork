@@ -14,7 +14,7 @@ function __transItem($string)
             }
         }
     }
-    return (isset($json[$lang])) ? ($json[$lang]) :( $displayString ? $displayString : $string);
+    return $json[$lang] ?? ($displayString ? $displayString : (is_string($json) ? $json : $string));
 }
 function __trans($language, $key, $default)
 {

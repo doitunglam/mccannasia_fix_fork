@@ -216,12 +216,15 @@ class CampainController extends Controller
     public function paymentAll(Request $request)
     {
         $date= $request->date;
+        $type= $request->type;
+        $from= $request->from;
+        $to= $request->to;
         $lang = (session('locale') ? session('locale') : 'en');
         $language = Language::orderBy('updated_at', 'DESC')->where('code', $lang)->first();
         $language = ($language && $language->value != '') ? json_decode($language->value, true) : [];
         $user = Auth::user();
         $config = Config::where('status', 1)->first();
-        $items = $this->useRepository->getPaymentByCurrentUser($request, $user, $date);
+        $items = $this->useRepository->getPaymentByCurrentUser($request, $user, $date, $type, $from, $to);
         return view('app::' . $this->useRepository->getConfig()['aciton'] . '.list-payment', [
             'title' => 'Payment',
             'route' => 'payment.request',
