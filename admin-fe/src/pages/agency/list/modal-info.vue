@@ -4,6 +4,10 @@
             <div style="display: flex; justify-content: center; margin-bottom: 20px;">
                 <a-range-picker :style="{ width: '256px' }" v-model="myCustomDate"></a-range-picker>
             </div>
+            <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+                <h4 class="title" style="padding-right: 10px;">{{ user.name }}</h4>
+                <span> (MGT: <strong>{{ user.referral_code }}</strong>)</span>
+            </div>
             <ranking-list :list="info" />
             <template #footer>
                 <a-button key="back" @click="handleCancel">{{ $ta('close') }}</a-button>
@@ -25,6 +29,7 @@ export default {
         return {
             data: {},
             info: [],
+            user: {},
             form: this.$form.createForm(this),
             myCustomDate: [null, null],
             from: null,
@@ -60,8 +65,8 @@ export default {
             }
             request(uri, "get", {
             }).then((res) => {
-                const { data } = res?.data ?? {};
-
+                const { data, user } = res?.data ?? {};
+                this.user = user;
                 this.info = Object.keys(data).map((key) => {
                     const value = formatCurrencyVND(data[key] || 0);
                     return {
