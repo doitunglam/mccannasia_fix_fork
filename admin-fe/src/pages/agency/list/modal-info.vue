@@ -1,6 +1,6 @@
 <template>
     <div key="2">
-        <a-modal :visible="showModal" :title="$t('modalTitle')">
+        <a-modal :closable="false" :visible="showModal" :title="$t('modalTitle')">
             <div style="display: flex; justify-content: center; margin-bottom: 20px;">
                 <a-range-picker :style="{ width: '256px' }" v-model="myCustomDate"></a-range-picker>
             </div>
@@ -148,6 +148,10 @@ export default {
 
         handleOk() {
             if (this.data.amount > 0) {
+                const confirm = window.confirm("Are you sure?");
+                if (!confirm) {
+                    return;
+                }
                 request(process.env.VUE_APP_API_BASE_URL + "/agency/change-amount/" + this.id, METHOD.PUT, {
                     amount: this.data.amount,
                     type: this.data.type

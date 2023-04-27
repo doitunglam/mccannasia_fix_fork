@@ -2,21 +2,26 @@
 <template>
     <div>
         <a-card>
-            <a-row>
-                <a-button @click="setDateFilter('today')">
-                    Today
-                </a-button>
-                <a-button @click="setDateFilter('yesterday')">
-                    Yesterday
-                </a-button>
-                <a-button @click="setDateFilter('week')">
-                    Week
-                </a-button>
-                <a-button @click="setDateFilter('month')">
-                    Month
-                </a-button>
-                <a-button @click="setDateFilter('clear')">
-                    Clear
+            <a-row style="display: flex; justify-content: space-between;">
+                <div>
+                    <a-button @click="setDateFilter('today')">
+                        Today
+                    </a-button>
+                    <a-button @click="setDateFilter('yesterday')">
+                        Yesterday
+                    </a-button>
+                    <a-button @click="setDateFilter('week')">
+                        Week
+                    </a-button>
+                    <a-button @click="setDateFilter('month')">
+                        Month
+                    </a-button>
+                    <a-button @click="setDateFilter('clear')">
+                        Clear
+                    </a-button>
+                </div>
+                <a-button @click="handleAcceptAll">
+                    Appect All
                 </a-button>
             </a-row>
         </a-card>
@@ -207,10 +212,24 @@ export default {
                     return;
                 }
             }
+            const confirm = window.confirm("Are you sure?");
+            if (!confirm) {
+                return;
+            }
             request(process.env.VUE_APP_API_BASE_URL + "/recharge/" + id, "put", {
                 status,
                 reason,
             }).then(() => {
+                this.getData();
+                this.$message.success(`Update successfully`);
+            });
+        },
+        handleAcceptAll(){
+            const confirm = window.confirm("Are you sure?");
+            if (!confirm) {
+                return;
+            }
+            request(process.env.VUE_APP_API_BASE_URL + "/recharge/accept-all", "put", {}).then(() => {
                 this.getData();
                 this.$message.success(`Update successfully`);
             });

@@ -80,7 +80,6 @@ function checkAuthorization(authType = AUTH_TYPE.BEARER) {
   return false
 }
 
-
 function loadInterceptors(interceptors, options) {
   const {request, response} = interceptors
   request.forEach(item => {
@@ -102,11 +101,18 @@ function loadInterceptors(interceptors, options) {
       onFulfilled = response => response
     }
     if (!onRejected || typeof onRejected !== 'function') {
-      onRejected = error => Promise.reject(error)
+      onRejected = error => {
+        Promise.reject(error)
+      }
     }
     axios.interceptors.response.use(
       response => onFulfilled(response, options),
-      error => onRejected(error, options)
+      async error => {
+        if(error.response.status === 401){
+          window.location.href = '/#/login'
+        }
+        onRejected(error, options)
+      }
     )
   })
 }

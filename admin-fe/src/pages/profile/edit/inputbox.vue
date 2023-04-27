@@ -57,8 +57,8 @@
                         <a-col :lg="24" :md="24" :sm="24">
                             <a-form-item :label="$t('referral_code')">
                                 <a-input :value="data.referral_code" name="referral_code"
-                                    :placeholder="$ta('referral_code')" @change="onChanged" v-if="!agencyId" />
-                                <span v-if="agencyId">{{ data.referral_code }}</span>
+                                    :placeholder="$ta('referral_code')" @change="onChanged" v-if="!data.id" />
+                                <span v-if="data.id">{{ data.referral_code }}</span>
                             </a-form-item>
                         </a-col>
 
@@ -81,7 +81,7 @@ import { METHOD, request } from '../../../utils/request';
 
 export default {
     name: 'inputBox',
-    props: ['showSubmit', "langData", "type", "agencyId"],
+    props: ['showSubmit', "langData", "type"],
     i18n: require('./i18n-inputBox.js'),
     data() {
         const data = { ... this.langData };
@@ -93,18 +93,8 @@ export default {
                 }
             }
         });
-
-
-        // const short_content = JSON.parse(preProcessdata.short_content);
-        // const reson_cancel = JSON.parse(preProcessdata.reson_cancel);
-
-        // console.log(data);
-
-
-
         return {
             data,
-
             form: this.$form.createForm(this)
         }
     },
@@ -143,9 +133,7 @@ export default {
             const data = {
                 ...this.data,
             }
-            if (this.agencyId) {
-                data.id = this.agencyId
-            }
+            
             request(
                 process.env.VUE_APP_API_BASE_URL + '/agency',
                 METHOD.POST,

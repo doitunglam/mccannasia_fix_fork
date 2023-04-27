@@ -210,6 +210,7 @@ export default {
       let this_ = this
       let menuArr = []
       menuTree.forEach(function (menu, i) {
+        if(menu.hide) return
         menuArr.push(this_.renderItem(h, menu, '0', i))
       })
       return menuArr

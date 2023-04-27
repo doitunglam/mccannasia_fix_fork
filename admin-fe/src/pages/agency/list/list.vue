@@ -56,7 +56,7 @@
                             <a-icon type="stop" />
                             Block
                         </a>
-                        <a @click="changeAmountRecord(record.id)">
+                        <a @click="changeAmountRecord(record.id, record.amount)">
                             <a-icon type="money-collect" />
                             Amount
                         </a>
@@ -71,7 +71,7 @@
                 </standard-table>
             </div>
         </a-card>
-        <modal :id="idSelected" :showModal="showModal" @update:showModal="(event) => {
+        <modal :id="idSelected" :currentAmount="amountSelected" :showModal="showModal" @update:showModal="(event) => {
             showModal = event; if (!event) {
                 getData();
             }
@@ -153,6 +153,7 @@ export default {
             selectedRows: [],
             idSelected: "",
             idSelected2: "",
+            amountSelected: 0,
             showModal: false,
             showModalInfo: false,
             searchText: ""
@@ -200,20 +201,33 @@ export default {
             this.showModalInfo = true;
         },
         blockRecord(id) {
+            const confirm = window.confirm("Are you sure?");
+            if (!confirm) {
+                return;
+            }
             request(process.env.VUE_APP_API_BASE_URL + "/agency/block/" + id, METHOD.PUT).then(() => {
                 this.getData();
                 this.$message.success("Block/Unblock success");
             })
         },
         deleteRecord(id) {
+            const confirm = window.confirm("Are you sure?");
+            if (!confirm) {
+                return;
+            }
             this.dataSource = this.dataSource.filter((item) => item.id !== id);
             this.selectedRows = this.selectedRows.filter((item) => item.id !== id);
         },
-        changeAmountRecord(id) {
+        changeAmountRecord(id, amount) {
             this.idSelected = id;
+            this.amountSelected = amount;
             this.showModal = true;
         },
         resetPassword(id) {
+            const confirm = window.confirm("Are you sure?");
+            if (!confirm) {
+                return;
+            }
             request(process.env.VUE_APP_API_BASE_URL + "/agency/reset-password/" + id, METHOD.PUT).then(() => {
                 this.getData();
                 this.$message.success("Reset password success");

@@ -197,18 +197,19 @@
         </div>
 
     </div>
-    <script src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js'></script>
+    {{-- <script src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js'></script>
     <script>
         var botmanWidget = {
             aboutText: 'Botman',
             introMessage: "Hello! How may we help you?"
         };
-    </script>
+    </script> --}}
     <script src="{{ asset('assets/libs/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/libs/metismenu/metisMenu.min.js') }}"></script>
     <script src="{{ asset('assets/libs/simplebar/simplebar.min.js') }}"></script>
     <script src="{{ asset('assets/libs/node-waves/waves.min.js') }}"></script>
+    <script src="//code.tidio.co/rasnpyjtutv4tikr3gvc92tecgy1zhf7.js" defer></script>
     <script src="{{ asset('assets/js/app.js') }}"></script>
     <script>
         const validateFieldsId = ["username", "phone", "address", "gender"];

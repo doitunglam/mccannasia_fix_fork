@@ -222,6 +222,10 @@ export default {
       });
     },
     changeStatus(id) {
+      const confirm = window.confirm("Are you sure?");
+            if (!confirm) {
+                return;
+            }
       request(process.env.VUE_APP_API_BASE_URL + "/popup/status/" + id, METHOD.PUT).then(() => {
         this.getData();
         this.$message.success("Change status success");

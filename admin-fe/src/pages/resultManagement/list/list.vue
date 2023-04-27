@@ -176,6 +176,10 @@ export default {
                     return;
                 }
             }
+            const confirm = window.confirm("Are you sure?");
+            if (!confirm) {
+                return;
+            }
             request(process.env.VUE_APP_API_BASE_URL + "/result/" + id, "put", {
                 status,
                 reason,
@@ -185,6 +189,10 @@ export default {
             });
         },
         handleApproveAll() {
+            const confirm = window.confirm("Are you sure?");
+            if (!confirm) {
+                return;
+            }
             request(process.env.VUE_APP_API_BASE_URL + "/result", "put", {
             }).then(() => {
                 this.getData();

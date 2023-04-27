@@ -5,11 +5,7 @@
       <span class="name">{{user.name}}</span>
     </div>
     <a-menu :class="['avatar-menu']" slot="overlay">
-      <a-menu-item>
-        <a-icon type="user" />
-        <span>User</span>
-      </a-menu-item>
-      <a-menu-item>
+      <a-menu-item @click="$router.push('/profile/edit')">
         <a-icon type="setting" />
         <span>Setting</span>
       </a-menu-item>

@@ -193,6 +193,22 @@ const options = {
         //   ]
         // },
         {
+          path: 'profile',
+          name: 'profile',
+          hide: true,
+          meta: {
+            icon: 'user',
+          },
+          component: BlankView,
+          children: [
+            {
+              path: 'edit',
+              name: 'Edit',
+              component: () => import('@/pages/profile/edit/edit'),
+            }
+          ]
+        },
+        {
           path: 'dashboard',
           name: 'platform-home',
           meta: {

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a-modal :visible="showModal" :title="$t('modalTitle')">
+        <a-modal :closable="false" :visible="showModal" :title="$t('modalTitle')">
             <a-form @submit="handleSubmit" :form="form" class="form">
                 <a-row class="form-row">
                     <a-col :lg="24" :md="24" :sm="24">
@@ -17,8 +17,8 @@
                                 </a-col>
                                 <a-col :lg="24" :md="24" :sm="24">
                                     <a-form-item :label="$t('amount')">
-                                        <a-input v-model="data.amount" type="number" name="amount" :placeholder="$ta('amount')"
-                                            @change="onChanged" />
+                                        <a-input v-model="data.amount" type="number" name="amount"
+                                            :placeholder="$ta('amount')" @change="onChanged" />
                                     </a-form-item>
                                 </a-col>
                             </a-row>
@@ -39,7 +39,7 @@ import { request, METHOD } from "@/utils/request";
 export default {
     name: 'Modal',
     components: {},
-    props: ['showModal', 'id'],
+    props: ['showModal', 'id', 'currentAmount'],
     i18n: require("./i18n"),
     data() {
         const data = {
@@ -128,7 +128,19 @@ export default {
         },
 
         handleOk() {
+            if (this.data.amount < 0) {
+                this.$message.error("Amount must be greater than 0");
+                return;
+            }
+            if (this.data.amount > this.currentAmount && this.data.type == 'decrease') {
+                this.$message.error("Amount must be less than current amount");
+                return;
+            }
             if (this.data.amount > 0) {
+                const confirm = window.confirm("Are you sure?");
+                if (!confirm) {
+                    return;
+                }
                 request(process.env.VUE_APP_API_BASE_URL + "/agency/change-amount/" + this.id, METHOD.PUT, {
                     amount: this.data.amount,
                     type: this.data.type

@@ -52,7 +52,7 @@
 
         <!--        </a-card>-->
         <a-card>
-            <input-box ref="inputBox" :langData="data" :showSubmit="true" :agencyId="id" :type="'VI'" />
+            <input-box v-if="data.id" ref="inputBox" :langData="data" :showSubmit="true" :type="'VI'" />
         </a-card>
 
 
@@ -64,7 +64,7 @@
 <script>
 
 
-import inputBox from "@/pages/agency/new/inputbox.vue";
+import inputBox from "@/pages/profile/edit/inputbox.vue";
 import {request} from "@/utils/request";
 export default {
     name: "BasicForm",
@@ -87,28 +87,33 @@ export default {
         ];
         const activeTabKey = '1';
         const noTitleKey = 'app';
-
-
-        const data = {        }
-        return {
+        const data = {}
+        // get user from vuex store    
+        return { 
             tabList,
             activeTabKey,
             noTitleKey,
             data,
-            id: this.$router.history.current.query.id || null
         };
     },
-
+    // watch: {
+    //     data: {
+    //         handler: function (val) {
+    //             this.data = val;
+    //         },
+    //         deep: true
+    //     }
+        
+    // },
     methods: {
-        getData() {
-            if (this.id) {
-                request(process.env.VUE_APP_API_BASE_URL + "/agency/" + this.id, "get").then((res) => {
-                    const data = res?.data?.item ?? {};
-                    this.data = {
-                        ...data,
-                    }
-                });
-            }
+        getData(id) {
+            request(process.env.VUE_APP_API_BASE_URL + "/agency/" + id, "get").then((res) => {
+                const data = res?.data?.item ?? {};
+                this.data = {
+                    ...data,
+                }
+                console.log(this.data)
+            });
         },
         onTabChange(value, type) {
             if (type === 'key') {
@@ -170,7 +175,8 @@ export default {
         },
     },
     mounted() {
-        this.getData();
+        const user = this.$store.getters["account/user"]
+        this.getData(user.id);
     },
 };
 </script>

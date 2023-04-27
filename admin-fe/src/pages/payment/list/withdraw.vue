@@ -2,119 +2,112 @@
 <template>
     <div>
         <a-card>
-            <a-row>
-                <a-button @click="setDateFilter('today')">
-                    Today
-                </a-button>
-                <a-button @click="setDateFilter('yesterday')">
-                    Yesterday
-                </a-button>
-                <a-button @click="setDateFilter('week')">
-                    Week
-                </a-button>
-                <a-button @click="setDateFilter('month')">
-                    Month
-                </a-button>
-                <a-button @click="setDateFilter('clear')">
-                    Clear
+            <a-row style="display: flex; justify-content: space-between;">
+                <div>
+                    <a-button @click="setDateFilter('today')">
+                        Today
+                    </a-button>
+                    <a-button @click="setDateFilter('yesterday')">
+                        Yesterday
+                    </a-button>
+                    <a-button @click="setDateFilter('week')">
+                        Week
+                    </a-button>
+                    <a-button @click="setDateFilter('month')">
+                        Month
+                    </a-button>
+                    <a-button @click="setDateFilter('clear')">
+                        Clear
+                    </a-button>
+                </div>
+                <a-button @click="handleAcceptAll">
+                    Appect All
                 </a-button>
             </a-row>
         </a-card>
         <a-card>
             <div>
                 <a-space class="operator">
-                        <!-- <a-button @click="addNew" type="primary">Add new</a-button> -->
-                        <!-- <a-dropdown>
+                    <!-- <a-button @click="addNew" type="primary">Add new</a-button> -->
+                    <!-- <a-dropdown>
                           <a-menu @click="handleMenuClick" slot="overlay">
                             <a-menu-item key="delete">删除</a-menu-item>
                             <a-menu-item key="audit">审批</a-menu-item>
                           </a-menu>
                           <a-button> 更多操作 <a-icon type="down" /> </a-button>
                         </a-dropdown> -->
-                      </a-space>
-                <standard-table
-                        :columns="columns"
-                        :dataSource="dataSource"
-
-                        :pagination="{ ...pagination, onChange: onPageChange }"
-
-                >
+                </a-space>
+                <standard-table :columns="columns" :dataSource="dataSource"
+                    :pagination="{ ...pagination, onChange: onPageChange }">
                     <template slot="image-column" slot-scope="image">
-                        <img :src="image.text"/>
+                        <img :src="image.text" />
                     </template>
                     <template slot="status-column" slot-scope="status">
-          <span
-                  v-if="status.text != 1"
-                  style="
+                        <span v-if="status.text != 1" style="
               background-color: green;
               color: white;
               padding: 4px 8px;
               border-radius: 4px;
               display: inline-block;
-            "
-          >
-            active
-          </span>
-                        <span
-                                v-if="status.text == 1"
-                                style="
+            ">
+                            active
+                        </span>
+                        <span v-if="status.text == 1" style="
               background-color: red;
               color: white;
               padding: 4px 8px;
               border-radius: 4px;
               display: inline-block;
-            "
-                        >
-            inactive
-          </span>
+            ">
+                            inactive
+                        </span>
                     </template>
 
                     <div slot="description" slot-scope="{ text }">
                         {{ text }}
                     </div>
 
-                    <div slot = "date-public-column" slot-scope="date_public">
+                    <div slot="date-public-column" slot-scope="date_public">
 
                         <div>
-                            <p>{{formatTime(date_public.text)}}</p>
+                            <p>{{ formatTime(date_public.text) }}</p>
                         </div>
                     </div>
-                    <div slot = "date-end-column" slot-scope="date_end">
+                    <div slot="date-end-column" slot-scope="date_end">
 
                         <div>
-                            <p>{{formatTime(date_end.text)}}</p>
+                            <p>{{ formatTime(date_end.text) }}</p>
                         </div>
                     </div>
                     <div slot="action" slot-scope="{  record }">
                         <a @click="checkRecord(record.id, 1)">
-                            <a-icon type="check"/>
+                            <a-icon type="check" />
                             Approve
                         </a>
                         <a @click="checkRecord(record.id, 2)">
-                            <a-icon type="stop"/>
+                            <a-icon type="stop" />
                             Refuse
                         </a>
                     </div>
                     <template slot="statusTitle">
-                        <a-icon @click.native="onStatusTitleClick" type="info-circle"/>
+                        <a-icon @click.native="onStatusTitleClick" type="info-circle" />
                     </template>
                 </standard-table>
             </div>
         </a-card>
     </div>
-
 </template>
 
 <script>
 
 
 import StandardTable from "@/components/table/StandardTable";
-import {request} from "@/utils/request";
+import { request } from "@/utils/request";
 import moment from "moment";
 import { formatCurrencyVND } from "@/utils/util";
 
 const columns = [
-{
+    {
         title: "User",
         dataIndex: "user_name",
     },
@@ -143,7 +136,7 @@ const columns = [
         title: "Review at",
         dataIndex: "updated_at",
         key: "updated_at",
-        
+
     },
     {
         title: "Reason Reject",
@@ -151,13 +144,13 @@ const columns = [
     },
     {
         title: "Action",
-        scopedSlots: {customRender: "action"},
+        scopedSlots: { customRender: "action" },
     },
 ];
 
 export default {
     name: "QueryList",
-    components: {StandardTable},
+    components: { StandardTable },
     data() {
         return {
             advanced: true,
@@ -179,12 +172,22 @@ export default {
         this.getData();
     },
     methods: {
-        formatTime(time){
+        formatTime(time) {
             const result = moment(time).format("DD-MM-YYYY");
             if (result === "Invalid date") {
                 return "no date";
             }
             return result
+        },
+        handleAcceptAll() {
+            const confirm = window.confirm("Are you sure?");
+            if (!confirm) {
+                return;
+            }
+            request(process.env.VUE_APP_API_BASE_URL + "/withdraw/accept-all", "put", {}).then(() => {
+                this.getData();
+                this.$message.success(`Update successfully`);
+            });
         },
         onPageChange(page, pageSize) {
             this.pagination.current = page;
@@ -196,7 +199,7 @@ export default {
                 page: this.pagination.current,
                 pageSize: this.pagination.pageSize,
             }).then((res) => {
-                const {data, current_page: page, per_page: pageSize, total} = res?.data?.items ?? {};
+                const { data, current_page: page, per_page: pageSize, total } = res?.data?.items ?? {};
                 this.data = data.map(_data => {
                     return {
                         ..._data,
@@ -215,11 +218,15 @@ export default {
         },
         checkRecord(id, status) {
             let reason = "";
-            if(status == 2){   
+            if (status == 2) {
                 reason = prompt("Please enter the reason for refusal", "");
-                if(reason == null || reason == ""){
+                if (reason == null || reason == "") {
                     return;
                 }
+            }
+            const confirm = window.confirm("Are you sure?");
+            if (!confirm) {
+                return;
             }
             request(process.env.VUE_APP_API_BASE_URL + "/recharge/" + id, "put", {
                 status,
@@ -287,21 +294,21 @@ export default {
 
 <style lang="less" scoped>
 .search {
-  margin-bottom: 54px;
+    margin-bottom: 54px;
 }
 
 .fold {
-  width: calc(100% - 216px);
-  display: inline-block;
+    width: calc(100% - 216px);
+    display: inline-block;
 }
 
 .operator {
-  margin-bottom: 18px;
+    margin-bottom: 18px;
 }
 
 @media screen and (max-width: 900px) {
-  .fold {
-    width: 100%;
-  }
+    .fold {
+        width: 100%;
+    }
 }
 </style>

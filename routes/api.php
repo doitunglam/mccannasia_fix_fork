@@ -153,6 +153,7 @@ Route::group([
 ], function ($router) {
     Route::controller(ApiWithDrawController::class)->group(function() {
         Route::middleware('jwt.auth')->get('', 'list');
+        Route::middleware('jwt.auth')->put('/accept-all', 'paymentAcceptAll');
         Route::middleware('jwt.auth')->put('/{id}', 'store');
     });
 });
@@ -162,6 +163,7 @@ Route::group([
 ], function ($router) {
     Route::controller(ApiRechargeController::class)->group(function() {
         Route::middleware('jwt.auth')->get('', 'list');
+        Route::middleware('jwt.auth')->put('/accept-all', 'paymentAcceptAll');
         Route::middleware('jwt.auth')->put('/{id}', 'store');
     });
 });
