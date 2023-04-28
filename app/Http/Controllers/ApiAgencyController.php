@@ -103,7 +103,7 @@ class ApiAgencyController extends Controller
         $model->email = $request->email;
         $model->phone = $request->phone;
         $model->address = $request->address;
-        $model->type = "agency";
+        $model->type = $model->type ? $model->type : 'agency';
         $model->gender = $request->gender;
         $model->bank_name = $request->bank_name;
         $model->bank_name_account = $request->bank_name_account;

@@ -179,17 +179,17 @@
                                             <table class="custom-table">
                                                 <tr class="custom-table">
                                                     <td class="custom-table"> {{ 'Tên tài khoản' }} </td>
-                                                    <td class="custom-table"> {!! $info['name'] !!} </td>
+                                                    <td class="custom-table"> {!! $info ? $info['name'] : 'Unknown' !!} </td>
                                                 </tr>
                                                 <tr class="custom-table">
                                                     <td class="custom-table">
                                                         {{ __trans($language, 'All.bank_name', 'Tên ngân hàng') }} </td>
-                                                    <td class="custom-table"> {!! $info['bank'] !!}</td>
+                                                    <td class="custom-table"> {!! $info ? $info['bank'] : 'Unknown' !!}</td>
                                                 </tr>
                                                 <tr class="custom-table">
                                                     <td class="custom-table">
                                                         {{ __trans($language, 'All.bank_account', 'Số tài khoản') }} </td>
-                                                    <td class="custom-table"> {!! __transItem($n->value) !!}</td>
+                                                    <td class="custom-table"> {!! $n ? __transItem($n->value) : 'Unknown' !!}</td>
                                                 </tr>
                                             </table>
 
