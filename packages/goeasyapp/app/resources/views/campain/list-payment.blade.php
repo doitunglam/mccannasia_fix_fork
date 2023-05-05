@@ -9,25 +9,25 @@
             </div>
         </div>
         <div class="d-flex" style="justify-content: space-between">
-            <div class="card search_page d-flex" style="width: 300px; background: rgba(90, 55, 55, 0.2)">
+            <div class="card search_page d-flex" style="width: 300px; background: #b7b7b733; border: 1px solid #d5d5d5">
                 <div class="d-flex" style="flex-direction: row">
                     <div class="card-body">
                         <a class="btn btn-info waves-effect waves-light mt-3 d-grid" id="btn-view-0"
-                            style=" height: 90px; align-items: center"><i
+                            style=" height: 90px; align-items: center; background-color:#3B4F66; border-color: #3B4F66"><i
                                 class="fa fa-plus"></i>{{ __trans($language, 'All.recharge', 'Nạp tiền') }}</a>
                     </div>
                     <div class="card-body">
                         <a class="btn btn-info waves-effect waves-light mt-3 d-grid" id="btn-view-1"
-                            style=" height: 90px; align-items: center"><i
+                            style=" height: 90px; align-items: center; background-color:#3B4F66; border-color: #3B4F66"><i
                                 class="fa fa-minus"></i>{{ __trans($language, 'All.withdraw', 'Rút tiền') }}</a>
                     </div>
                 </div>
                 <div class="card-body d-flex" style="flex-direction: column">
                     <a class="btn btn-info waves-effect waves-light mt-2 d-grid" id="btn-view-2"
-                        style="width: 100%; height: 50px; align-items: center">{{ __trans($language, 'All.withdraw', 'Chi tiết giao dịch') }}</a>
+                        style="width: 100%; height: 50px; align-items: center; background-color:#3B4F66; border-color: #3B4F66">{{ __trans($language, 'All.withdraw', 'Chi tiết giao dịch') }}</a>
                 </div>
             </div>
-            <div class="card" style="width: 78%; background: rgba(90, 55, 55, 0.2); min-height: 300px">
+            <div class="card" style="width: 78%; background: #b7b7b733; min-height: 300px; border: 1px solid #d5d5d5">
                 <div class="card-body">
                     <div class="col-12">
                         <div class="row">
@@ -107,7 +107,7 @@
                                                 box-shadow: inset 0 0 0 3px rgba(35, 33, 45, 0.3),
                                                     0 0 0 3px rgba(185, 185, 185, 0.3);
                                                 position: relative;
-                                                width: 4.2%;
+                                                width: 50px;
                                             }
 
                                             .radio input {
@@ -171,6 +171,9 @@
                                             <h5 class="modal-title" id="transaction-detailModalLabel">
                                                 {{ __trans($language, 'All.tranfer_info', 'Thông tin chuyển khoản') }}
                                             </h5>
+                                            <?php
+                                            $info = null;
+                                            ?>
                                             @foreach ($config as $index => $n)
                                                 <?php
                                                 $info = json($n->name);
@@ -212,16 +215,16 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="d-flex align-items-center">
-                                                <a class="btn btn-info waves-effect waves-light mr-2 d-grid"
+                                                <a class="btn btn-info waves-effect waves-light mr-2 d-grid" style=" background-color:#3B4F66; border-color: #3B4F66; margin-right: 2px;"
                                                     href="{{ route('payment.all') }}?date=today" id="btn-view-0"
                                                     style="align-items: center; margin-right:10px">Hôm nay</a>
-                                                <a class="btn btn-info waves-effect waves-light mr-2 d-grid"
+                                                <a class="btn btn-info waves-effect waves-light mr-2 d-grid" style=" background-color:#3B4F66; border-color: #3B4F66; margin-right: 2px;"
                                                     href="{{ route('payment.all') }}?date=yesterday" id="btn-view-0"
                                                     style="align-items: center; margin-right:10px">Hôm qua</a>
-                                                <a class="btn btn-info waves-effect waves-light mr-2 d-grid"
+                                                <a class="btn btn-info waves-effect waves-light mr-2 d-grid" style=" background-color:#3B4F66; border-color: #3B4F66; margin-right: 2px;"
                                                     href="{{ route('payment.all') }}?date=week" id="btn-view-0"
                                                     style="align-items: center; margin-right:10px">Trong vòng 7 ngày</a>
-                                                <a class="btn btn-info waves-effect waves-light mr-2 d-grid"
+                                                <a class="btn btn-info waves-effect waves-light mr-2 d-grid" style=" background-color:#3B4F66; border-color: #3B4F66; margin-right: 2px;"
                                                     href="{{ route('payment.all') }}?date=month" id="btn-view-0"
                                                     style="align-items: center; margin-right:10px">Trong vòng 30 ngày</a>
                                                 <div id="dropdown-wrapper" class="dropdown-wrapper" tabindex="1">
@@ -235,7 +238,7 @@
                                                 <input type="text" name="datetimes" />
                                                 <a class="btn btn-info waves-effect waves-light ml-2 d-grid"
                                                     onclick="handleFilter()" id="btn-view-0"
-                                                    style="align-items: center; margin-left:10px">
+                                                    style="align-items: center; margin-left:10px; background-color:#3B4F66; border-color: #3B4F66">
                                                     Lọc</a>
                                             </div>
                                         </div>
