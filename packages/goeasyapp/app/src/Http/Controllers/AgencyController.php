@@ -51,32 +51,73 @@ class AgencyController extends Controller
     {
         $user = Auth::user();
         $model = User::find($id);
+        $from1 = $request->from1;
+        $to1 = $request->to1;
+        $from2 = $request->from2;
+        $to2 = $request->to2;
         if ($model) {
             if ($user->can('view', $model)) {
                 $referral_list = [];
+                $summary = [];
+                $totalAgencyOfCurrentUser = 0;
                 if ($model->referral_code) {
-
-
                     $statistic_query = DB::table('users')
-                        ->leftJoin('payments', 'payments.user', '=', 'users.id')
-                        ->select('users.id',
-                            DB::raw('SUM(CASE WHEN payments.type = 1 THEN payments.amount ELSE 0 END) as total_recharge'),
-                            DB::raw('SUM(CASE WHEN payments.type IS NULL THEN payments.amount ELSE 0 END) as total_withdraw'))
-                        ->where('users.parent_referral_code', '=', $model->referral_code)
-                        ->groupBy('users.id');
+                    ->leftJoin('payments', 'payments.user', '=', 'users.id')
+                    ->where('users.parent_referral_code', '=', $model->referral_code)
+                    ->select(
+                        'users.id',
+                        DB::raw('SUM(CASE WHEN payments.type = 1 THEN payments.amount ELSE 0 END) as total_recharge'),
+                        DB::raw('SUM(CASE WHEN payments.type IS NULL THEN payments.amount ELSE 0 END) as total_withdraw')
+                    )
+                    ->groupBy('users.id');
 
-                    $referral_list = DB::table('users')
-                        ->joinSub($statistic_query, 'statistic_query', function (JoinClause $join) {
-                            $join->on('users.id', '=', 'statistic_query.id');
-                        })->get();
+                $referral_list_raw = DB::table('users')
+                    ->leftJoinSub($statistic_query, 'statistic_query', function (JoinClause $join) {
+                        $join->on('users.id', '=', 'statistic_query.id');
+                    })
+                    ->where('users.parent_referral_code', '=', $model->referral_code);
+
+                    if ($from2 !== null || $to2 !== null) {
+                        $referral_list_raw->where('users.created_at', '>=', $from2)
+                            ->where('users.created_at', '<=', $to2);
+                    }
+
+                $referral_list = $referral_list_raw->get();
+                    $totalAgencyOfCurrentUser = User::whereNotNull('parent_referral_code')
+                    ->where('parent_referral_code', $model->referral_code);
+
+                    $summary = User::leftJoin('payments', 'payments.user', '=', 'users.id')
+                        ->where('users.parent_referral_code', $model->referral_code)
+                        ->whereNotNull('users.parent_referral_code')
+                        ->where('payments.status', 1)
+                        ->select(
+                            DB::raw('SUM(CASE WHEN payments.type = 1 THEN payments.amount ELSE 0 END) as totalRechargeAmount'),
+                            DB::raw('SUM(CASE WHEN payments.type IS NULL THEN payments.amount ELSE 0 END) as totalWithdrawAmount')
+                        );
+
+                    if ($from1 !== null || $to1 !== null) {
+                        $totalAgencyOfCurrentUser->where('created_at', '>=', $from1)
+                            ->where('created_at', '<=', $to1);
+
+                        $summary->whereBetween('payments.created_at', [$from1, $to1]);
+                    }
+
+                    $totalAgencyOfCurrentUser = $totalAgencyOfCurrentUser->count();
+                    $summary = $summary->get();
                 }
-
                 return view('app::user.edit', [
                     'model' => $model,
                     'store' => 'user.storeUpdate',
                     'title' => 'Users',
                     'banks' => Bank::BANKS,
-                    'referral_list' => $referral_list
+                    'referral_list' => $referral_list,
+                    'totalAgencyOfCurrentUser' => $totalAgencyOfCurrentUser,
+                    'totalRecharge' => $summary[0]->totalRechargeAmount ?? 0,
+                    'totalWithdraw' => $summary[0]->totalWithdrawAmount ?? 0,
+                    'from1' => $from1,
+                    'to1' => $to1,
+                    'from2' => $from2,
+                    'to2' => $to2,
                 ]);
             } else
                 abort(403);

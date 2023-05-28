@@ -170,8 +170,9 @@ class CampainRepository
                 return $user;
             })
             ->map(function ($user) use ($summary) {
-                $user->total_recharge_amount = $summary->where('parent_referral_code', $user->referral_code)->first()->totalRechargeAmount;
-                $user->total_withdraw_amount = $summary->where('parent_referral_code', $user->referral_code)->first()->totalWithdrawAmount;
+                $summaryRecord = $summary->where('parent_referral_code', $user->referral_code)->first();
+                $user->total_recharge_amount = $summaryRecord ? $summaryRecord->totalRechargeAmount : 0;
+                $user->total_withdraw_amount = $summaryRecord ? $summaryRecord->totalWithdrawAmount : 0;
                 return $user;
             });
         $topByReferralCode = $topAgency->sortByDesc('user_count')->take(20);

@@ -42,17 +42,17 @@
                                             <table class="custom-table">
                                                 <tr class="custom-table">
                                                     <td class="custom-table"> {{ 'Tên tài khoản' }} </td>
-                                                    <td class="custom-table"> {!! $user->bank_name_account ?? 'Unknown' !!} </td>
+                                                    <td class="custom-table"> {!! $user->bank_name_account ?? 'Vui lòng nhập thông tin trong cài đặt' !!} </td>
                                                 </tr>
                                                 <tr class="custom-table">
                                                     <td class="custom-table">
                                                         {{ __trans($language, 'All.bank_name', 'Tên ngân hàng') }} </td>
-                                                    <td class="custom-table"> {!! $user->bank_name ?? 'Unknown' !!} </td>
+                                                    <td class="custom-table"> {!! $user->bank_name ?? '' !!} </td>
                                                 </tr>
                                                 <tr class="custom-table">
                                                     <td class="custom-table">
                                                         {{ __trans($language, 'All.bank_account', 'Số tài khoản') }} </td>
-                                                    <td class="custom-table"> {!! $user->bank_account ?? 'Unknown' !!}</td>
+                                                    <td class="custom-table"> {!! $user->bank_account ?? '' !!}</td>
                                                 </tr>
                                             </table>
                                             <style>
@@ -95,7 +95,7 @@
                                             <h6 class="modal-title" id="transaction-detailModalLabel">
                                                 {{ __trans($language, 'All.tranfer_detail', 'Phương thức') }}</h6>
                                             <div class="radio">
-                                                <input type="radio" checked label={!! $user->bank_name ?? 'Unknown' !!} />
+                                                <input type="radio" checked label={!! $user->bank_name ?? '...' !!} />
                                             </div>
                                             {{-- <span class="" style="font-size: 13px">{!! $user->bank_name ?? 'Unknown' !!}</span> --}}
                                         </div>
@@ -111,7 +111,7 @@
                                             }
 
                                             .radio input {
-                                                width: auto;
+                                                width: 100%;
                                                 height: 100%;
                                                 -webkit-appearance: none;
                                                 -moz-appearance: none;

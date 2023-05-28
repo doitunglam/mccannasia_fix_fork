@@ -358,6 +358,9 @@ class CampainController extends Controller
             if($request->payment < 200000) {
                 return redirect()->back()->with('error', 'Số tiền yêu cầu rút phải lớn hơn 200.000');
             }
+            if (!$user->bank_name_account || !$user->bank_name || !$user->bank_account) {
+                return redirect()->back()->with('error', 'Vui lòng cập nhật thông tin tài khoản ngân hàng trước khi thực hiện yêu cầu rút tiền');
+            }
             $balance = $userModel->amount - $request->payment;
             $user->amount =  $balance;
             $user->save();

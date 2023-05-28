@@ -85,6 +85,7 @@ class AuthController extends Controller
         $model->phone = $request->phone;
         $model->address = $request->address;
         $model->type = 'agency';
+        $model->referral_code = $this->genReferralCode($request->email, $request->phone, $request->name);
         if ($request->password != '')
             $model->password = bcrypt($request->password);
 
@@ -114,6 +115,13 @@ class AuthController extends Controller
         $model->save();
         return redirect()->intended('admin/login')
             ->with('success', 'Đăng ký thành công!');
+    }
+
+    public function genReferralCode($email, $phone, $name) {
+        $pre = substr($email, 0, 3) . substr($phone, 0, 3) . substr($name, 0, 3);
+        // convert to uppercase and remove special characters and spaces and UTF-8 characters
+        $referral_code = strtoupper(preg_replace('/[^A-Za-z0-9\-]/', '', $pre));
+        return $referral_code;
     }
 
     public function register()

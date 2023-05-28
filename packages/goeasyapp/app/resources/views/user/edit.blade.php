@@ -211,6 +211,24 @@ $ln = json_decode($ln->label_, true);
                 </div>
             </div>
         </form>
+        <div class="card">
+            <div class="card-body">
+                <div style="display: flex; justify-content: space-between;">
+                    <div>
+                        <h4>Tổng số đại lý: {{ $totalAgencyOfCurrentUser }}</h4>
+                        <h4>Tổng số tiền cấp dưới đã nạp: {{ currency_format($totalRecharge) }}</h4>
+                        <h4>Tổng số tiền cấp dưới đã rút: {{ currency_format($totalWithdraw) }}</h4>
+                    </div>
+                    <div style="display: flex; height: fit-content;">
+                        <input id="input1" type="text" name="datetimes" />
+                        <a class="btn btn-info waves-effect waves-light ml-2 d-grid" onclick="handleFilter1()"
+                            id="btn-view-0"
+                            style="align-items: center; margin-left:10px; background-color:#3B4F66; border-color: #3B4F66">
+                            Lọc</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         @if (!empty($referral_list))
             <div class="card">
                 <div class="card-body">
@@ -220,8 +238,20 @@ $ln = json_decode($ln->label_, true);
                         $total_referral_list = count($referral_list);
                     }
                     ?>
-                    <h4>Danh sách khách nhập mã mời ({{ $total_referral_list }}
-                        {{ __trans($language, 'All.agency', 'Khách') }})</h4>
+                    <div style="display: flex; justify-content: space-between;">
+                        <div>
+                            <h4>Danh sách đối tác ({{ $total_referral_list }}
+                                {{ __trans($language, 'All.agency', 'Khách') }})</h4>
+                        </div>
+                        <div style="display: flex; height: fit-content;">
+                            <input id="input2" type="text" name="datetimes" />
+                            <a class="btn btn-info waves-effect waves-light ml-2 d-grid" onclick="handleFilter2()"
+                                id="btn-view-0"
+                                style="align-items: center; margin-left:10px; background-color:#3B4F66; border-color: #3B4F66">
+                                Lọc</a>
+                        </div>
+                    </div>
+
                     <table class="table table-responsive table-striped mt-4">
                         <tr>
                             <th>{{ __trans($language, 'All.id', 'ID') }}</th>
@@ -258,6 +288,10 @@ $ln = json_decode($ln->label_, true);
 
 @endsection
 @section('script')
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" defer>
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <script>
         $(document).ready(function() {
 
@@ -511,6 +545,42 @@ $ln = json_decode($ln->label_, true);
             })
 
         });
+    </script>
+    <script>
+        let startDate1 = '';
+        let endDate1 = '';
+        let startDate2 = '';
+        let endDate2 = '';
+        const handleFilter1 = () => {
+            let url = window.location.href.split('?')[0];
+            if (startDate1 && endDate1) {
+                url +=
+                    `?from1=${moment(startDate1).startOf('day').toISOString()}&to1=${moment(endDate1).endOf('day').toISOString()}`;
+            }
+            window.location.href = url;
+        }
+        const handleFilter2 = () => {
+            let url = window.location.href.split('?')[0];
+            if (startDate2 && endDate2) {
+                url +=
+                    `?from2=${moment(startDate2).startOf('day').toISOString()}&to2=${moment(endDate2).endOf('day').toISOString()}`;
+            }
+            window.location.href = url;
+        }
+        $(document).ready(function() {
+            $("#input1").daterangepicker({},
+                function(start, end, label) {
+                    startDate1 = start.format("YYYY-MM-DD").toString();
+                    endDate1 = end.format("YYYY-MM-DD").toString();
+                }
+            );
+            $("#input2").daterangepicker({},
+                function(start, end, label) {
+                    startDate2 = start.format("YYYY-MM-DD").toString();
+                    endDate2 = end.format("YYYY-MM-DD").toString();
+                }
+            );
+        })
     </script>
     <script>
         $(document).ready(function() {
