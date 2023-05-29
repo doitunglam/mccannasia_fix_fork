@@ -2,23 +2,18 @@
 
 namespace Goeasyapp\App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Bank;
+use App\Models\User;
+use Auth;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Goeasyapp\Core\Http\Hooks\CampainHook;
-use Goeasyapp\Core\Http\Repositories\CampainRepository;
-use Auth;
-use App\Models\Category;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use \Illuminate\Validation\Rule;
-
 
 class AgencyController extends Controller
 {
-
 
     public function restoreAll(Request $request)
     {
@@ -62,29 +57,29 @@ class AgencyController extends Controller
                 $totalAgencyOfCurrentUser = 0;
                 if ($model->referral_code) {
                     $statistic_query = DB::table('users')
-                    ->leftJoin('payments', 'payments.user', '=', 'users.id')
-                    ->where('users.parent_referral_code', '=', $model->referral_code)
-                    ->select(
-                        'users.id',
-                        DB::raw('SUM(CASE WHEN payments.type = 1 THEN payments.amount ELSE 0 END) as total_recharge'),
-                        DB::raw('SUM(CASE WHEN payments.type IS NULL THEN payments.amount ELSE 0 END) as total_withdraw')
-                    )
-                    ->groupBy('users.id');
+                        ->leftJoin('payments', 'payments.user', '=', 'users.id')
+                        ->where('users.parent_referral_code', '=', $model->referral_code)
+                        ->select(
+                            'users.id',
+                            DB::raw('SUM(CASE WHEN payments.type = 1 THEN payments.amount ELSE 0 END) as total_recharge'),
+                            DB::raw('SUM(CASE WHEN payments.type IS NULL THEN payments.amount ELSE 0 END) as total_withdraw')
+                        )
+                        ->groupBy('users.id');
 
-                $referral_list_raw = DB::table('users')
-                    ->leftJoinSub($statistic_query, 'statistic_query', function (JoinClause $join) {
-                        $join->on('users.id', '=', 'statistic_query.id');
-                    })
-                    ->where('users.parent_referral_code', '=', $model->referral_code);
+                    $referral_list_raw = DB::table('users')
+                        ->leftJoinSub($statistic_query, 'statistic_query', function (JoinClause $join) {
+                            $join->on('users.id', '=', 'statistic_query.id');
+                        })
+                        ->where('users.parent_referral_code', '=', $model->referral_code);
 
                     if ($from2 !== null || $to2 !== null) {
                         $referral_list_raw->where('users.created_at', '>=', $from2)
                             ->where('users.created_at', '<=', $to2);
                     }
 
-                $referral_list = $referral_list_raw->get();
+                    $referral_list = $referral_list_raw->get();
                     $totalAgencyOfCurrentUser = User::whereNotNull('parent_referral_code')
-                    ->where('parent_referral_code', $model->referral_code);
+                        ->where('parent_referral_code', $model->referral_code);
 
                     $summary = User::leftJoin('payments', 'payments.user', '=', 'users.id')
                         ->where('users.parent_referral_code', $model->referral_code)
@@ -119,10 +114,13 @@ class AgencyController extends Controller
                     'from2' => $from2,
                     'to2' => $to2,
                 ]);
-            } else
+            } else {
                 abort(403);
-        } else
+            }
+
+        } else {
             abort(404);
+        }
 
         // $referral_list = empty($model->referral_code)
         //     ? []
@@ -197,9 +195,9 @@ class AgencyController extends Controller
         $model->bank_name_account = $request->bank_name_account;
         $model->bank_account = $request->bank_account;
         $model->referral_code = $request->referral_code;
-        if (! empty($request->password))
+        if (!empty($request->password)) {
             $model->password = bcrypt($request->password);
-
+        }
 
         $model->save();
         if ($request->file('image')) {
@@ -222,8 +220,10 @@ class AgencyController extends Controller
         $uniqueIgnoreSelf = Rule::unique('users')->ignore($id);
         $genderArray = ['Male', 'Female'];
         $bankNameArray = [];
-        foreach (Bank::BANKS as $bank)
+        foreach (Bank::BANKS as $bank) {
             array_push($bankNameArray, $bank['shortName']);
+        }
+
         // 'string','in:'.implode(',',$genderArray),
         $request->validate([
             'name' => ['required', 'string', $uniqueIgnoreSelf],
@@ -242,8 +242,10 @@ class AgencyController extends Controller
         $model->name = $request->name;
         $model->email = $request->email;
         $model->phone = $request->phone;
-        if ($request->address)
+        if ($request->address) {
             $model->address = $request->address;
+        }
+
         $model->type = $request->type_;
         $model->gender = $request->gender;
         if ($request->bank_name) {
@@ -252,11 +254,13 @@ class AgencyController extends Controller
             $model->bank_account = $request->bank_account;
         }
 
-        if ($request->password)
+        if ($request->password) {
             $model->password = bcrypt($request->password);
+        }
 
-        if ($request->referral_code)
+        if ($request->referral_code) {
             $model->referral_code = $request->referral_code;
+        }
 
         $model->save();
         if ($request->file('image')) {
@@ -340,7 +344,6 @@ class AgencyController extends Controller
         $items = $items->get();
         $search = $request->all();
 
-
         $data = [
             'search' => $search,
             'items' => $items,
@@ -372,7 +375,6 @@ class AgencyController extends Controller
         }
         $items = $items->get();
         $search = $request->all();
-
 
         $data = [
             'search' => $search,
@@ -458,7 +460,7 @@ class AgencyController extends Controller
             'model' => $model,
             'store' => 'user.change_amount',
             'title' => 'Thay đổi số dư',
-            'banks' => Bank::BANKS
+            'banks' => Bank::BANKS,
         ]);
     }
 

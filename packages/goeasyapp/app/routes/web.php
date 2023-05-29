@@ -41,7 +41,7 @@ Route::get('/dashboard', function () {
 //     ->where('any', '.*');
 Route::prefix('admin')->group(function () {
 
-    Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [CampainController::class, 'day'])->name('home');
+    Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [CampainController::class, 'dashboard'])->name('home');
     Route::middleware(['auth:sanctum', 'verified'])->get('/language', [LanguageController::class, 'list'])->name('language.list');
     Route::middleware(['auth:sanctum', 'verified'])->get('/language/create', [LanguageController::class, 'create'])->name('language.create');
     Route::middleware(['auth:sanctum', 'verified'])->post('/language/store/{id}', [LanguageController::class, 'store'])->name('language.store');

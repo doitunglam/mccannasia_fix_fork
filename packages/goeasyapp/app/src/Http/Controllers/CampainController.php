@@ -497,18 +497,16 @@ class CampainController extends Controller
             'title' => 'Chiến dịch hot',
         ]);
     }
-    public function day(Request $request)
+    public function dashboard(Request $request)
     {
-        $items = $this->useRepository->getCampainDay($request);
         $user = Auth::user();
         $totalRechargeAmountToday = $this->useRepository->getTotalRechargeAmountToday();
         $totalWithdrawAmountToday = $this->useRepository->getTotalWithdrawAmountToday();
         $totalUserRegisterToday = $this->useRepository->getTotalUserRegisterToday();
         $topUserMostRefer = $this->useRepository->getTop5UserMostReferralCode();
+        $infoAgency = $this->useRepository->getInfoAgency($request, $user->id);
         $requestUri = $request->getRequestUri();
-        $page = $user->type == 'agency' || $requestUri == '/admin/campain/day' ? '.day' : '.dashboard';
-        return view('app::' . $this->useRepository->getConfig()['aciton'] . $page, [
-            'items' => $items,
+        return view('app::' . $this->useRepository->getConfig()['aciton'] . '.dashboard', [
             'title' => "Trang chủ",
             'user' => $user,
             'totalRechargeAmountToday' => $totalRechargeAmountToday,
@@ -517,6 +515,20 @@ class CampainController extends Controller
             'topByReferralCode' => $topUserMostRefer['topByReferralCode'],
             'topByRechargeAmount' => $topUserMostRefer['topByRechargeAmount'],
             'topByWithdrawAmount' => $topUserMostRefer['topByWithdrawAmount'],
+            'referral_list' => $infoAgency['referral_list'],
+            'totalAgencyOfCurrentUser' => $infoAgency['totalAgencyOfCurrentUser'],
+            'totalRecharge' => $infoAgency['totalRecharge'],
+            'totalWithdraw' => $infoAgency['totalWithdraw'],
+        ]);
+    }
+    public function day(Request $request)
+    {
+        $items = $this->useRepository->getCampainDay($request);
+        $user = Auth::user();
+        return view('app::' . $this->useRepository->getConfig()['aciton'] . '.day', [
+            'items' => $items,
+            'title' => "Trang chủ",
+            'user' => $user,
         ]);
     }
     public function register($id)

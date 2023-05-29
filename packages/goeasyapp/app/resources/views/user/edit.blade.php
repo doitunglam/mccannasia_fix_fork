@@ -211,7 +211,7 @@ $ln = json_decode($ln->label_, true);
                 </div>
             </div>
         </form>
-        <div class="card">
+        {{-- <div class="card">
             <div class="card-body">
                 <div style="display: flex; justify-content: space-between;">
                     <div>
@@ -228,7 +228,7 @@ $ln = json_decode($ln->label_, true);
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         @if (!empty($referral_list))
             <div class="card">
                 <div class="card-body">
