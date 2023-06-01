@@ -31,7 +31,7 @@ class ApiRechargeController extends Controller
                 'message' => 'Cập nhật thành công',
             ]);
     }
-    public function paymentAcceptAll(Request $request, $type)
+    public function paymentAcceptAll(Request $request)
     {
         $payments = Payment::where('status', null)->where('type',1)->get();
         foreach ($payments as $payment) {
